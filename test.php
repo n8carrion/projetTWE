@@ -1,4 +1,4 @@
 <?php
 echo "test du web" ;
-echo "test sur Ubuntu" ;
+echo "test sur Ubuntu 2" ;
 ?>
