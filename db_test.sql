@@ -30,7 +30,11 @@ SET time_zone = "+00:00";
 CREATE TABLE `Image` (
   `hash` varchar(255) NOT NULL COMMENT 'hash de l''image converti en jpg',
   `isObjet` int(11) NOT NULL COMMENT 'Clée étrangère de l''objet',
-  `ordre` int(8) NOT NULL COMMENT 'Ordre dans lequelle les images d''un même objet doivent s''afficher'
+  `ordre` int(8) NOT NULL COMMENT 'Ordre dans lequelle les images d''un même objet doivent s''afficher',
+
+  PRIMARY KEY (`hash`),
+  FOREIGN KEY (isObjet) REFERENCES Objet(id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -47,7 +51,7 @@ INSERT INTO `Image` (`hash`, `isObjet`, `ordre`) VALUES
 --
 
 CREATE TABLE `Objet` (
-  `id` int(11) NOT NULL,
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
   `nom` varchar(40) NOT NULL,
   `idProprietaire` int(11) NOT NULL,
   `description` text NOT NULL,
@@ -56,7 +60,10 @@ CREATE TABLE `Objet` (
   `categorieObjet` enum('Meuble','Électroménager','Vêtement','Informatique','Nourriture','Divertissement','Service') NOT NULL,
   `dateCreation` timestamp NOT NULL DEFAULT current_timestamp(),
   `debutPret` date DEFAULT NULL,
-  `finPret` date DEFAULT NULL
+  `finPret` date DEFAULT NULL,
+
+  FOREIGN KEY (idProprietaire) REFERENCES Utilisateur(id)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -73,7 +80,7 @@ INSERT INTO `Objet` (`id`, `nom`, `idProprietaire`, `description`, `typeAnnonce`
 --
 
 CREATE TABLE `Utilisateur` (
-  `id` int(11) NOT NULL,
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
   `nom` varchar(40) NOT NULL,
   `prenom` varchar(40) NOT NULL,
   `passeHash` varchar(255) NOT NULL COMMENT 'Hash du mot de passe',
@@ -91,44 +98,12 @@ CREATE TABLE `Utilisateur` (
 INSERT INTO `Utilisateur` (`id`, `nom`, `prenom`, `passeHash`, `mail`, `telephone`, `adresse`, `facebook`, `statutUtilisateur`) VALUES
 (1, 'GRÉGOIRE', 'Valentin', '', 'valentin.gregoire@centrale.centralelille.fr', '+33 6 60 18 37 45', 'B210b', 'https://www.facebook.com/profile.php?id=100013626060028', 'moderateur');
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `Image`
---
-ALTER TABLE `Image`
-  ADD PRIMARY KEY (`hash`);
 
---
--- Indexes for table `Objet`
---
-ALTER TABLE `Objet`
-  ADD PRIMARY KEY (`id`);
 
---
--- Indexes for table `Utilisateur`
---
-ALTER TABLE `Utilisateur`
-  ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT for dumped tables
---
 
---
--- AUTO_INCREMENT for table `Objet`
---
-ALTER TABLE `Objet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
---
--- AUTO_INCREMENT for table `Utilisateur`
---
-ALTER TABLE `Utilisateur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
