@@ -93,7 +93,7 @@ CREATE TABLE `Utilisateur` (
 
 INSERT INTO `Utilisateur` (`id`, `nom`, `prenom`, `passeHash`, `mail`, `telephone`, `adresse`, `facebook`, `statutUtilisateur`) VALUES
 (1, 'GRÉGOIRE', 'Valentin', '', 'valentin.gregoire@centrale.centralelille.fr', '+33 6 60 18 37 45', 'B210b', 'https://www.facebook.com/profile.php?id=100013626060028', 'moderateur'),
-(2, 'BOUCHER', 'Jeanne', 'mdp', 'jeanne.boucher@centrale.centralille.fr', '+33 7 81 71 20 39', 'B103', 'https://www.facebook.com/profile.php?id=61565222811524', 'etudiant');
+(2, 'BOUCHER', 'Jeanne', '', 'jeanne.boucher@centrale.centralille.fr', '+33 7 81 71 20 39', 'B103', 'https://www.facebook.com/profile.php?id=61565222811524', 'etudiant');
 
 --
 -- Index pour les tables déchargées
