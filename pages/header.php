@@ -1,12 +1,13 @@
 
 <style>
     #banniere {
-        background-color:beige;
-        padding: 20px;
+        background-color:rgb(240, 240, 240);
+        border : 1px solid black;
+        padding: 10px;
         position : relative;
     }
     #logo img {
-        width: 100px;
+        width: 250px;
         display:inline ;
     }
     #titre {
@@ -41,15 +42,15 @@
 
 <body>
 
+   
+
     <div id="banniere">
 
-    
-
-        <h1 id="titre"> La REZerve </h1>
-        <!-- le titre est cliquable et contient un lien vers l'acceuil -->
+        <!-- <h1 id="titre"> La REZerve </h1> -->
+        <!-- le logo est cliquable et contient un lien vers l'acceuil -->
         <div id="logo">
             <a href="index.php?view=accueil"><img src="../ressources/logoLaREZerve1.png" alt="Logo de la REZerve"></a>
-
+        </div>
         <div id="menu">
             <a id ="lienAcceuil" href="index.php?view=accueil">Accueil</a>
             <a id ="lienCatalogue" href="index.php?view=catalogue">Catalogue</a>
@@ -66,7 +67,6 @@
         // 	echo "<a id=\"lienConnexion\" href=\"index.php?view=login\">Se connecter</a>";
         ?>
 
-
-    </div>
+</div>
 
 </body>

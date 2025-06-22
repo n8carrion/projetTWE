@@ -27,7 +27,7 @@ Développement Durable (ODD) de l’Agenda 2030 :</p>
 <ul>
     <!-- il y a une imageg pour chaque element de la liste suivante -->
     <li>
-        <a href="https://www.un.org/sustainabledevelopment/fr/sustainable-consumption-production/"> 
+        <a href="https://www.un.org/sustainabledevelopment/fr/sustainable-consumption-production/" target="_blank" > 
             <img src="../ressources/ODD11.png" alt="ODD 11" width="70">
         </a>
         
@@ -35,7 +35,7 @@ Développement Durable (ODD) de l’Agenda 2030 :</p>
         
     </li>
     <li>
-        <a href="https://www.un.org/sustainabledevelopment/fr/sustainable-consumption-production/"> 
+        <a href="https://www.un.org/sustainabledevelopment/fr/sustainable-consumption-production/" target="_blank"> 
             <img src="../ressources/ODD12.png" alt="ODD 12" width="70">
         </a>
         
