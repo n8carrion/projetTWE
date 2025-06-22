@@ -7,20 +7,33 @@
     }
     #logo img {
         width: 100px;
+        display:inline ;
     }
     #titre {
         font-size: 24px;
         margin: 10px 0;
-    
     }
 
-    #menu {
-        
-    }
     a {
         margin: 5px;
         text-decoration: none;
         text-style : bold;
+    }
+    #banniere div {
+        display:inline ;
+    }
+    #barreSearch {
+        position:absolute ;
+        right: 300px;
+    }
+    #lienConnexion {
+        position:absolute;
+        right:10px;
+    }
+    #BtnAdd{
+        display:none ;
+        right: 100px ;
+        position:absolute ;
     }
 
 </style>
@@ -42,12 +55,15 @@
             <a id ="lienCatalogue" href="index.php?view=catalogue">Catalogue</a>
         </div>
 
-        
+        <input id=barreSearch type="search" placeholder="Recherche d'une annonce">
+        <input id=BtnAdd type="button" value="+Ajouter une annonce">
+        <a id ="lienConnexion" href="index.php?view=login">Se connecter</a>
+    
 
         <?php
         // Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
         // if (!valider("connecte","SESSION"))
-        // 	echo "<a href=\"index.php?view=login\">Se connecter</a>";
+        // 	echo "<a id=\"lienConnexion\" href=\"index.php?view=login\">Se connecter</a>";
         ?>
 
 
