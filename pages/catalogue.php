@@ -35,46 +35,84 @@ include_once '../pages/header.php';
     </style>
     <script src="../libs/utils.js"></script>
     <script src="../libs/ajax.js"></script>
+    <script src="../libs/jquery-3.7.1.min.js"></script>
 
     <script>
 
-        
-     function integrer(reponse) {
-            console.log("Reçu :", reponse);
+        //fonction pour créer une carte d'objet, elle sera ensuite apellée par la fonction chargerAnnonces
+        function creerCarteObjet(id, titre, type, categorie, statut, image) {
+            
+            var carte = $('<div class="carteObjet"></div>');
+            var lien = $('<a></a>').attr('href', 'index.php?view=ficheObjet&id=' + id);
+            var img = $('<img>').attr('src', '../uploads/imagesObjets/' + image).attr('alt', 'Photo de l’objet');
+            var titreCarte = $('<h2></h2>').text(titre);
 
-            // 1. On parse la chaîne JSON en un objet JS
-            const data = JSON.parse(reponse);
-            console.log("Objet JSON :", data);
+            
+            var details = $('<p></p>').html('<strong>Type :</strong> ' + type + '<br>' +
+                                             '<strong>Catégorie :</strong> ' + categorie + '<br>' +
+                                             '<strong>Statut :</strong> ' + statut);
 
-            // 2. On vide la liste actuelle
-            const ul = document.getElementById("listeObjet");
-            ul.innerHTML = "";
+            // Assembler la carte
+            lien.append(img, titreElement, details);
+            carte.append(lien);
 
-            // 3. Vérification qu’il y a des objets
-            if (data.listeObjets && data.listeObjets.length > 0) {
-                data.listeObjets.forEach((objet, i) => {
-                    const li = document.createElement("li");
-                    li.className = "carteObjet"; // Pour styliser comme tes cartes
-                    li.id = `objet_${i}`;
+            return carte;
 
-                    //
-                    li.innerHTML = `
-                        <a href="index.php?view=ficheObjet&id=${objet.id}">
-                            <h2>${objet.nom}</h2>
-                            <p><strong>Type :</strong> ${objet.typeAnnonce}</p>
-                            <p><strong>Catégorie :</strong> ${objet.categorieObjet}</p>
-                            <p><strong>Statut :</strong> ${objet.statutObjet}</p>
-                        </a>
-                    `;
+        }
+           
 
-                    ul.appendChild(li);
-                });
-            } else {
-                // Si aucun objet trouvé
-                ul.innerHTML = "<li>Aucun objet trouvé.</li>";
-            }
+        // Fonction pour charger les annonces correspondantes à la catégorie et au type sélectionnés
+        // et les afficher dans la liste des objets
+        // Cette fonction est appelée lors du chargement de la page avec aucun filtre
+        //  et lors du clic sur le bouton Filtrer
+        function chargerAnnonces(categorie, type) {
+            $.ajax({
+                url: '.listerObjets.php',
+                type: 'GET',
+                data: {
+                    "categorie": categorie,
+                    "type": type
+                },
+                success: function(reponse) {
+                    // Vider la liste des objets avant d'ajouter les nouveaux
+                    $('#listeObjet').empty();
+
+                    // Parcourir les annonces reçues et créer des cartes d'objet 
+                    // et l'ajouter à la liste des objets visibles dans le catalogue
+                    response.forEach(function(objet) {
+                        var carte = creerCarteObjet(
+                            objet.id,
+                            objet.titre,
+                            objet.type,
+                            objet.categorie,
+                            objet.statut,
+                            objet.image
+                        );
+                        // Ajouter la carte à la liste des objets
+                        $('#listeObjet').append(carte);
+                    });
+                }
+                            
+
+        });
     }
+            
 
+        $(document).ready(function() {
+            
+
+            // Charger toutes les annonces sans filtre au chargement de la page
+            chargerAnnonces('', ''); // faire en sorte que la fonction chargerAnnonces soit appelée avec des paramètres vides pour charger toutes les annonces
+
+            // Événement de clic sur le bouton Filtrer
+            $('#btnFiltrer').click(function(e) {
+                
+                var categorie = $('#categorie').val();
+                var type = $('#typeAnnonce').val();
+                chargerAnnonces(categorie, type);
+            });
+        });
+        
 
 
     </script>
@@ -89,7 +127,7 @@ include_once '../pages/header.php';
 <!-- Barre de filtres -->
 <fieldset id="filtres">
     <legend>Filtres</legend>
-        <form id="filtres">
+    
             <label for="categorie">Catégorie :</label>
             <select name="categorie" id="categorie">
                 <option value="meuble">Meuble</option>
@@ -98,16 +136,15 @@ include_once '../pages/header.php';
                 <option value="autre">Autre</option>
             </select>
 
-            <label for="categorie">Catégorie :</label>
+            <label for="type">Type :</label>
             <select name="type" id="typeAnnonce">
                 <option value="">Tous les types</option>
                 <option value="don">Don</option>
                 <option value="pret">Prêt</option>
             </select>
 
-            <input type="text" id="recherche" name="recherche" placeholder="Rechercher...">
-            <button type="submit">Filtrer</button>
-        </form>
+            <button id="btnFiltrer">Filtrer</button>
+        
 </fieldset>
 
 
@@ -116,7 +153,7 @@ include_once '../pages/header.php';
 <fieldset id="annonces">
     <legend>Les annonces</legend>
 
-    <!-- c'est une liste d'annonces -->
+    <!-- c'est une liste de carteObjet -->
 
     <ul  id="listeObjet">
             <!-- c'est ici que vont être ajouter les annonces recues par la requête AJAX -->
@@ -139,8 +176,6 @@ include_once '../pages/header.php';
     </ul>
 
     
-    
-
     
 </fieldset>
 
