@@ -14,31 +14,67 @@ include_once '../pages/header.php';
             font-size: 1.5em;
         }
 
-        .carte-objet {
+        .carteObjet {
             border: 1px solid #ddd;
             padding: 15px;
             margin-bottom: 15px;
             background-color: #f9f9f9;
         }
 
-        .carte-objet img {
+        .carteObjet img {
             height: 200px;
         }
 
-        .carte-objet h2 {
-            margin-top: 0;
-        }
 
         .carte-objet a {
             display: inline-block;
             margin-top: 10px;
-            color: #007bff;
+            color:rgb(0, 0, 0); 
             text-decoration: none;
         }
     </style>
-
+    <script src="../libs/utils.js"></script>
+    <script src="../libs/ajax.js"></script>
 
     <script>
+
+        
+     function integrer(reponse) {
+            console.log("Reçu :", reponse);
+
+            // 1. On parse la chaîne JSON en un objet JS
+            const data = JSON.parse(reponse);
+            console.log("Objet JSON :", data);
+
+            // 2. On vide la liste actuelle
+            const ul = document.getElementById("listeObjet");
+            ul.innerHTML = "";
+
+            // 3. Vérification qu’il y a des objets
+            if (data.listeObjets && data.listeObjets.length > 0) {
+                data.listeObjets.forEach((objet, i) => {
+                    const li = document.createElement("li");
+                    li.className = "carteObjet"; // Pour styliser comme tes cartes
+                    li.id = `objet_${i}`;
+
+                    //
+                    li.innerHTML = `
+                        <a href="index.php?view=ficheObjet&id=${objet.id}">
+                            <h2>${objet.nom}</h2>
+                            <p><strong>Type :</strong> ${objet.typeAnnonce}</p>
+                            <p><strong>Catégorie :</strong> ${objet.categorieObjet}</p>
+                            <p><strong>Statut :</strong> ${objet.statutObjet}</p>
+                        </a>
+                    `;
+
+                    ul.appendChild(li);
+                });
+            } else {
+                // Si aucun objet trouvé
+                ul.innerHTML = "<li>Aucun objet trouvé.</li>";
+            }
+    }
+
 
 
     </script>
@@ -51,7 +87,6 @@ include_once '../pages/header.php';
 <h1>Catalogue</h1>
 
 <!-- Barre de filtres -->
-
 <fieldset id="filtres">
     <legend>Filtres</legend>
         <form id="filtres">
@@ -81,19 +116,32 @@ include_once '../pages/header.php';
 <fieldset id="annonces">
     <legend>Les annonces</legend>
 
-    <!-- Chaque objet est représenté par une "carte" -->
-    <div class="carte-objet">
-        <!-- Si on clique sur  -->
-      <a href="index.php?view=ficheObjet&id=1">
-        <img src="../uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
-        <h2>Table basse test</h2>
-        <p><strong>Type :</strong>Don</p>
-        <p><strong>Catégorie :</strong> Électroménager</p>
-        <p><strong>Statut :</strong> Disponible</p>
-      </a>     
-    </div>
+    <!-- c'est une liste d'annonces -->
 
-     <!-- Répété avec requête AJAX -->
+    <ul  id="listeObjet">
+            <!-- c'est ici que vont être ajouter les annonces recues par la requête AJAX -->
+            <!-- Chaque objet est représenté par un div de classe carteObjet -->
+             <li> 
+                <!-- ce premier element de liste est un test -->
+                <!-- d'autre element seront ajoutés grace à la réponse recue par la requête ajax -->
+                <div class="carteObjet">
+                    <a href="index.php?view=ficheObjet&id=1">
+                        <img src="../uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
+                        <h2>Table basse test</h2>
+                        <p><strong>Type :</strong>Don</p>
+                        <p><strong>Catégorie :</strong> Électroménager</p>
+                        <p><strong>Statut :</strong> Disponible</p>
+                    </a>     
+                </div>
+
+
+            </li>
+    </ul>
+
+    
+    
+
+    
 </fieldset>
 
 
