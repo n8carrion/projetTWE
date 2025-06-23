@@ -1,0 +1,29 @@
+fieldset {
+    border: 2px solid #ccc;
+}
+
+legend {
+    font-size: 1.5em;
+}
+
+.carte-objet {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+}
+
+.carte-objet img {
+    height: 200px;
+}
+
+.carte-objet h2 {
+    margin-top: 0;
+}
+
+.carte-objet a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
