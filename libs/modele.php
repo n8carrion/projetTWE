@@ -1,4 +1,21 @@
 <?php
+include_once("libs/maLibSQL.pdo.php") ;
+//Fonctions Utilisateurs
+function creerUtilisateur($nom, $prenom, $passe,$mail,$tel,$adresse,$facebook,$statut) {
+  $SQL = "INSERT INTO `Utilisateur` (`nom`, `prenom`, `passeHash`, `mail`, `telephone`, `adresse`, `facebook`, `statutUtilisateur`)" ;
+  $SQL .= " VALUES ('$nom,'$prenom','$passe','$mail','$tel','$adresse','$facebook','$statut)" ;
+
+  return SQLInsert($SQL) ;
+}
+
+function ListerObjetsASoi($idProprietaire) {
+  $SQL = "SELECT o.* from Objet o" ;
+  $SQL .= " INNER JOIN Utilisateur u ON o.idProprietaire = u.id" ;
+  $SQL .= " WHERE o.idProprietaire = '$idProprietaire'" ;
+
+  return parcoursRS(SQLSelect($SQL)) ;
+}
+
 /*
 Fonctions pour les objets :
   fonction ajouterObjet($data)
