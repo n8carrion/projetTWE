@@ -1,5 +1,5 @@
 <?php
-include_once '../pages/header.php';
+include_once '../templates/header.php';
 ?>
 
 
@@ -14,31 +14,31 @@ include_once '../pages/header.php';
             font-size: 1.5em;
         }
 
-        .carteObjet {
+        .carte-objet {
             border: 1px solid #ddd;
             padding: 15px;
             margin-bottom: 15px;
             background-color: #f9f9f9;
         }
 
-        .carteObjet img {
+        .carte-objet img {
             height: 200px;
         }
 
+        .carte-objet h2 {
+            margin-top: 0;
+        }
 
         .carte-objet a {
             display: inline-block;
             margin-top: 10px;
-            color:rgb(0, 0, 0); 
+            color: #007bff;
             text-decoration: none;
         }
     </style>
-    <script src="../libs/utils.js"></script>
-    <script src="../libs/ajax.js"></script>
-    <script src="../libs/jquery-3.7.1.min.js"></script>
+
 
     <script>
-
         //fonction pour créer une carte d'objet, elle sera ensuite apellée par la fonction chargerAnnonces
         function creerCarteObjet(id, titre, type, categorie, statut, image) {
             
@@ -125,9 +125,10 @@ include_once '../pages/header.php';
 <h1>Catalogue</h1>
 
 <!-- Barre de filtres -->
+
 <fieldset id="filtres">
     <legend>Filtres</legend>
-    
+        <form id="filtres">
             <label for="categorie">Catégorie :</label>
             <select name="categorie" id="categorie">
                 <option value="meuble">Meuble</option>
@@ -136,15 +137,16 @@ include_once '../pages/header.php';
                 <option value="autre">Autre</option>
             </select>
 
-            <label for="type">Type :</label>
+            <label for="categorie">Catégorie :</label>
             <select name="type" id="typeAnnonce">
                 <option value="">Tous les types</option>
                 <option value="don">Don</option>
                 <option value="pret">Prêt</option>
             </select>
 
-            <button id="btnFiltrer">Filtrer</button>
-        
+            <input type="text" id="recherche" name="recherche" placeholder="Rechercher...">
+            <button type="submit">Filtrer</button>
+        </form>
 </fieldset>
 
 
@@ -153,30 +155,19 @@ include_once '../pages/header.php';
 <fieldset id="annonces">
     <legend>Les annonces</legend>
 
-    <!-- c'est une liste de carteObjet -->
+    <!-- Chaque objet est représenté par une "carte" -->
+    <div class="carte-objet">
+        <!-- Si on clique sur  -->
+      <a href="index.php?view=ficheObjet&id=1">
+        <img src="../uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
+        <h2>Table basse test</h2>
+        <p><strong>Type :</strong>Don</p>
+        <p><strong>Catégorie :</strong> Électroménager</p>
+        <p><strong>Statut :</strong> Disponible</p>
+      </a>     
+    </div>
 
-    <ul  id="listeObjet">
-            <!-- c'est ici que vont être ajouter les annonces recues par la requête AJAX -->
-            <!-- Chaque objet est représenté par un div de classe carteObjet -->
-             <li> 
-                <!-- ce premier element de liste est un test -->
-                <!-- d'autre element seront ajoutés grace à la réponse recue par la requête ajax -->
-                <div class="carteObjet">
-                    <a href="index.php?view=ficheObjet&id=1">
-                        <img src="../uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
-                        <h2>Table basse test</h2>
-                        <p><strong>Type :</strong>Don</p>
-                        <p><strong>Catégorie :</strong> Électroménager</p>
-                        <p><strong>Statut :</strong> Disponible</p>
-                    </a>     
-                </div>
-
-
-            </li>
-    </ul>
-
-    
-    
+     <!-- Répété avec requête AJAX -->
 </fieldset>
 
 

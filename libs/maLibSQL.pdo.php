@@ -1,11 +1,14 @@
 <?php
 
+// V1.0 du 18 mai 2018
+
 if (file_exists("./config.php"))
 	include_once("./config.php");
-else if (file_exists("libs/config.php"))
-	include_once "libs/config.php";
 else if (file_exists("../libs/config.php"))
 	include_once "../libs/config.php";
+else if (file_exists("libs/config.php"))
+	include_once "libs/config.php";
+else die("Fichier config introuvable");
 
 /**
  * @file maLibSQL.php

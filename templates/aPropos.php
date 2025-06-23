@@ -1,3 +1,7 @@
+<?php
+include_once '../templates/header.php';
+?>
+
 <body>
 <!-- ici est la page à propose avec des informations sur le site et ses créateurs -->
 <h1>À propos de La REZerve</h1>
