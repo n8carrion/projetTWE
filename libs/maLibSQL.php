@@ -1,14 +1,6 @@
 <?php
 
-// V1.0 du 18 mai 2018
-
-if (file_exists("./config.php"))
-	include_once("./config.php");
-else if (file_exists("../libs/config.php"))
-	include_once "../libs/config.php";
-else if (file_exists("libs/config.php"))
-	include_once "libs/config.php";
-else die("Fichier config introuvable");
+include_once "config.php";
 
 /**
  * @file maLibSQL.php
@@ -34,22 +26,13 @@ function SQLUpdate($sql)
 	global $BDD_user;
 	global $BDD_password;
 
-	try {
-		$dbh = new PDO("mysql:host=$BDD_host;dbname=$BDD_base", $BDD_user, $BDD_password);
-	} catch (PDOException $e) {
-		die("<font color=\"red\">SQLUpdate/Delete: Erreur de connexion : " . $e->getMessage() . "</font>");
-	}
-
-	$dbh->exec("SET CHARACTER SET utf8");
-	$res = $dbh->query($sql);
-	if ($res === false) {
-		$e = $dbh->errorInfo(); 
-		die("<font color=\"red\">SQLUpdate/Delete: Erreur de requete : " . $e[2] . "</font>");
-	}
-
-	$dbh = null;
-	$nb = $res->rowCount();
-	if ($nb != 0) return $nb;
+	mysql_connect($BDD_host, $BDD_user,$BDD_password) or die("<font color=\"red\">SQLUpdate/Delete: Erreur de connexion : " . mysql_error() . "</font>");
+	mysql_set_charset('utf8');
+	mysql_select_db($BDD_base) or die ("<font color=\"red\">SQLUpdate/Delete: Erreur select db : " . mysql_error() . "</font>");
+	mysql_query($sql) or die("SQLUpdate/Delete: Erreur sur la requete : <font color=\"red\">$sql</font>");
+	
+	$nb = mysql_affected_rows();
+	if ($nb != -1) return $nb;
 	else return false;
 	
 }
@@ -71,22 +54,15 @@ function SQLInsert($sql)
 	global $BDD_user;
 	global $BDD_password;
 	
-	try {
-		$dbh = new PDO("mysql:host=$BDD_host;dbname=$BDD_base", $BDD_user, $BDD_password);
-	} catch (PDOException $e) {
-		die("<font color=\"red\">SQLInsert: Erreur de connexion : " . $e->getMessage() . "</font>");
-	}
-
-	$dbh->exec("SET CHARACTER SET utf8");
-	$res = $dbh->query($sql);
-	if ($res === false) {
-		$e = $dbh->errorInfo(); 
-		die("<font color=\"red\">SQLInsert: Erreur de requete : " . $e[2] . "</font>");
-	}
-
-	$lastInsertId = $dbh->lastInsertId();
-	$dbh = null; 
-	return $lastInsertId;
+	mysql_connect($BDD_host,$BDD_user,$BDD_password) or die("<font color=\"red\">SQLInsert: Erreur de connexion : " . mysql_error() . "</font>");
+	mysql_set_charset('utf8');
+	mysql_select_db($BDD_base) or die ("<font color=\"red\">SQLInsert: Erreur select db : " . mysql_error() . "</font>");
+	
+	$rs = mysql_query($sql) or die("SQLInsert: Erreur sur la requete : <font color=\"red\">$sql" . "|". mysql_error() . "</font>");
+	
+	if ($rs) return mysql_insert_id();
+	else return false;
+		
 }
 
 
@@ -105,27 +81,18 @@ function SQLGetChamp($sql)
 	global $BDD_user;
 	global $BDD_password;
 
-	try {
-		$dbh = new PDO("mysql:host=$BDD_host;dbname=$BDD_base", $BDD_user, $BDD_password);
-	} catch (PDOException $e) {
-		die("<font color=\"red\">SQLGetChamp: Erreur de connexion : " . $e->getMessage() . "</font>");
-	}
-
-	$dbh->exec("SET CHARACTER SET utf8");
-	$res = $dbh->query($sql);
-	if ($res === false) {
-		$e = $dbh->errorInfo(); 
-		die("<font color=\"red\">SQLGetChamp: Erreur de requete : " . $e[2] . "</font>");
-	}
-
-	$num = $res->rowCount();
-	$dbh = null;
-
+	mysql_connect($BDD_host,$BDD_user,$BDD_password) or die("<font color=\"red\">SQLGetChamp: Erreur de connexion : " . mysql_error() . "</font>");
+	mysql_set_charset('utf8');
+	mysql_select_db($BDD_base) or die ("<font color=\"red\">SQLGetChamp: Erreur select db : " . mysql_error() . "</font>");
+ 
+	$rs = mysql_query($sql) or die("SQLGetChamp: Erreur sur la requete : <font color=\"red\">$sql</font>");
+	$num = mysql_num_rows($rs);
+	
+	// On pourrait utiliser mysql_fetch_field() ??
+	
 	if ($num==0) return false;
 	
-	$res->setFetchMode(PDO::FETCH_NUM);
-
-	$ligne = $res->fetch();
+	$ligne = mysql_fetch_row($rs);
 	if ($ligne == false) return false;
 	else return $ligne[0];
 
@@ -144,25 +111,15 @@ function SQLSelect($sql)
 	global $BDD_base;
  	global $BDD_user;
  	global $BDD_password;
-
-	try {
-		$dbh = new PDO("mysql:host=$BDD_host;dbname=$BDD_base", $BDD_user, $BDD_password);
-	} catch (PDOException $e) {
-		die("<font color=\"red\">SQLSelect: Erreur de connexion : " . $e->getMessage() . "</font>");
-	}
-
-	$dbh->exec("SET CHARACTER SET utf8");
-	$res = $dbh->query($sql);
-	if ($res === false) {
-		$e = $dbh->errorInfo(); 
-		die("<font color=\"red\">SQLSelect: Erreur de requete : " . $e[2] . "</font>");
-	}
 	
-	$num = $res->rowCount();
-	$dbh = null;
+ 	mysql_connect($BDD_host,$BDD_user,$BDD_password) or die("<font color=\"red\">SQLSelect: Erreur de connexion : " . mysql_error() . "</font>");
+	mysql_set_charset('utf8');
+ 	mysql_select_db($BDD_base) or die ("<font color=\"red\">SQLSelect: Erreur select db : " . mysql_error() . "</font>");
 
+	$rs = mysql_query($sql) or die("SQLSelect: Erreur sur la requete : <font color=\"red\">$sql" . "|" .  mysql_error() . "</font>");
+	$num = mysql_num_rows($rs);
 	if ($num==0) return false;
-	else return $res;
+	else return $rs;
 }
 
 /**
@@ -175,12 +132,47 @@ function parcoursRs($result)
 {
 	if  ($result == false) return array();
 
-	$result->setFetchMode(PDO::FETCH_ASSOC);
-	while ($ligne = $result->fetch()) 
+	while ($ligne = mysql_fetch_assoc($result)) 
 		$tab[]= $ligne;
 
 	return $tab;
 }
+
+
+/* Il y a sans doute moyen de faire mieux...
+	Il faut juste exécuter mysql_query("SET NAMES UTF8"); avant chaque requête... 
+	Mieux d'après php.net : mysql_set_charset('utf8')
+ */
+function my_utf8_encode(&$val,$cle)
+{
+	if (is_array($val))
+		$val = utf8_encode_r($val);
+	else{
+		$val = utf8_encode($val);
+	}
+}
+function utf8_encode_r($tab)
+{
+	// On pourrait passer $tab par référence...
+	array_walk ($tab, 'my_utf8_encode');
+	return $tab; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
