@@ -85,4 +85,5 @@
     <div class="menu" style="display : inline">
         <a id="lienSeConnecter" href="login">Se connecter</a>
     </div>
+    
 </div>
