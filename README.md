@@ -4,7 +4,7 @@ membres : nati, william, vale et jeanne
 Il faut autoriser l'usage d'une fichier .htaccess  
 Pour cela, faire les commandes suivantes :  
 `sudo a2enmod rewrite`  
-`sudo sudo service apache2 restart`  
+`sudo service apache2 restart`  
 `sudo nano /etc/apache2/sites-available/000-default.conf` et ajouter à la toute fin du fichier :
 ```
 <Directory /var/www/html>
@@ -13,3 +13,4 @@ Pour cela, faire les commandes suivantes :
     Require all granted
 </Directory>
 ```
+Et enfin, redémarrer une dernière fois le serveur Apache2 : `sudo service apache2 restart`
