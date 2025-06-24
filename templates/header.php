@@ -6,7 +6,7 @@
         display: inline-block;
     padding: 8px 15px;
     background-color:rgb(170, 202, 41);
-    color: white;
+    color: rgba(251,249,246,255);
     /* enleve le texte souligné pour un lien */
     text-decoration: none; 
     border-radius: 3px;
@@ -24,7 +24,6 @@
     background-color:rgb(21, 60, 9); 
     font-weight: bold;
     border-radius: 3px;
-    /* margin-right: 5px; */
     
     }
 
@@ -39,6 +38,7 @@
         background-color:rgba(251,249,246,255); /* Couleur de fond */
         padding: 10px;
         border : 1px solid black;
+        border-radius: 3px;
     
     }
 
@@ -52,12 +52,15 @@
     }
 
 
-
-
     #Odd img {
         width: 70px; /* Largeur des images ODD */
         height: 70px; /* Hauteur des images ODD */
     }
+
+     #odd11:hover, #odd12:hover {
+        opacity : 70% ; 
+    }
+
 
 
 </style>
