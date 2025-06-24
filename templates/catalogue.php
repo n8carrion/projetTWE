@@ -1,5 +1,5 @@
 <?php
-include_once '../templates/header.php';
+include_once 'templates/header.php';
 ?>
 
 
@@ -44,7 +44,7 @@ include_once '../templates/header.php';
             
             var carte = $('<div class="carteObjet"></div>');
             var lien = $('<a></a>').attr('href', 'index.php?view=ficheObjet&id=' + id);
-            var img = $('<img>').attr('src', '../uploads/imagesObjets/' + image).attr('alt', 'Photo de l’objet');
+            var img = $('<img>').attr('src', 'uploads/imagesObjets/' + image).attr('alt', 'Photo de l’objet');
             var titreCarte = $('<h2></h2>').text(titre);
 
             
@@ -159,7 +159,7 @@ include_once '../templates/header.php';
     <div class="carte-objet">
         <!-- Si on clique sur  -->
       <a href="index.php?view=ficheObjet&id=1">
-        <img src="../uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
+        <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
         <h2>Table basse test</h2>
         <p><strong>Type :</strong>Don</p>
         <p><strong>Catégorie :</strong> Électroménager</p>

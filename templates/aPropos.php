@@ -1,5 +1,5 @@
 <?php
-include_once '../templates/header.php';
+include_once 'templates/header.php';
 ?>
 
 <body>
@@ -32,7 +32,7 @@ Développement Durable (ODD) de l’Agenda 2030 :</p>
     <!-- il y a une imageg pour chaque element de la liste suivante -->
     <li>
         <a href="https://www.un.org/sustainabledevelopment/fr/sustainable-consumption-production/" target="_blank" > 
-            <img src="../ressources/ODD11.png" alt="ODD 11" width="70">
+            <img src="ressources/ODD11.png" alt="ODD 11" width="70">
         </a>
         
         ODD 11 : Villes et communautés durables
@@ -40,7 +40,7 @@ Développement Durable (ODD) de l’Agenda 2030 :</p>
     </li>
     <li>
         <a href="https://www.un.org/sustainabledevelopment/fr/sustainable-consumption-production/" target="_blank"> 
-            <img src="../ressources/ODD12.png" alt="ODD 12" width="70">
+            <img src="ressources/ODD12.png" alt="ODD 12" width="70">
         </a>
         
         ODD 12 : Consommation et production responsables

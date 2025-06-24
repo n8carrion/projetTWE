@@ -49,16 +49,16 @@
         <!-- <h1 id="titre"> La REZerve </h1> -->
         <!-- le logo est cliquable et contient un lien vers l'acceuil -->
         <div id="logo">
-            <a href="index.php?view=accueil"><img src="../ressources/logoLaREZerve1.png" alt="Logo de la REZerve"></a>
+            <a href="accueil"><img src="ressources/logoLaREZerve1.png" alt="Logo de la REZerve"></a>
         </div>
         <div id="menu">
-            <a id ="lienAcceuil" href="index.php?view=accueil">Accueil</a>
-            <a id ="lienCatalogue" href="index.php?view=catalogue">Catalogue</a>
+            <a id ="lienAcceuil" href="accueil">Accueil</a>
+            <a id ="lienCatalogue" href="catalogue">Catalogue</a>
         </div>
 
         <input id=barreSearch type="search" placeholder="Recherche d'une annonce">
         <input id=BtnAdd type="button" value="+Ajouter une annonce">
-        <a id ="lienConnexion" href="index.php?view=login">Se connecter</a>
+        <a id ="lienConnexion" href="login">Se connecter</a>
     
 
         <?php

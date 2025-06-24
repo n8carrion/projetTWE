@@ -11,14 +11,36 @@ La vue à afficher dans la page index est définie par le paramètre "view" qui 
 Les formulaires de toutes les vues générées enverront leurs données vers la page data.php pour traitement. La page data.php redirigera alors vers la page index pour réafficher la vue pertinente, généralement la vue dans laquelle se trouvait le formulaire. 
 */
 
+$base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/'; // récupération de la base du serveur
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
+	<base href="<?= $base ?>">
+	<title>La REZerve</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+
+<?php
+
+// récupération du paramètre de vue
+//$view = valider("view");
+$url = valider("url"); // récupération de l'url
+
+echo "url:". $url;
+
+$url = explode('/', $url);
+$view = $url[0];
+echo ", view:". $view;
+// S'il est vide, on charge la vue accueil par défaut
+if (!$view) $view = "accueil";
 
 // Affichage dans tous les cas du header
 include("templates/header.php");
-
-// récupération du paramètre de vue
-$view = valider("view");
-// S'il est vide, on charge la vue accueil par défaut
-if (!$view) $view = "accueil";
 
 switch ($view) {
 	case "accueil":
@@ -44,3 +66,5 @@ switch ($view) {
 // Dans tous les cas, on affiche le pied de page
 include("templates/footer.php");
 ?>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+    Options +FollowSymLinks
+    RewriteEngine On
+
+    # Permet un accès direct à certains dossiers
+    RewriteCond %{REQUEST_URI} ^.*/(ressources|css|js|uploads)/ [NC]
+    RewriteRule ^ - [L]
+
+    # Sinon redirige vers index.php, avec l'url en argument
+    RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+</IfModule>

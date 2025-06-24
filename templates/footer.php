@@ -63,12 +63,12 @@ p {
         <!-- <h1 id="titre"> La REZerve </h1> -->
         <!-- le logo est cliquable et contient un lien vers l'acceuil -->
         <div id="logo">
-            <a href="index.php?view=accueil"><img src="../ressources/logoLaREZerve1.png" alt="Logo de la REZerve"></a>
+            <a href="accueil"><img src="ressources/logoLaREZerve1.png" alt="Logo de la REZerve"></a>
         </div>
         <div id="menu">
-            <a id ="lienAcceuil" href="index.php?view=accueil">Accueil </a> 
-            <a id ="lienCatalogue" href="index.php?view=catalogue">Catalogue </a> 
-            <a id = "lienAPropos" href="index.php?view=apropos">A Propos</a> 
+            <a id ="lienAcceuil" href="accueil">Accueil </a> 
+            <a id ="lienCatalogue" href="catalogue">Catalogue </a> 
+            <a id = "lienAPropos" href="apropos">A Propos</a> 
         </div>
         <div>
             <p>
@@ -81,10 +81,10 @@ p {
         </div>
         <div id="Odd">
             <a target="_blank" href="https://pactemondial.org/17-objectifs-developpement-durable/odd-11-villes-et-communautes-durables/">
-                <img id="odd11" src="../ressources/ODD11.png" alt="ODD 11: Villes et Communautés durables">
+                <img id="odd11" src="ressources/ODD11.png" alt="ODD 11: Villes et Communautés durables">
             </a>
             <a target="_blank" href="https://pactemondial.org/17-objectifs-developpement-durable/odd-12-consommation-et-production-responsable/#:~:text=L'ODD%2012%20encourage%20sp%C3%A9cifiquement,produits%20nuisibles%20pour%20l'environnement.">
-             <img id="odd12" src="../ressources/ODD12.png" alt="ODD12: Consommation et production ">
+             <img id="odd12" src="ressources/ODD12.png" alt="ODD12: Consommation et production ">
             </a>
         </div>
     
