@@ -39,7 +39,7 @@
     position: absolute ;
     bottom:10%;
 }
-p {
+#footext {
     position:absolute ;
     top:4%;
     left:50%;
@@ -71,7 +71,7 @@ p {
             <a id = "lienAPropos" href="apropos">A Propos</a> 
         </div>
         <div>
-            <p>
+            <p id=footext>
             
                 La REZerve répond aux objectifs de 
                 développement durable (ODD) suivants: <br>
