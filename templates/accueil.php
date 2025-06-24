@@ -1,17 +1,6 @@
-
-<?php
-
-if (basename($_SERVER["PHP_SELF"]) != "index.php")
-{
-	header("Location:../index.php?view=accueil");
-	die("");
-}
-
-?>
-
 <script>
     //rajouter le chargment des annonces
- </script>
+</script>
 
 <div>
 <p>La REZerve
