@@ -1,8 +1,5 @@
-<?php
-include_once 'templates/header.php';
-?>
 
-<body>
+
 <!-- ici est la page à propose avec des informations sur le site et ses créateurs -->
 <h1>À propos de La REZerve</h1>
 <p>À la résidence Léonard de Vinci (résidence étudiante de Centrale Lille, connue sous le nom de
@@ -48,12 +45,5 @@ Développement Durable (ODD) de l’Agenda 2030 :</p>
     </li>
 </ul>
 
-<!-- je veux mettre une image et quand on clique dessus ca redirige vers un lien  -->
 
   
-
- 
-
-
-
-</body
