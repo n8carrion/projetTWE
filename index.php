@@ -11,6 +11,25 @@ La vue à afficher dans la page index est définie par le paramètre "view" qui 
 Les formulaires de toutes les vues générées enverront leurs données vers la page data.php pour traitement. La page data.php redirigera alors vers la page index pour réafficher la vue pertinente, généralement la vue dans laquelle se trouvait le formulaire. 
 */
 
+// récupération du paramètre de vue
+//$view = valider("view");
+$url = valider("url"); // récupération de l'url
+
+$url = explode('/', $url, 2);
+$view = $url[0]; // Récupération de la view (racine)
+// S'il est vide, on charge la vue accueil par défaut
+if (!$view) {
+	header("Location:accueil");
+	die("");
+}
+
+if (count($url) > 1) {
+	$data = $url[1]; // Récupération des données (reste de l'URL)
+} else {
+	$data = null;
+}
+
+
 $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/'; // récupération de la base du serveur
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -45,46 +64,35 @@ $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/'; // récupération 
 
 <body>
 
-<?php
+	<?php
 
-// récupération du paramètre de vue
-//$view = valider("view");
-$url = valider("url"); // récupération de l'url
+	// Affichage dans tous les cas du header
+	include("templates/header.php");
 
-echo "url:". $url;
+	switch ($view) {
+		case "accueil":
+			include("templates/accueil.php");
+			break;
 
-$url = explode('/', $url);
-$view = $url[0];
-echo ", view:". $view;
-// S'il est vide, on charge la vue accueil par défaut
-if (!$view) $view = "accueil";
+		case "apropos":
+			include("templates/aPropos.php");
+			break;
 
-// Affichage dans tous les cas du header
-include("templates/header.php");
+		case "catalogue":
+			include("templates/catalogue.php");
+			break;
 
-switch ($view) {
-	case "accueil":
-		include("templates/accueil.php");
-		break;
+		case "login":
+			include("templates/login.php");
+			break;
 
-	case "apropos":
-		include("templates/aPropos.php");
-		break;
-	
-	case "catalogue":
-		include("templates/catalogue.php");
-		break;
-	
-	case "login":
-		include("templates/login.php");
-		break;
+		default:
+			include("templates/404.php");
+	}
 
-	default:
-		include("templates/404.php");
-}
-
-// Dans tous les cas, on affiche le pied de page
-include("templates/footer.php");
-?>
+	// Dans tous les cas, on affiche le pied de page
+	include("templates/footer.php");
+	?>
 </body>
+
 </html>
