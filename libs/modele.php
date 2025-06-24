@@ -77,7 +77,7 @@ function getImagesbyObject($idObjet) {
   $SQL .= " INNER JOIN Objet o ON i.idObjet= o.id";
   $SQL .= " WHERE i.idObjet = '$idObjet'" ;
 
-  return parcoursRS(SQLSelect($SQL)) ;
+  return parcoursRs(SQLSelect($SQL)) ;
 }
 
 function supprimerImage($idImage) {
@@ -93,7 +93,7 @@ $SQL = "SELECT i.* FROM Image i";
 $SQL .= " INNER JOIN Objet o ON i.idObjet= o.id";
 $SQL .= " WHERE i.idObjet = '$idObjet' AND i.id='$idImage'";
 
-return parcoursRS(SQLSelect($SQL)) ;
+return parcoursRs(SQLSelect($SQL)) ;
 }
 
 /*
