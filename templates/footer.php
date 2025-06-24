@@ -36,7 +36,7 @@
         <?php
         // Si l'utilisateur n'est pas connecte, on affiche un lien de connexion 
         // if (!valider("connecte","SESSION"))
-        // 	echo "<a id=\"lienConnexion\" href=\"index.php?view=login\">Se connecter</a>";
+        // 	echo "<a id=\"lienConnexion\" href=\"login\">Se connecter</a>";
         ?>
 
 </div>

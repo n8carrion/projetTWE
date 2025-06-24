@@ -24,7 +24,7 @@ if (!$view) {
 }
 
 if (count($url) > 1) {
-	$data = $url[1]; // Récupération des données (reste de l'URL)
+	$data = explode('/', $url[1]); // Récupération des données (reste de l'URL)
 } else {
 	$data = null;
 }
@@ -84,6 +84,34 @@ $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/'; // récupération 
 
 		case "login":
 			include("templates/login.php");
+			break;
+		
+		case "annonce":
+			if (is_null($data)) {
+				// on cherche à aller à une annonce, sans préciser laquelle...
+				include("templates/404.php");
+				break;
+			}
+			if (count($data) > 1 && $data[1] == "edit") {
+				include("templates/editionObjet.php");
+			} else {
+				include("templates/ficheObjet.php");
+			}
+			break;
+		
+		case "profil":
+			if (is_null($data)) {
+				// On cherche à aller à un profil, sans préciser lequel...
+				// TODO: Il faut donner une valeur par défaut ici !
+				// idée: si l'utilisateur est connecté, on redirige vers son profil, et sinon on redirige vers login ?
+				include("templates/404.php");
+				break;
+			}
+			if (count($data) > 1 && $data[1] == "edit") {
+				include("templates/editionUtilisateur.php");
+			} else {
+				include("templates/profilUtilisateur.php");
+			}
 			break;
 
 		default:

@@ -34,7 +34,7 @@
     <!-- Chaque objet est représenté par une "carte" -->
     <div class="carte-objet">
         <!-- Si on clique sur  -->
-        <a href="index.php?view=ficheObjet&id=1">
+        <a href="annonce/1"> <!-- annonce/idObjet -->
             <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
             <h2>Table basse test</h2>
             <p><strong>Type :</strong>Don</p>
@@ -52,7 +52,7 @@
     function creerCarteObjet(id, titre, type, categorie, statut, image) {
 
         var carte = $('<div class="carteObjet"></div>');
-        var lien = $('<a></a>').attr('href', 'index.php?view=ficheObjet&id=' + id);
+        var lien = $('<a></a>').attr('href', 'annonce/' + id);
         var img = $('<img>').attr('src', 'uploads/imagesObjets/' + image).attr('alt', 'Photo de l’objet');
         var titreCarte = $('<h2></h2>').text(titre);
 
