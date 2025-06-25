@@ -71,6 +71,12 @@ function setModerateur($idUtilisateur) {
   SQLUpdate($SQL) ;
 }
 
+function infoUtilisateur($idUtilisateur) {
+  $SQL = "SELECT * from Utilisateur" ;
+  $SQL .= " WHERE id='$idUtilisateur'" ;
+  return parcoursRs(SQLSelect($SQL)) ;
+}
+
 //Fonctions Images
 
 function getImagesbyObjet($idObjet) {

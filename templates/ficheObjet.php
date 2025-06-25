@@ -34,7 +34,7 @@
 
         <div class="admin-options">
             <button> <!-- not sure yet if the link will be js or done just with <a></a>-->
-                <a href="index.php?view=editionObjet&id=1">
+                <a href="annonce/1/edit">
                     Modifier l'annonce </a>
             </button>
 
