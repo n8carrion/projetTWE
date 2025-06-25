@@ -23,7 +23,40 @@ Explorez le catalogue ou proposez vos objets dès maintenant !
     <h2 class="center"> Les dernières annonces</h2>
 </div>
     <!-- Chaque objet est représenté par une "carte" -->
-    <div class="carte-objet">
+<div class="carteObjet">
+        <!-- Si on clique sur  -->
+        <a href="annonce/1"> <!-- annonce/idObjet -->
+            <img src="uploads/imagesObjets/dWc3XpV9MqL7zRy.jpg" alt="Photo de l’objet">
+            <h2>Commode test</h2>
+            <p><strong>Type :</strong>Don</p>
+            <p><strong>Catégorie :</strong> Électroménager</p>
+            <p><strong>Statut :</strong> Disponible</p>
+        </a>
+    </div>
+
+    <div class="carteObjet">
+        <!-- Si on clique sur  -->
+        <a href="annonce/1"> <!-- annonce/idObjet -->
+            <img src="uploads/imagesObjets/Yc3qNzX84JrKbvF.jpg" alt="Photo de l’objet">
+            <h2>Table basse test</h2>
+            <p><strong>Type :</strong>Don</p>
+            <p><strong>Catégorie :</strong> Électroménager</p>
+            <p><strong>Statut :</strong> Disponible</p>
+        </a>
+    </div>
+
+    <div class="carteObjet">
+        <!-- Si on clique sur  -->
+        <a href="annonce/1"> <!-- annonce/idObjet -->
+            <img src="uploads/imagesObjets/PqKmZRY29xTW48j.jpg" alt="Photo de l’objet">
+            <h2>Four test</h2>
+            <p><strong>Type :</strong>Don</p>
+            <p><strong>Catégorie :</strong> Électroménager</p>
+            <p><strong>Statut :</strong> Disponible</p>
+        </a>
+    </div>
+
+    <div class="carteObjet">
         <!-- Si on clique sur  -->
         <a href="annonce/1"> <!-- annonce/idObjet -->
             <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
@@ -32,7 +65,18 @@ Explorez le catalogue ou proposez vos objets dès maintenant !
             <p><strong>Catégorie :</strong> Électroménager</p>
             <p><strong>Statut :</strong> Disponible</p>
         </a>
-</div>
+    </div>
+
+    <div class="carteObjet">
+        <!-- Si on clique sur  -->
+        <a href="annonce/1"> <!-- annonce/idObjet -->
+            <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
+            <h2>Table basse test</h2>
+            <p><strong>Type :</strong>Don</p>
+            <p><strong>Catégorie :</strong> Électroménager</p>
+            <p><strong>Statut :</strong> Disponible</p>
+        </a>
+    </div>
 
 
 

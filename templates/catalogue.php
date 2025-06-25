@@ -1,18 +1,5 @@
 <style>
-    /* style pour les cartes objet */
-    .carteObjet {
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        padding: 10px;
-        margin: 10px;
-        display: inline-block;
-        
-    }
-    .carteObjet img {
-        width: 400px;
-        height: auto;
-        border-radius: 4px;
-    }
+
 </style>
 
 <!-- STRUCTURE DE LA PAGE ===================================== -->
@@ -56,7 +43,18 @@
     <div class="carteObjet">
         <!-- Si on clique sur  -->
         <a href="annonce/1"> <!-- annonce/idObjet -->
-            <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
+            <img src="uploads/imagesObjets/dWc3XpV9MqL7zRy.jpg" alt="Photo de l’objet">
+            <h2>Commode test</h2>
+            <p><strong>Type :</strong>Don</p>
+            <p><strong>Catégorie :</strong> Électroménager</p>
+            <p><strong>Statut :</strong> Disponible</p>
+        </a>
+    </div>
+
+    <div class="carteObjet">
+        <!-- Si on clique sur  -->
+        <a href="annonce/1"> <!-- annonce/idObjet -->
+            <img src="uploads/imagesObjets/Yc3qNzX84JrKbvF.jpg" alt="Photo de l’objet">
             <h2>Table basse test</h2>
             <p><strong>Type :</strong>Don</p>
             <p><strong>Catégorie :</strong> Électroménager</p>
@@ -67,19 +65,8 @@
     <div class="carteObjet">
         <!-- Si on clique sur  -->
         <a href="annonce/1"> <!-- annonce/idObjet -->
-            <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
-            <h2>Table basse test</h2>
-            <p><strong>Type :</strong>Don</p>
-            <p><strong>Catégorie :</strong> Électroménager</p>
-            <p><strong>Statut :</strong> Disponible</p>
-        </a>
-    </div>
-
-    <div class="carteObjet">
-        <!-- Si on clique sur  -->
-        <a href="annonce/1"> <!-- annonce/idObjet -->
-            <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
-            <h2>Table basse test</h2>
+            <img src="uploads/imagesObjets/PqKmZRY29xTW48j.jpg" alt="Photo de l’objet">
+            <h2>Four test</h2>
             <p><strong>Type :</strong>Don</p>
             <p><strong>Catégorie :</strong> Électroménager</p>
             <p><strong>Statut :</strong> Disponible</p>
