@@ -169,3 +169,52 @@ h1,h2 {
     text-align:center;
 }
 
+
+#infos {
+    padding:20px;
+    margin:20px;
+    display: block;
+}
+
+/* Style EditionObjet */
+#publication {
+    position:relative ;
+    height:600px;
+}
+
+#publication input {
+    display: block;
+    padding:20px;
+    margin:20px;
+}
+
+#infos {
+    position:absolute;
+    left:250px ;
+}
+#typeService {
+    position:absolute;
+    left:600px ;
+    padding:20px;
+    margin:20px;
+    display: block;
+}
+#BtnPublier {
+    position:absolute ;
+    bottom:100px ;
+    left:650px;
+}
+input[type="radio"], label{
+    display: inline-block!important;
+    vertical-align: middle;
+}
+input[type="checkbox"], label{
+    display: inline-block!important;
+    vertical-align: middle;
+}
+
+textarea {
+    height:300px;
+    width:300px ;
+    resize:vertical ;
+}
