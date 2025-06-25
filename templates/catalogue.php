@@ -93,8 +93,8 @@
         
     }
     .carteObjet img {
-        width: auto;
-        height: 300px;
+        width: 400px;
+        height: auto;
         border-radius: 4px;
     }
 </style>
@@ -148,6 +148,75 @@
         </a>
     </div>
 
+    <div class="carteObjet">
+        <!-- Si on clique sur  -->
+        <a href="annonce/1"> <!-- annonce/idObjet -->
+            <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
+            <h2>Table basse test</h2>
+            <p><strong>Type :</strong>Don</p>
+            <p><strong>Catégorie :</strong> Électroménager</p>
+            <p><strong>Statut :</strong> Disponible</p>
+        </a>
+    </div>
+
+    <div class="carteObjet">
+        <!-- Si on clique sur  -->
+        <a href="annonce/1"> <!-- annonce/idObjet -->
+            <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
+            <h2>Table basse test</h2>
+            <p><strong>Type :</strong>Don</p>
+            <p><strong>Catégorie :</strong> Électroménager</p>
+            <p><strong>Statut :</strong> Disponible</p>
+        </a>
+    </div>
+
+    <div class="carteObjet">
+        <!-- Si on clique sur  -->
+        <a href="annonce/1"> <!-- annonce/idObjet -->
+            <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
+            <h2>Table basse test</h2>
+            <p><strong>Type :</strong>Don</p>
+            <p><strong>Catégorie :</strong> Électroménager</p>
+            <p><strong>Statut :</strong> Disponible</p>
+        </a>
+    </div>
+
+    <div class="carteObjet">
+        <!-- Si on clique sur  -->
+        <a href="annonce/1"> <!-- annonce/idObjet -->
+            <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
+            <h2>Table basse test</h2>
+            <p><strong>Type :</strong>Don</p>
+            <p><strong>Catégorie :</strong> Électroménager</p>
+            <p><strong>Statut :</strong> Disponible</p>
+        </a>
+    </div>
+
+    <div class="carteObjet">
+        <!-- Si on clique sur  -->
+        <a href="annonce/1"> <!-- annonce/idObjet -->
+            <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
+            <h2>Table basse test</h2>
+            <p><strong>Type :</strong>Don</p>
+            <p><strong>Catégorie :</strong> Électroménager</p>
+            <p><strong>Statut :</strong> Disponible</p>
+        </a>
+    </div>
+
+    <div class="carteObjet">
+        <!-- Si on clique sur  -->
+        <a href="annonce/1"> <!-- annonce/idObjet -->
+            <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
+            <h2>Table basse test</h2>
+            <p><strong>Type :</strong>Don</p>
+            <p><strong>Catégorie :</strong> Électroménager</p>
+            <p><strong>Statut :</strong> Disponible</p>
+        </a>
+    </div>
+
+    
+
+     
 
     <!-- Répété avec requête AJAX -->
 
