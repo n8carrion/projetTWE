@@ -1,7 +1,4 @@
 <?php
-session_start();
-
-include_once "libs/maLibUtils.php";
 
 /*
 Cette page génère les différentes vues de l'application en utilisant des templates situés dans le répertoire "templates". Un template ou 'gabarit' est un fichier php qui génère une partie de la structure XHTML d'une page. 
@@ -11,34 +8,14 @@ La vue à afficher dans la page index est définie par le paramètre "view" qui 
 Les formulaires de toutes les vues générées enverront leurs données vers la page data.php pour traitement. La page data.php redirigera alors vers la page index pour réafficher la vue pertinente, généralement la vue dans laquelle se trouvait le formulaire. 
 */
 
-// récupération du paramètre de vue
-//$view = valider("view");
-$url = valider("url"); // récupération de l'url
-
-$url = explode('/', $url, 2);
-$view = $url[0]; // Récupération de la view (racine)
-// S'il est vide, on charge la vue accueil par défaut
-if (!$view) {
-	header("Location:accueil");
-	die("");
-}
-
-if (count($url) > 1) {
-	$data = explode('/', $url[1]); // Récupération des données (reste de l'URL)
-} else {
-	$data = null;
-}
-
-
-$base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/'; // récupération de la base du serveur
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
-	<base href="<?= $base ?>">
-	<title>La REZerve</title>
+	<base href="<?= rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/' // Récupération de la base du serveur ?>">
+	<title><?= $title ?> - La REZerve</title>
 
 	<link rel="apple-touch-icon" sizes="57x57" href="ressources/icons/favicon-57x57.png">
 	<link rel="apple-touch-icon" sizes="60x60" href="ressources/icons/favicon-60x60.png">
@@ -65,7 +42,6 @@ $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/'; // récupération 
 <body>
 
 	<?php
-
 	// Affichage dans tous les cas du header
 	include("templates/header.php");
 
@@ -80,10 +56,6 @@ $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/'; // récupération 
 
 		case "catalogue":
 			include("templates/catalogue.php");
-			break;
-
-		case "editionObjet":
-			include("templates/editionObjet.php");
 			break;
 
 		case "login":

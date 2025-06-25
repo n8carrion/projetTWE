@@ -1,0 +1,1 @@
+<h1>Erreur 500 : Erreur interne du serveur</h1>

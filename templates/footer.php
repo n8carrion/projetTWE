@@ -11,7 +11,7 @@
         <div class="menu" style="display : inline">
             <a  href="accueil">Accueil</a>
             <a  href="catalogue">Catalogue</a>
-            <a  href="apropos">A propos</a>
+            <a  href="apropos">À propos</a>
         </div>
 
         <div id="Odd">
