@@ -19,6 +19,22 @@ if (count($url) > 1) {
     $data = null;
 }
 
+// Gestion des appels AJAX
+if ($view == 'api') {
+    switch ($data[0]) {
+        case 'listerObjet':
+            break;
+        
+        default:
+            // on a pas reconnue ce qui est demandé
+
+            break;
+    }
+    die(); // Pour ne pas 
+}
+
+
+// Gestion de l'appel à view
 $mainpage = "templates/500.php";
 $title = "Erreur 500";
 
@@ -48,12 +64,14 @@ switch ($view) {
             // on cherche à aller à une annonce, sans préciser laquelle...
             $mainpage = "templates/404.php";
             $title = "Erreur 404";
-            break;
-        }
-        if (count($data) > 1 && $data[1] == "edit") {
+        } elseif (count($data) > 1 && $data[1] == "edit") {
             $mainpage = "templates/editionObjet.php";
             $title = "Édition de \"Nom de l'objet ici\""; // TODO
+        } elseif ($data[0] == "") {
+            $mainpage = "templates/404.php";
+            $title = "Erreur 404";
         } else {
+            $idObjet = $data[0];
             $mainpage = "templates/ficheObjet.php";
             $title = "Nom de l'objet ici"; // TODO
         }
