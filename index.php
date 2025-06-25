@@ -82,6 +82,10 @@ $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/'; // récupération 
 			include("templates/catalogue.php");
 			break;
 
+		case "editionObjet":
+			include("templates/editionObjet.php");
+			break;
+
 		case "login":
 			include("templates/login.php");
 			break;
