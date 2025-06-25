@@ -53,7 +53,7 @@
             var categorie = $('#categorie').val();
             var type = $('#typeAnnonce').val();
             $.ajax({
-                url: 'listerObjets.php',
+                url: 'api/listerObjet', 
                 type: 'GET',
                 data: {
                     "categorie": categorie,
