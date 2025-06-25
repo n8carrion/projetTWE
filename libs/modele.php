@@ -2,9 +2,11 @@
 include_once("libs/maLibSQL.pdo.php") ;
 
 //parcoursRs() renvoie un tableau assocaitif
-//il faudra utiliser json_encode() pour le convertir en objet JSON
+//il faudra ensuite utiliser json_encode() pour le convertir en objet JSON
 
-//Fonctions Utilisateurs
+//===========================
+// Fonctions pour les utilisateurs ============================================
+//===========================
 function creerUtilisateur($nom, $prenom, $passe,$mail,$tel,$adresse,$facebook,$statut) {
   $SQL = "INSERT INTO Utilisateur(nom, prenom, passeHash, mail, telephone, adresse, facebook, statutUtilisateur)" ;
   $SQL .= " VALUES ('$nom','$prenom','$passe','$mail','$tel','$adresse','$facebook','$statut')" ;
@@ -77,9 +79,11 @@ function infoUtilisateur($idUtilisateur) {
   return parcoursRs(SQLSelect($SQL)) ;
 }
 
-//Fonctions Images
+//===========================
+// Fonctions pour les images ============================================
+//===========================
 
-function getImagesbyObjet($idObjet) {
+function getImagesByObjet($idObjet) {
   //Renvoie le tableau d'images (objets JSON)
   //relatif à l'objet d'id idObjet
   $SQL = "SELECT i.* FROM Image i" ;
@@ -98,15 +102,17 @@ function choisirImage($idObjet, $idImage) {
   //Retourne l'objet JSON représentant l'image donnée 
   // dont $idImage est en paramètres
   // associée à l'objet dont l'id est $idObjet
-$SQL = "SELECT i.* FROM Image i";
-$SQL .= " INNER JOIN Objet o ON i.idObjet= o.id";
-$SQL .= " WHERE i.idObjet = '$idObjet' AND i.id='$idImage'";
+  $SQL = "SELECT i.* FROM Image i";
+  $SQL .= " INNER JOIN Objet o ON i.idObjet= o.id";
+  $SQL .= " WHERE i.idObjet = '$idObjet' AND i.id='$idImage'";
 
-return parcoursRs(SQLSelect($SQL)) ;
+  return parcoursRs(SQLSelect($SQL)) ;
 }
 
+//===========================
+// Fonctions pour les objets ============================================
+//===========================
 
-// Fonctions pour les objets :
 
 //La fonction creerObjet permet de d'ajouter un objet dans la base de données en lui donnant ses infos 
 //(sauf id et dateCreation qui sont généré  automatiquement pas la base de données. )
@@ -148,7 +154,7 @@ function supprimerObjet($idObjet) {
 
 
 //   fonction ListerObjets(....) permet de lister les objets de la base de données
-//   en fonction de plusieurs paramètres : 
+//   en fonction de plusieurs paramètres donné dans un tableau associatif $options: 
 //   - categorie (string) : catégorie de l'objet
 //   - type (string) : don ou emprunt
 //   - utilisateur (int) : id du propriétaire de l'objet
@@ -157,10 +163,24 @@ function supprimerObjet($idObjet) {
 //   - sort (string) : tri des objets par date de création (recent ou ancien
 // si on lui donne aucun paramètre, on liste tous les objets de la table Objet
 
+// //exemple d'objet JSON pour un objet : (on ne prend pas en compte les prêts)
+  // {"id" : 1, 
+  // "nom" : "Table basse",
+  // "idProprietaire" : 2,
+  // "description" : "Table basse en bois",
+  // "typeAnnonce" : "don",
+  // "statutObjet" : "disponible",
+  // "categorieObjet" : "meuble",
+  // "dateCreation" : "2023-10-01 12:00:00",
+  // "images" : [
+  //   {"id": 1, "hash": "exemple1.jpg", "idObjet": 1},
+  //   {"id": 2, "hash": "exemple2.jpg", "idObjet": 1}
+  // ]
+  // }
 function listerObjets($options = array()) {
     // la tableau associatif $options peut contenir : 
     // 'categorie', 'type', 'utilisateur', 'statut', 'amount', 'sort'
-    $SQL = "SELECT id FROM Objet WHERE 1=1"; //toujours vrai, donc permet de tout selectionner
+    $SQL = "SELECT * FROM Objet WHERE 1=1"; //toujours vrai, donc permet de tout selectionner
 
     // Filtrage par catégorie
     if (!empty($options['categorie'])) {
@@ -204,14 +224,32 @@ function listerObjets($options = array()) {
         $SQL .= " LIMIT $amount";
     }
 
-    // Exécution et retour des id des objets correspondants à la requête SQL :
+    // Exécution et retour de tous les objets  correspondants à la requête SQL :
     // parcoursRs() renvoie un tableau associatif avec les résultats de la requête
-    $result = parcoursRs(SQLSelect($SQL));
-    $ids = array();// c'est le tableau qui contient la liste des id
-    foreach ($result as $row) {
-        $ids[] = $row['id']; // on ajoute l'id au tableau $ids qui sera retourné par la fonction 
+    //ensuite on pourra faire un json_encode() du resulat pour avoir un tableau d'objet json
+    //le tableau contiendra tous les oBjets des objets concernés par les filtres
+
+    //TODO : le tableau renvoyé doit aussi contenir les images associées à chaque objet!!
+    $res = parcoursRs(SQLSelect($SQL));
+
+    // Pour chaque objet, on ajoute le champ "images"
+    foreach ($res as &$objet) {
+        $objet['images'] = getImagesByObjet($objet['id']);
     }
-    return $ids;
+    unset($objet); // bonne pratique pour éviter les effets de bord
+
+    return $res;
+
+  }
+
+  
+
+//La fonction infoObjet(idObjet) renvoie un tableau associatif contenant 
+// les informations de l'objet d'ont l'id est passé en paramètre
+function infoObjet($idObjet) {
+  $SQL = "SELECT * from Objet" ;
+  $SQL .= " WHERE id='$idObjet'" ;
+  return parcoursRs(SQLSelect($SQL)) ;
 }
 
 

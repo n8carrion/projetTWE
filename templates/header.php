@@ -47,7 +47,7 @@
     }
 
 
-    #logo  {
+    .logo  {
         width: 200px; 
     }
 
@@ -70,7 +70,7 @@
 
     
         <a href="accueil">
-            <img id="logo" src="ressources/logoLaREZerve1.png" />
+            <img class="logo" src="ressources/logoLaREZerve1.png" />
         </a>
     <div class="menu" style="display : inline">
         <a id="lienAcceuil" href="accueil">Accueil</a>

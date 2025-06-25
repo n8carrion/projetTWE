@@ -3,7 +3,7 @@
     <div id="footer" class="banniere">
 
         <a href="accueil">
-            <img id="logo" src="ressources/logoLaREZerve1.png" />
+            <img class="logo" src="ressources/logoLaREZerve1.png" />
         </a>
         
         

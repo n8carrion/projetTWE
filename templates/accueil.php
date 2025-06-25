@@ -4,7 +4,7 @@
 
 <div id=description>
 <h1>La REZerve</h1>
-<img src="ressources/logoLaREZerve1.png">
+<img class = "logo" src="ressources/logoLaREZerve1.png">
 <p>
 Ici, on donne une seconde vie aux objets sur la résidence de Centrale ! <br>
 
