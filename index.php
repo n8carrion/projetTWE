@@ -45,58 +45,8 @@ Les formulaires de toutes les vues générées enverront leurs données vers la 
 	// Affichage dans tous les cas du header
 	include("templates/header.php");
 
-	switch ($view) {
-		case "accueil":
-			include("templates/accueil.php");
-			break;
-
-		case "apropos":
-			include("templates/aPropos.php");
-			break;
-
-		case "editionObjet":
-			include("templates/editionObjet.php");
-			break;
-
-		case "catalogue":
-			include("templates/catalogue.php");
-			break;
-
-		case "login":
-			include("templates/login.php");
-			break;
-		
-		case "annonce":
-			if (is_null($data)) {
-				// on cherche à aller à une annonce, sans préciser laquelle...
-				include("templates/404.php");
-				break;
-			}
-			if (count($data) > 1 && $data[1] == "edit") {
-				include("templates/editionObjet.php");
-			} else {
-				include("templates/ficheObjet.php");
-			}
-			break;
-		
-		case "profil":
-			if (is_null($data)) {
-				// On cherche à aller à un profil, sans préciser lequel...
-				// TODO: Il faut donner une valeur par défaut ici !
-				// idée: si l'utilisateur est connecté, on redirige vers son profil, et sinon on redirige vers login ?
-				include("templates/404.php");
-				break;
-			}
-			if (count($data) > 1 && $data[1] == "edit") {
-				include("templates/editionUtilisateur.php");
-			} else {
-				include("templates/profilUtilisateur.php");
-			}
-			break;
-
-		default:
-			include("templates/404.php");
-	}
+	// Inclusion de la page principale
+	include($mainpage);
 
 	// Dans tous les cas, on affiche le pied de page
 	include("templates/footer.php");

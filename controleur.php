@@ -19,6 +19,22 @@ if (count($url) > 1) {
     $data = null;
 }
 
+// Gestion des appels AJAX
+if ($view == 'api') {
+    switch ($data[0]) {
+        case 'listerObjet':
+            break;
+        
+        default:
+            // on a pas reconnue ce qui est demandé
+
+            break;
+    }
+    die(); // Pour ne pas 
+}
+
+
+// Gestion de l'appel à view
 $mainpage = "templates/500.php";
 $title = "Erreur 500";
 
