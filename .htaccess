@@ -6,6 +6,6 @@
     RewriteCond %{REQUEST_URI} ^.*/(ressources|css|js|uploads)/ [NC]
     RewriteRule ^ - [L]
 
-    # Sinon redirige vers index.php, avec l'url en argument
-    RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+    # Sinon redirige vers controleur.php, avec l'url en argument
+    RewriteRule ^(.*)$ controleur.php?url=$1 [QSA,L]
 </IfModule>
