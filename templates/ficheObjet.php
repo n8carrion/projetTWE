@@ -1,3 +1,21 @@
+<?php
+    include_once "libs/modele.php";
+    $infoObjet = infoObjet($idObjet)[0];
+    $nom = $infoObjet["nom"];
+    $idUser = $infoObjet["idProprietaire"];
+    $infoUser =infoUtilisateur($idUser)[0];
+    $nomUser = $infoUser["nom"];
+    $prenomUser = $infoUser["prenom"];
+    $userMail = $infoUser["mail"];
+    $userTelephone = $infoUser["telephone"];
+
+
+    // TODO :
+    // - LINK IMAGES TO FICHE OBJET
+    //- add dates pret (for the moment null)
+    // - link to user profil
+    // - link to 404 if id doesnt exist
+?>
 <div class="container">
     <div class="left">
         <div class="main-image">
@@ -11,25 +29,27 @@
     </div>
 
     <div class="details">
-        <h2 id="objet-nom">NOM D'OBJET</h2>
-        <p id="statutObjet">À donner : DISPONIBLE</p>
+        <h2 id="objet-nom"><?= $nom ?></h2>
+        <p id="statutObjet"><?=$infoObjet["statutObjet"]?> </p>
 
         <p><strong>Description :</strong></p>
-        <p id="objet-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris placerat justo non est suscipit, nec dictum massa dictum.</p>
+        <p id="objet-description"> <?=$infoObjet['description'] ?></p>
 
-        <p id="categorieObjet"><strong>Catégorie :</strong> Meuble</p>
-        <p id=objet-typeAnnonce><strong>Type :</strong> Don</p>
+        <p id="categorieObjet"><strong>Catégorie :</strong> Meuble TODO : get categorie from idCategorie</p>
+        <p id=objet-typeAnnonce><strong>Type :</strong> <?=$infoObjet["typeAnnonce"]?></p>
 
         <p>
-            <strong>Publié par :</strong>User123
-            <button id="button_user_profil">Voir Profil</button>
+            <strong>Publié par :</strong><?=$prenomUser  ?> <?=$nomUser ?>
+            <button id="button_user_profil">
+                <a href="profil/1">Voir Profil</a></button>
         </p>
 
         <p id="objet-dates"><strong>Dates de prêt :</strong> du 01/07/2025 au 15/07/2025</p>
 
         <div class="contact">
-            <p id="user-adresse"><strong>Contact :</strong> mail@mail.com</p>
-            <p id="user-telephone">+33 0 01 23 45 67</p>
+            <p id="user-mail"><strong>Contact : </strong> <?= $userMail ?></p>
+            <p id="user-telephone"><strong>Telephone : </strong><?=$userTelephone?></p>
+            <p id="user-adresse"><strong>Adresse : </strong><?=$infoUser["adresse"]?></p>
         </div>
 
         <div class="admin-options">
