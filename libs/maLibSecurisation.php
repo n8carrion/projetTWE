@@ -9,35 +9,66 @@ include_once "modele.php";	// Car on utilise la fonction connecterUtilisateur()
  */
 
 /**
- * Cette fonction vérifie si le login/passe passés en paramètre sont légaux
+ * Cette fonction vérifie si le ticket CLA est légal
+ * Si oui, elle regarde si l'utilisateur doit existe déjà
+ * Si ce n'est pas le cas, création de l'utilisateur
  * Elle stocke les informations sur la personne dans des variables de session : session_start doit avoir été appelé...
- * Infos à enregistrer : pseudo, idUser, heureConnexion, isAdmin
+ * Infos à enregistrer : idUser, isModerator
  * Elle enregistre l'état de la connexion dans une variable de session "connecte" = true
- * L'heure de connexion doit être stockée au format date("H:i:s") 
- * @pre login et passe ne doivent pas être vides
- * @param string $login
+ * @param string $ticketCLA
  * @param string $password
- * @return false ou true ; un effet de bord est la création de variables de session
+ * @return string $q ; là où doit être redirigé l'utilisateur
  */
-function verifUser($login,$password)
+
+function verifUserCLA($ticketCLA)
 {
-	// TODO : verifUser dans maLibSecurisation
-	// TODO : verifUserBdd dans modele 
-	// cf. les commentaires de ces deux fonctions 
-	
-	if ($id = verifUserBdd($login,$password)) {
-		$_SESSION["pseudo"] = $login;
-		$_SESSION["idUser"] = $id;
-		$_SESSION["heureConnexion"] = date("H:i:s");
-		$_SESSION["isAdmin"] = isAdmin($id);
-		$_SESSION["connecte"] = true; 
-		return true;
+	$url = "https://centralelilleassos.fr/authentification/larezerve/" . urlencode($ticketCLA);
+
+	$options = [
+		'http' => [
+			'ignore_errors' => true
+		]
+	];
+	$context = stream_context_create($options);
+	$response = file_get_contents($url, false, $context);
+	$data = json_decode($response, true);
+
+	if (!$data || !$data['success']) {
+		die("Échec de l'authentification."); // TODO : remove
 	}
+
+	// Information de l'utilisateur
+	$payload = $data['payload'];
+	$username = $payload['username'];
+	$firstName = $payload['firstName'];
+	$lastName = $payload['lastName'];
+	$email = $payload['emailSchool'];
+	//$cursus = $payload['cursus']; // non utilisé
 	
-	return false; 
+	$q = "accueil";
+	if (!($idUser = existUserCLA($username))) {
+		$idUser = creerUtilisateur($lastName, $firstName, $username, $email);
+		$q = "profil/edit";
+	}
+
+	// Ouvrir une session
+	$_SESSION['connecte'] = true;
+	$_SESSION['idUser'] = $idUser;
+	$_SESSION['isModerator'] = isModerateur($idUser);
+
+	return $q;
 }
 
+function fixtureLogin($pseudoCLA) {
+	if (!($idUser = existUserCLA($pseudoCLA))) {
+		die("User does not exist");
+	}
 
+	// Ouvrir une session
+	$_SESSION['connecte'] = true;
+	$_SESSION['idUser'] = $idUser;
+	$_SESSION['isModerator'] = isModerateur($idUser);
+}
 
 
 /**

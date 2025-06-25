@@ -7,9 +7,9 @@ include_once("libs/maLibSQL.pdo.php") ;
 //===========================
 // Fonctions pour les utilisateurs ============================================
 //===========================
-function creerUtilisateur($nom, $prenom, $passe,$mail,$tel,$adresse,$facebook,$statut) {
-  $SQL = "INSERT INTO Utilisateur(nom, prenom, passeHash, mail, telephone, adresse, facebook, statutUtilisateur)" ;
-  $SQL .= " VALUES ('$nom','$prenom','$passe','$mail','$tel','$adresse','$facebook','$statut')" ;
+function creerUtilisateur($nom, $prenom, $pseudoCLA, $mail) {
+  $SQL = "INSERT INTO Utilisateur(nom, prenom, pseudoCLA, mail)" ;
+  $SQL .= " VALUES ('$nom','$prenom','$pseudoCLA', '$mail')" ;
 
   return SQLInsert($SQL) ;
 }
@@ -33,37 +33,26 @@ function listerUtilisateur($statut="both") {
   return parcoursRs(SQLSelect($SQL)) ;
 }
 
-function verifUserBdd($login,$passe)
+function existUserCLA($pseudoCLA)
 {
 	// Vérifie l'identité d'un utilisateur 
-	// dont les identifiants sont passes en paramètre
-	// renvoie faux si user inconnu
-	// renvoie l'id de l'utilisateur si succès
-	
+	// dont le ticket CLA est passé en argument
+	// renvoie faux si le ticket ne renvoie rien auprès de CLA
+	// sinon, si l'utilisateur existe déjà, 
+
 	$SQL = "SELECT id FROM Utilisateur"; 
-	$SQL .= " WHERE mail='$login' AND passeHash='$passe'";
+	$SQL .= " WHERE pseudoCLA='$pseudoCLA'";
 	
-	// $tab = parcoursRs(SQLSelect($SQL)) ;
-	// if (count($tab)) return $tab[0]["id"]; 
-	// else return false;
 	return SQLGetChamp($SQL); 
-	
-		// On utilise SQLGetChamp
-	// si on avait besoin de plus d'un champ
-	// on aurait du utiliser SQLSelect
-	
-	
-	// Attention à la protection du champ passe ! 
-	// Il est préférable de crypter le champ passe  
-	// $SQL .= " WHERE pseudo='$login' AND passe=crypt('$passe')";
 }
+
 function isModerateur ($idUtilisateur) {
   //Verifie que l'utilisateur est modérateur
   //cela lui donne ainsi les droits d'édition
   //de tout le catalogue
   $SQL = "SELECT statutUtilisateur FROM Utilisateur" ;
   $SQL .= " WHERE id='$idUtilisateur'" ;
-  return SQLGetChamp($SQL) === 'moderateur' ; //pour avoir un booléen
+  return SQLGetChamp($SQL) === 'Modérateur' ; //pour avoir un booléen
 }
 
 function setModerateur($idUtilisateur) {

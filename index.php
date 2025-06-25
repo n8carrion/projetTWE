@@ -14,7 +14,7 @@ Les formulaires de toutes les vues générées enverront leurs données vers la 
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
-	<base href="<?= rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/' // Récupération de la base du serveur ?>">
+	<base href="<?= $base ?>">
 	<title><?= $title ?> - La REZerve</title>
 
 	<link rel="apple-touch-icon" sizes="57x57" href="ressources/icons/favicon-57x57.png">

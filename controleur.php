@@ -2,6 +2,10 @@
 session_start();
 
 include_once "libs/maLibUtils.php";
+include_once("libs/maLibSecurisation.php");
+include_once("libs/modele.php");
+
+$base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/'; // Récupération de la base du serveur
 
 $url = valider("url"); // récupération de l'url
 
@@ -55,16 +59,39 @@ switch ($view) {
         break;
 
     case "login":
-        $mainpage = "templates/login.php";
-        $title = "Connexion";
+        if (is_null($data)) {
+            $mainpage = "templates/login.php";
+            $title = "Connexion";
+        } elseif ($data[0] == "cla") {
+            $ticket = valider("ticket"); // Ce ticket n'est valide que 15 secondes !
+            if (!$ticket) {
+                $mainpage = "templates/404.php";
+                $title = "Erreur 404";
+                break;
+            }
+            $q = verifUserCLA($ticket);
+            header('Location: '.$base.$q);
+            die();
+        } elseif ($data[0] == "fix") {
+            include_once("config.php");
+            if ($PROD) {
+                $mainpage = "templates/404.php";
+                $title = "Erreur 404";
+                break;
+            }
+            fixtureLogin($data[1]);
+            header('Location: '.$base."accueil");
+            die();
+        }
         break;
 
-    case "annonce":
+    case "annonce": // TODO : mettre en place l'authentification
         if (is_null($data)) {
             // on cherche à aller à une annonce, sans préciser laquelle...
             $mainpage = "templates/404.php";
             $title = "Erreur 404";
         } elseif (count($data) > 1 && $data[1] == "edit") {
+            $idObjet = $data[0];
             $mainpage = "templates/editionObjet.php";
             $title = "Édition de \"Nom de l'objet ici\""; // TODO
         } elseif ($data[0] == "") {
@@ -78,22 +105,51 @@ switch ($view) {
         break;
 
     case "profil":
-        if (is_null($data)) {
+        if (is_null($data) || $data[0]=="edit") {
             // On cherche à aller à un profil, sans préciser lequel...
-            // TODO: Il faut donner une valeur par défaut ici !
-            // idée: si l'utilisateur est connecté, on redirige vers son profil, et sinon on redirige vers login ?
-            $mainpage = "templates/404.php";
-            $title = "Erreur 404";
-            break;
+            // Si l'utilisateur est connecté, on redirige vers son profil, et sinon on redirige vers login
+            if (valider("connecte","SESSION")) {
+                if (!is_null($data) && $data[0]=="edit") {
+                    $data = [valider("idUser","SESSION"), "edit"]; // Cela va à terme rediriger vers le profil de la personne en mode édition
+                } else {
+                    $data = [valider("idUser","SESSION")]; // Cela va à terme rediriger vers le profil de la personne
+                }
+            } else {
+                header('Location: '.$base.'login');
+                die();
+            }
         }
-        if (count($data) > 1 && $data[1] == "edit") {
-            $mainpage = "templates/editionUtilisateur.php";
-            $title = "Édition du profil de \"Nom de la personne ici\""; // TODO
-        } else {
-           $mainpage = "templates/profilUtilisateur.php";
-           $title = "Profil de \"Nom de la personne ici\""; // TODO
+        if (is_numeric($data[0])) {
+            $idProfil = $data[0];
+            
+            if (!($userInfo = infoUtilisateur($idProfil))){
+                $mainpage = "templates/404.php";
+                $title = "Erreur 404";
+                break;
+            }
+            $userString = $userInfo[0]["prenom"] . " " . $userInfo[0]["nom"];
+            if (count($data) > 1 && $data[1] == "edit") {
+                if (!valider("connecte","SESSION")) {
+                    header('Location: '.$base.'login');
+                    die();
+                } elseif ($idProfil == valider("idUser", "SESSION") || isModerateur(valider("idUser", "SESSION"))) {
+                    $mainpage = "templates/editionUtilisateur.php";
+                    $title = "Édition du profil de ".$userString;
+                } else {
+                    $mainpage = "templates/403.php";
+                    $title = "Erreur 403";
+                }
+            } else {
+                $mainpage = "templates/profilUtilisateur.php";
+                $title = "Profil de ".$userString;
+            }
         }
         break;
+
+    case 'logout':
+        session_destroy();
+        header('Location: ' . $base . 'accueil');
+        die();
 
     default:
         $mainpage = "templates/404.php";
