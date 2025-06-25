@@ -20,34 +20,42 @@ if (count($url) > 1) {
 }
 
 $mainpage = "templates/500.php";
+$title = "Erreur 500";
 
 switch ($view) {
     case "accueil":
         $mainpage = "templates/accueil.php";
+        $title = "Accueil";
         break;
 
     case "apropos":
         $mainpage = "templates/aPropos.php";
+        $title = "À propos";
         break;
 
     case "catalogue":
         $mainpage = "templates/catalogue.php";
+        $title = "Catalogue";
         break;
 
     case "login":
         $mainpage = "templates/login.php";
+        $title = "Connexion";
         break;
 
     case "annonce":
         if (is_null($data)) {
             // on cherche à aller à une annonce, sans préciser laquelle...
             $mainpage = "templates/404.php";
+            $title = "Erreur 404";
             break;
         }
         if (count($data) > 1 && $data[1] == "edit") {
             $mainpage = "templates/editionObjet.php";
+            $title = "Édition de \"Nom de l'objet ici\""; // TODO
         } else {
             $mainpage = "templates/ficheObjet.php";
+            $title = "Nom de l'objet ici"; // TODO
         }
         break;
 
@@ -57,17 +65,21 @@ switch ($view) {
             // TODO: Il faut donner une valeur par défaut ici !
             // idée: si l'utilisateur est connecté, on redirige vers son profil, et sinon on redirige vers login ?
             $mainpage = "templates/404.php";
+            $title = "Erreur 404";
             break;
         }
         if (count($data) > 1 && $data[1] == "edit") {
             $mainpage = "templates/editionUtilisateur.php";
+            $title = "Édition du profil de \"Nom de la personne ici\""; // TODO
         } else {
            $mainpage = "templates/profilUtilisateur.php";
+           $title = "Profil de \"Nom de la personne ici\""; // TODO
         }
         break;
 
     default:
         $mainpage = "templates/404.php";
+        $title = "Erreur 404";
 }
 
 include("index.php");
