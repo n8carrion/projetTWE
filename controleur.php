@@ -27,6 +27,18 @@ if (count($url) > 1) {
 if ($view == 'api') {
     switch ($data[0]) {
         case 'listerObjet':
+            // Récupère les filtres envoyés en GET
+            $categorie = valider('categorie');
+            $type = valider('type');
+            // Prépare les options pour listerObjets
+            $options = [];
+            if ($categorie) $options['categorie'] = $categorie;
+            if ($type) $options['type'] = $type;
+            // Appelle la fonction et renvoie le JSON
+            $result = listerObjets($options);
+            echo json_encode($result);
+            
+                
             break;
         
         default:

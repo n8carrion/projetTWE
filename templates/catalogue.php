@@ -1,6 +1,10 @@
-<style>
+<!-- inclure la page modele.php -->
+<?php
+include_once("libs/modele.php");            
+?>
 
-</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 <!-- STRUCTURE DE LA PAGE ===================================== -->
 
@@ -14,11 +18,15 @@
 
         <label for="categorie">Catégorie :</label>
         <select name="categorie" id="categorie">
-            <option value="Vêtement">Vêtement</option>
-            <option value="Informatique">Informatique</option>
-            <option value="Nourriture">Nourriture</option>
-            <option value="Divertissement">Divertissement</option>
-            <option value="Service">Service</option>
+            <?php
+            // On récupère les catégories d'objets depuis la base de données
+            $SQL = "SELECT DISTINCT nom FROM Categorie";
+            $categories = parcoursRs(SQLSelect($SQL));
+            // On affiche chaque catégorie dans une option du select
+            foreach ($categories as $categorie) {
+                echo '<option value="' . htmlspecialchars($categorie['nom']) . '">' . htmlspecialchars($categorie['nom']) . '</option>';
+            }
+            ?>
         </select>
 
         <label for="type">Type :</label>
@@ -73,50 +81,6 @@
         </a>
     </div>
 
-    <div class="carteObjet">
-        <!-- Si on clique sur  -->
-        <a href="annonce/1"> <!-- annonce/idObjet -->
-            <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
-            <h2>Table basse test</h2>
-            <p><strong>Type :</strong>Don</p>
-            <p><strong>Catégorie :</strong> Électroménager</p>
-            <p><strong>Statut :</strong> Disponible</p>
-        </a>
-    </div>
-
-    <div class="carteObjet">
-        <!-- Si on clique sur  -->
-        <a href="annonce/1"> <!-- annonce/idObjet -->
-            <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
-            <h2>Table basse test</h2>
-            <p><strong>Type :</strong>Don</p>
-            <p><strong>Catégorie :</strong> Électroménager</p>
-            <p><strong>Statut :</strong> Disponible</p>
-        </a>
-    </div>
-
-    <div class="carteObjet">
-        <!-- Si on clique sur  -->
-        <a href="annonce/1"> <!-- annonce/idObjet -->
-            <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
-            <h2>Table basse test</h2>
-            <p><strong>Type :</strong>Don</p>
-            <p><strong>Catégorie :</strong> Électroménager</p>
-            <p><strong>Statut :</strong> Disponible</p>
-        </a>
-    </div>
-
-    <div class="carteObjet">
-        <!-- Si on clique sur  -->
-        <a href="annonce/1"> <!-- annonce/idObjet -->
-            <img src="uploads/imagesObjets/2_1.jpg" alt="Photo de l’objet">
-            <h2>Table basse test</h2>
-            <p><strong>Type :</strong>Don</p>
-            <p><strong>Catégorie :</strong> Électroménager</p>
-            <p><strong>Statut :</strong> Disponible</p>
-        </a>
-    </div>
-
     
 
      
@@ -140,8 +104,8 @@
 
         //Image, si il n'y a pas d'image, on met une image par défaut
         var imgSrc = (oObjet.images && oObjet.images.length > 0)
-         ? 'uploads/imagesObjets/' + oObjet.images[0].hash
-         : 'uploads/imagesObjets/default.jpg';
+         ? 'uploads/imagesObjets/' + oObjet.images[0].hash +".jpg"
+         : 'ressources/noImage.jpg';
         var img = $('<img>').attr('src', imgSrc).attr('alt', 'Photo de l’objet');
 
         var titreCarte = $('<h2></h2>').text(oObjet.nom);
@@ -174,6 +138,8 @@
   // }
 
 
+
+
     $(document).ready(function() {
 
         // TODO : Charger toutes les annonces sans aucun filtre au chargement de la page
@@ -186,11 +152,13 @@
             $.ajax({
                 url: 'api/listerObjet', 
                 type: 'GET',
+                dataType : 'json',
                 data: {
                     "categorie": categorie,
                     "type": type
                 },
                 success: function(reponse) {
+                    console.log(reponse); // Afficher la réponse dans la console pour le débogage
                     // Vider la liste des objets avant d'ajouter les nouveaux
                     $('#annonces').empty();
 
@@ -204,8 +172,11 @@
                         // Ajouter la carte à la liste des objets
                         $('#annonces').append(carte);
                     });
-                }
-            });
+                }, 
+                error: function(xhr, status, error) {
+    console.error("Erreur lors de la récupération des objets ", xhr.responseText, status, error);
+}
+            });//fin requête AJAX
         });//fin click sur le bouton Filtrer
 
     });//fin document ready

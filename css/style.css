@@ -92,6 +92,15 @@ legend {
         display: block;
     }
 
+     #annonces {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start; /* ou center si tu veux centrer aussi verticalement */
+    gap: 20px; /* espace entre les cartes, optionnel */
+    text-align: center; /* centre le texte à l'intérieur si besoin */
+}
+
 /* STYLE POUR LES FIELDSET */
 
     fieldset {
@@ -102,12 +111,21 @@ legend {
         color : rgb(21, 60, 9);
     }
 
-    fieldset legend, h1 {
+    fieldset legend, h2 {
         font-weight: bold;
         color: rgb(21, 60, 9);
         padding: 0 10px;
         font-family : Arial, sans-serif;
-        font-size: 1.4em;          
+        font-size: 1.8em;          
+        font-weight: 900;
+    }
+
+    h1 {
+        font-weight: bold;
+        color: rgb(21, 60, 9);
+        padding: 0 10px;
+        font-family : Arial, sans-serif;
+        font-size: 2.8em;          
         font-weight: 900;
     }
 

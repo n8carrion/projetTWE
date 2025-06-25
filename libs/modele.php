@@ -172,10 +172,10 @@ function listerObjets($options = array()) {
     $SQL = "SELECT * FROM Objet WHERE 1=1"; //toujours vrai, donc permet de tout selectionner
 
     // Filtrage par catégorie
-    if (!empty($options['categorie'])) {
-        $categorie = htmlspecialchars($options['categorie']); // permet d'éviter les injections SQL
-        $SQL .= " AND categorieObjet='$categorie'";
-    }
+    // if (!empty($options['categorie'])) {
+    //     $categorie = htmlspecialchars($options['categorie']); // permet d'éviter les injections SQL
+    //     $SQL .= " AND categorieObjet='$categorie'";
+    // }
 
     // Filtrage par type
     if (!empty($options['type'])) {
