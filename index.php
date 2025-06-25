@@ -54,6 +54,10 @@ Les formulaires de toutes les vues générées enverront leurs données vers la 
 			include("templates/aPropos.php");
 			break;
 
+		case "editionObjet":
+			include("templates/editionObjet.php");
+			break;
+
 		case "catalogue":
 			include("templates/catalogue.php");
 			break;
