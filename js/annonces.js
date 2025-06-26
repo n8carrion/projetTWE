@@ -2,6 +2,7 @@
 
 //Fonction pour créer une carte d'objet, qui sera ensuite ajoutée au catalogue 
 // Cette fonction est appelée pour chaque objet reçu de la requête AJAX
+console.log("Chargement du script annonces.js qui contient mkCarteObjet et chargerAnnonces");
 function mkCarteObjet(oObjet) {
 
         var carte = $('<div class="carteObjet"></div>');
@@ -41,19 +42,22 @@ function mkCarteObjet(oObjet) {
 
     }
 
-function chargerAnnonces(params, idCible) {
+//Fonction pour charger les annonce dans un element d'id "annonces"
+//params sera donné à la fonction listerObjet de l'API contenu dans api/listerObjet
+//ne pas oublier dans la page en question d'avoir la librairie jQuery et annonce.js
+function chargerAnnonces(params) {
     $.ajax({
         url: 'api/listerObjet',
         type: 'GET',
         dataType: 'json',
         data: params,
         success: function(reponse) {
-            $(idCible).empty();
+            $("#annonces").empty();
             $.each(reponse, function(index, oObjet) {
                 var carte = mkCarteObjet(oObjet);
-                $(idCible).append(carte);
+                $("#annonces").append(carte);
             });
-            if ($(idCible).children().length === 0 && $('#messageAucunObjet').length) {
+            if ($("#annonces").children().length === 0 && $('#messageAucunObjet').length) {
                 $('#messageAucunObjet').show();
             } else if ($('#messageAucunObjet').length) {
                 $('#messageAucunObjet').hide();
