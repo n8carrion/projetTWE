@@ -68,12 +68,46 @@ include_once("libs/modele.php");
   // ]
   // }
 
-
+     var idUser = idUtilisateur;
     $(document).ready(function() {
+    console.log(idUser);
+        $.ajax({
 
+                            url: 'api/listerObjet',
+                            type: 'GET',
+                            dataType : 'json',
+                            data: {
+                                "utilisateur": idUser
+                            },
+                            success: function(reponse) {
+                                console.log(reponse); // Afficher la réponse dans la console pour le débogage
+                                // Vider la liste des objets avant d'ajouter les nouveaux
+                                $('#annonces').empty();
+
+                                // Parcourir les annonces reçues et créer des cartes d'objet
+                                // et l'ajouter à la liste des objets visibles dans le catalogue
+                                //la réponse est un tableau JSON d'objets
+                                //pour chaque objet, on crée une carte et on l'ajoute à la liste des objets
+                                $.each(reponse, function(index, oObjet) {
+                                    // Créer une carte pour chaque objet
+                                    var carte = mkCarteObjet(oObjet);
+                                    // Ajouter la carte à la liste des objets
+                                    $('#annonces').append(carte);
+                                });
+                                // Après avoir ajouté toutes les cartes
+                                if ($('#annonces').children().length === 0) {
+                                    $('#messageAucunObjet').show();
+                                } else {
+                                    $('#messageAucunObjet').hide();
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                console.error("Erreur lors de la récupération des objets ", xhr.responseText, status, error);
+            }
+                        });//fin requête AJAX
         // On charge TOUTES les annonces sans aucun filtre au chargement de la page
         // Requête AJAX pour charger toutes les annonces au chargement de la page
-        $.ajax({
+       /* $.ajax({
             url: 'api/listerObjet',
             type: 'GET',
             dataType : 'json',
@@ -96,53 +130,21 @@ include_once("libs/modele.php");
             }
         });//fin requête AJAX affichage de toutes les annonces
 
-        // Événement de clic sur le bouton Filtrer
-        $('#btnFiltrer').click(function() {
+        */
 
-            var idUser = idUtilisateur;
 
-            /*
-            var categorie = $('#categorieAnnonce').val();
-            var type = $('#typeAnnonce').val();
-            var sort = $('#sortAnnonce').val();
-             console.log(sort);*/
 
-            $.ajax({
-                url: 'api/listerObjet',
-                type: 'GET',
-                dataType : 'json',
-                data: {
-                    "idUtilisateur": idUser
-                },
-                success: function(reponse) {
-                    console.log(reponse); // Afficher la réponse dans la console pour le débogage
-                    // Vider la liste des objets avant d'ajouter les nouveaux
-                    $('#annonces').empty();
 
-                    // Parcourir les annonces reçues et créer des cartes d'objet
-                    // et l'ajouter à la liste des objets visibles dans le catalogue
-                    //la réponse est un tableau JSON d'objets
-                    //pour chaque objet, on crée une carte et on l'ajoute à la liste des objets
-                    $.each(reponse, function(index, oObjet) {
-                        // Créer une carte pour chaque objet
-                        var carte = mkCarteObjet(oObjet);
-                        // Ajouter la carte à la liste des objets
-                        $('#annonces').append(carte);
-                    });
-                    // Après avoir ajouté toutes les cartes
-                    if ($('#annonces').children().length === 0) {
-                        $('#messageAucunObjet').show();
-                    } else {
-                        $('#messageAucunObjet').hide();
-                    }
-                },
-                error: function(xhr, status, error) {
-    console.error("Erreur lors de la récupération des objets ", xhr.responseText, status, error);
-}
-            });//fin requête AJAX
-        });//fin click sur le bouton Filtrer
 
     });//fin document ready
+
+
+                /*
+                var categorie = $('#categorieAnnonce').val();
+                var type = $('#typeAnnonce').val();
+                var sort = $('#sortAnnonce').val();
+                 console.log(sort);*/
+
 
 
 </script>
