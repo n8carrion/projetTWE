@@ -25,9 +25,9 @@ $userString = $infoUser['prenom'] ." ". $infoUser['nom'];
   <p><strong>Telephone</strong> : <?= $infoUser["telephone"] ?></p>
   <p><strong>Adresse</strong>: <?= $infoUser["adresse"] ?></p>
 
-  <?php if($idProfil==$userInfo[0]['id']): ?>
-  <button class="btn"><a href="profil/edit">Modifier profil </a> </button>
-  <?php endif; ?>
+ <?php if ($idProfil == valider("idUser", "SESSION")): ?>
+<button class="btn"><a href="profil/edit">Modifier profil </a> </button>
+<?php endif; ?>
 </section>
 
 <!-- ici même code que catalogue mais adapté-->
