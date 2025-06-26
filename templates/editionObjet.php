@@ -1,6 +1,6 @@
 <?php
     include_once "libs/modele.php";
-    if ($idObjet>0) {
+
     $infoObjet = infoObjet($idObjet)[0];
     $nom = $infoObjet['nom'];
     $description = $infoObjet["description"] ;
@@ -19,7 +19,7 @@
     $source2 = "uploads/imagesObjets/" . $image2[0]["hash"]  . ".jpg";
     $source3 = "uploads/imagesObjets/" . $image3[0]["hash"]  . ".jpg";
     */
-    }
+
 
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $idObjet = $_POST['idObjet'] ?? -1;
@@ -29,18 +29,15 @@
         $categorieNom = $_POST['categorie'] ?? '';
         $typeAnnonce = ($_POST['typeAnnonce'] === 'Don') ? 'Don' : 'Prêt';
         $idProprietaire = $_SESSION['idUtilisateur'] ?? null;
-        $statutObjet = "actif";
 
-        $categorieData = getCategorieByNom($categorieNom);
-        $idCategorie = $categorieData[0]['idCategorie'] ?? null;
+        $statutObjet="Disponible";
 
-        if ($idObjet == -1) {
-            // Ajouter un nouvel objet
-            creerObjet($nom, $idProprietaire, $description, $typeAnnonce, $statutObjet, $idCategorie);
-        } else {
+        $idCategorie = SQLGetChamp("SELECT id FROM Categorie WHERE nom='$categorieNom'");
+
+
             // Modifier l'objet existant
             modifierObjet($idObjet, $nom, $description, $idCategorie, $typeAnnonce, $statutObjet);
-        }
+
 
         // Redirect to avoid resubmission
         header('Location: ' . $base . 'annonce/'.$idObjet); // Or wherever you want to go

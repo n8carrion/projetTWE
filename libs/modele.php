@@ -157,8 +157,7 @@ function creerObjet($nom, $idProprietaire, $description, $typeAnnonce, $statutOb
 //   La fonction modifierObjet(idProprietaire) permet de modifier un objet dans la base de données
 // tous les paramètres doivent être donnés : idObjet, nom, description, typeAnnonce, statutObjet et categorieObjet
 //   elle ne modifie pas l'id de l'objet ni la date de création 
-function modifierObjet($idObjet, $nom, $description, $categorieObjet, $typeAnnonce, $statutObjet) {
-  // Pour éviter les injections de HTML
+function modifierObjet($idObjet, $nom, $description, $idCategorie, $typeAnnonce, $statutObjet) {
   $nom = htmlspecialchars($nom);
   $description = htmlspecialchars($description);
 
@@ -167,7 +166,7 @@ function modifierObjet($idObjet, $nom, $description, $categorieObjet, $typeAnnon
             description='$description',
             typeAnnonce='$typeAnnonce',
             statutObjet='$statutObjet',
-            categorieObjet='$categorieObjet'
+            idCategorie='$idCategorie'
           WHERE id='$idObjet'";
 
   SQLUpdate($SQL);
@@ -215,6 +214,12 @@ function supprimerCategorie ($idCategorie) {
 function getCategorieByNom($nomCategorie) {
     $SQL = "SELECT * FROM Categorie WHERE nom ='$nomCategorie'";
     return parcoursRs(SQLSelect($SQL));
+}
+
+function getCategorieIdByNom($nomCategorie) {
+    $nomCategorie = htmlspecialchars($nomCategorie);
+    $SQL = "SELECT id FROM Categorie WHERE nom = '$nomCategorie'";
+    return SQLGetChamp($SQL); // renvoie directement l’id ou false
 }
 
 //   fonction ListerObjets(....) permet de lister les objets de la base de données
