@@ -56,7 +56,7 @@
         <p>
             <strong>Publié par :</strong><?=$prenomUser  ?> <?=$nomUser ?>
             <button id="button_user_profil">
-                <a href="profil">Voir Profil</a></button>
+                <a href="profil/<?=$idUser?> ">Voir Profil</a></button>
         </p>
         <?php if($infoObjet["typeAnnonce"]=="Pret"): ?>
         <p id="objet-dates"><strong>Dates de prêt :</strong> du <?= $infoObjet["debutPret"] ?> au <?= $infoObjet["finPret"] ?></p>
@@ -69,7 +69,7 @@
 
         <div class="admin-options">
             <button> <!-- not sure yet if the link will be js or done just with <a></a>-->
-                <a href="annonce/1/edit">
+                <a href="annonce/<?=$idObjet?>/edit">
                     Modifier l'annonce </a>
             </button>
 

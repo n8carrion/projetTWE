@@ -145,6 +145,7 @@ legend {
 .left{
     flex:1;
     position: relative;
+
 }
 
 /* Main image
@@ -252,7 +253,7 @@ img {
 /* Six columns side by side */
 .column {
     float: left;
-    width: 16.66%;
+    width: 110px;
 }
 
 /* Add a transparency effect for thumnbail images */
@@ -408,7 +409,7 @@ h1,h2 {
 /* Style EditionObjet */
 #publication {
     position:relative ;
-    height:600px;
+    height:1000px;
 }
 
 #publication input {
@@ -442,7 +443,7 @@ h1,h2 {
 }
 #BtnPublier {
     position:absolute ;
-    bottom:50px ;
+    bottom:0 ;
     left:650px;
 }
 /*
