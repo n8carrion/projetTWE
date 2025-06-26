@@ -66,11 +66,13 @@
         <?php if($infoObjet["typeAnnonce"]=="Pret"): ?>
         <p id="objet-dates"><strong>Dates de prêt :</strong> du <?= $infoObjet["debutPret"] ?> au <?= $infoObjet["finPret"] ?></p>
         <?php endif; ?>
+        <?php if(valider("connecte","SESSION")): ?>
         <div class="contact">
             <p id="user-mail"><strong>Contact : </strong> <?= $userMail ?></p>
             <p id="user-telephone"><strong>Telephone : </strong><?=$userTelephone?></p>
             <p id="user-adresse"><strong>Adresse : </strong><?=$infoUser["adresse"]?></p>
         </div>
+         <?php endif; ?>
         <?php if($objetInfo[0]["idProprietaire"] == valider("idUser", "SESSION") || isModerateur(valider("idUser", "SESSION"))): ?>
         <div class="admin-options">
             <button class="btn"> <!-- not sure yet if the link will be js or done just with <a></a>-->
