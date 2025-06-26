@@ -7,6 +7,7 @@
     $idcat = $infoObjet['idCategorie'];
     $cat = getCategorie($idcat) ;
     $don = ($infoObjet['typeAnnonce'] =="Don") ;
+    $images = getImagesByObjet($idObjet);
     $image1 = choisirImageByOrder($idObjet, 1) ;
     $image2 = choisirImageByOrder($idObjet, 2) ;
     $image3 = choisirImageByOrder($idObjet, 3) ;
@@ -57,10 +58,11 @@
 <?php if(isset($don) && $don==0) echo "checked";?>>
  Pour Prêter 
 </label>
-    de 
+    <span id="texteDebut">de</span>
     <input name="debutPret" id="debut" type="date">
-    Jusqu'à
+    <span id="texteFin">Jusqu'à</span>
     <input name="FinPret" id="fin" type="date">
+    <button type="button" id="resetAnnonce">Réinitialiser</button>
     <label for="toujours">
     <input id="toujours" type="checkbox" name="typeAnnonce">
     Toujours(jusqu'à desactisvation) 
@@ -68,3 +70,50 @@
 </div>
 <input id="BtnPublier" class="btn" type="submit" value="Publier">
 </form>
+
+<script src="js/jquery-3.7.1.min.js">
+</script>
+<script>
+
+    $('#resetAnnonce').click(function () {
+    // Décocher les radios
+    $('#don').prop('checked', false);
+    $('#pret').prop('checked', false);
+
+    // Réafficher les labels
+    $('#don').closest('label').show();
+    $('#pret').closest('label').show();
+
+    // Réafficher les dates et leurs textes
+    $('#debut').show();
+    $('#fin').show();
+    $('#texteDebut').show();
+    $('#texteFin').show();
+});
+
+$(document).ready(function () {
+    $('input[name="typeAnnonce"]').change(function () {
+        if ($('#don').is(':checked')) {
+            $('#pret').closest('label').hide();
+
+            $('#debut').hide();
+            $('#fin').hide();
+            $('#texteDebut').hide();
+            $('#texteFin').hide();
+
+            $('#don').closest('label').show();
+        }
+
+        if ($('#pret').is(':checked')) {
+            $('#don').closest('label').hide();
+
+            $('#debut').show();
+            $('#fin').show();
+            $('#texteDebut').show();
+            $('#texteFin').show();
+
+            $('#pret').closest('label').show();
+        }
+    });
+});
+</script>

@@ -418,7 +418,7 @@ h1,h2 {
 }
 #BtnPublier {
     position:absolute ;
-    bottom:50px ;
+    bottom:0px ;
     left:650px;
 }
 /*
