@@ -7,10 +7,58 @@ include_once("libs/modele.php");
 <script src ="js/jquery-3.7.1.min.js"></script>
 <script src ="js/annonces.js"></script>
 
+<style>
+        
+    .suggest-container {
+        position: relative;
+        display: inline-block;
+        width: 250px; /* adapte à la largeur de ton input */
+    }
+    
+    #recherche {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 6px 10px;
+        border: 1px solid #888;
+        border-radius: 3px;
+        outline: none;
+    }
+    
+    #suggestions {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        border: 1px solid #888;
+        border-top: none;
+        z-index: 1001;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-height: 180px;
+        overflow-y: auto;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    #suggestions li {
+        display: block;
+        padding: 6px 12px;
+        border-bottom: 1px solid #eee;
+        cursor: pointer;
+        background: white;
+        transition: background 0.2s;
+    }
+    
+    #suggestions li:last-child {
+        border-bottom: none;
+    }
+    
+    #suggestions li:hover {
+        background: #f0f0f0;
+    }
 
-
-
-
+</style>
 
 <!-- STRUCTURE DE LA PAGE ===================================== -->
 
@@ -49,8 +97,14 @@ include_once("libs/modele.php");
             <option value="ancien">Plus anciennes d'abord</option>
         </select>
 
-        <input type="text" id="recherche" name="recherche" placeholder="Rechercher...">
-        <button id="btnFiltrer" type="button" >Filtrer</button>
+                <button id="btnFiltrer" type="button" >Filtrer</button>
+
+
+        <div class="suggest-container">
+            <input type="text" id="recherche" name="recherche" placeholder="Rechercher...">
+            <ul id="suggestions" style="display:none;"></ul>
+        </div>
+
     
 </fieldset>
 
@@ -151,6 +205,41 @@ include_once("libs/modele.php");
             
 
         });//fin click sur le bouton Filtrer
+
+
+        // Suggestions dynamiques sur la barre de recherche
+    $("#recherche").on("keyup", function() {
+        let val = $(this).val();
+        if (val.length > 0) {
+            $.get("api/suggestionsObjets", {debutNom: val}, function(data) {
+                let suggestions = JSON.parse(data);
+                if (suggestions.length > 0) {
+                    let html = "";
+                    suggestions.forEach(function(obj) {
+                        html += `<li data-id="${obj.id}" style="cursor:pointer; padding:2px 8px;">${obj.nom}</li>`;
+                    });
+                    $("#suggestions").html(html).show();
+                } else {
+                    $("#suggestions").hide();
+                }
+            });
+        } else {
+            $("#suggestions").hide();
+        }
+    });//fin keyup sur la barre de recherche
+
+    // Clic sur une suggestion
+    $("#suggestions").on("click", "li", function() {
+        let id = $(this).data("id");
+        window.location.href = "annonce/" + id;
+    });//fin click sur une suggestion
+
+    // Cacher les suggestions si on clique ailleurs
+    $(document).click(function(e) {
+        if (!$(e.target).closest("#recherche, #suggestions").length) {
+            $("#suggestions").hide();
+        }
+    });//finclick document
 
     });//fin document ready
 

@@ -71,6 +71,11 @@ if ($view == 'api') {
             }
 
             break;
+        case 'suggestionsObjets':
+            $debutNom = valider('debutNom');
+            $result = suggestionsObjets($debutNom);
+            echo json_encode($result);
+        exit;
         
         default:
             // on a pas reconnue ce qui est demandé

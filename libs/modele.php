@@ -217,6 +217,12 @@ function getCategorieByNom($nomCategorie) {
     return parcoursRs(SQLSelect($SQL));
 }
 
+function suggestionsObjets($debutNom) {
+    $debutNom = htmlspecialchars($debutNom);
+    $SQL = "SELECT id, nom FROM Objet WHERE nom LIKE '$debutNom%'";
+    return parcoursRs(SQLSelect($SQL));
+}
+
 //   fonction ListerObjets(....) permet de lister les objets de la base de données
 //   en fonction de plusieurs paramètres donné dans un tableau associatif $options: 
 //   - categorie (string) : catégorie de l'objet

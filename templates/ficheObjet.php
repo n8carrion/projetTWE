@@ -130,6 +130,8 @@
                 data: { idObjet: <?= $idObjet ?> }, // Envoi de l'ID de l'objet à supprimer
                 success: function(reponse) {
                   console.log(reponse);
+                  //redirige vers la page  d'accueil
+                  window.location.href = "accueil";
                 },
                 error: function() {
                     alert("Une erreur s'est produite lors de la suppression de l'annonce.");
