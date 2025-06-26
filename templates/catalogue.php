@@ -6,6 +6,30 @@ include_once("libs/modele.php");
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <!-- <scipt src ="js/jquery-3.7.1.min.js"></scipt> -->
 
+
+<style>
+    .elemCarte .etiquette {
+        display : inline-block;
+        padding : 4px;
+        margin : 2px;
+        color : rgba(251, 249, 246, 255);
+        background-color: darkgreen;
+        border-radius: 3px;
+    }
+
+    /* tous les div voisin direct d'une classe etiquette sont en display inline block */
+    .etiquette + div {
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .carteObjet:hover{
+        opacity: 0.6;
+    }
+
+</style>
+
 <!-- STRUCTURE DE LA PAGE ===================================== -->
 
 
@@ -86,9 +110,22 @@ include_once("libs/modele.php");
         var titreCarte = $('<h2></h2>').text(oObjet.nom);
 
 
-        var details = $('<p></p>').html('<strong>Type :</strong> ' + oObjet.typeAnnonce + '<br>' +
-            '<strong>Catégorie :</strong> ' + oObjet.categorieNom + '<br>' +
-            '<strong>Statut :</strong> ' + oObjet.statutObjet);
+        var details = $('<p></p>')
+                    .append(
+                        $('<div class="elemCarte"></div>')
+                            .append('<div class="etiquette" >Type :</div>')
+                            .append('<div>' + oObjet.typeAnnonce + '</div>')
+                    )
+                    .append(
+                        $('<div class="elemCarte"></div>')
+                            .append('<div class="etiquette">Catégorie :</div>')
+                            .append('<div>' + oObjet.categorieNom + '</div>')
+                    )
+                    .append(
+                        $('<div class="elemCarte"></div>')
+                            .append('<div class="etiquette">Statut :</div>')
+                            .append('<div>' + oObjet.statutObjet + '</div>')
+                    );
 
         // Assembler la carte
         lien.append(img, titreCarte, details);
