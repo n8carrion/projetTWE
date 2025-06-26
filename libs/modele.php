@@ -380,7 +380,6 @@ function infoObjet($idObjet) {
   // fonction lister Utilisateur(class=”both”) //étudiant ou moderateur
   // Fonction modifierUtilisateur()
   // fonction creerUtilisateur()
-  // Fonction ListerObjetsASoi(idPrioprietaire)
   // Fonction ListerObjetsCategorie()
   // Fonction supprimerUtilisateur() pour le modérateur
 

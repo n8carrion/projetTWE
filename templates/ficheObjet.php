@@ -18,11 +18,12 @@
 ?>
 <div class="container">
     <div class="left">
-            <?php if (empty($images)): ?>
-              <div class="mySlides">
-                <div class="numbertext">1 / 1</div>
-                <img src="uploads/imagesObjets/noimage.jpg" style="width:100%">
-              </div>
+          
+          <?php if (empty($images)): ?>
+          <div class="mySlides">
+            <div class="numbertext">1 / 1</div>
+            <img src="ressources/noImage.jpg" alt="Aucune image" style="width:100%">
+          </div>
             <?php else: ?>
               <?php foreach ($images as $index => $image): ?>
                 <div class="mySlides">
