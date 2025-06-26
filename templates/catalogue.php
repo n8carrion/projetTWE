@@ -16,8 +16,9 @@ include_once("libs/modele.php");
     <legend>Filtres</legend>
     
 
-        <label for="categorie">Catégorie :</label>
-        <select name="categorie" id="categorie">
+        <label for="categorieAnnonce">Catégorie :</label>
+        <select name="categorie" id="categorieAnnonce">
+            <option value="all">Toutes les catégorie</option>
             <?php
             // On récupère les catégories d'objets depuis la base de données
             $SQL = "SELECT DISTINCT nom FROM Categorie";
@@ -29,11 +30,17 @@ include_once("libs/modele.php");
             ?>
         </select>
 
-        <label for="type">Type :</label>
+        <label for="typeAnnonce">Type :</label>
         <select name="type" id="typeAnnonce">
-            <option value="">Tous les types</option>
+            <option value="all">Tous les types</option>
             <option value="don">Don</option>
             <option value="pret">Prêt</option>
+        </select>
+
+        <label for="sortAnnonce">Trier par :</label>
+        <select name="sort" id="sortAnnonce">
+            <option value="recent">Plus récentes d'abord</option>
+            <option value="ancien">Plus anciennes d'abord</option>
         </select>
 
         <input type="text" id="recherche" name="recherche" placeholder="Rechercher...">
@@ -42,30 +49,23 @@ include_once("libs/modele.php");
 </fieldset>
 
 
-
-
-
 <!-- Catalogue des objets -->
 <fieldset id="annonces">
     <legend>Les annonces</legend>
-    <div>
-    <!-- On affiche un message si aucune annonce n'est trouvée -->
-        <h2 id="messageAucunObjet" style="display : none; color: red; text-align : center;">Aucune annonce trouvée...</h2>
-    </div>
+   
 
-  
-
-    
-
-     
-
-    <!-- Répété avec requête AJAX -->
 
 <!-- on fait une requête AJAX qui envoie les filtres à une page listerObjet.php -->
  <!-- si c'est un succes, alors ca nous renvoi comme réponse une tableau JSON clé = idObjet et valeur = objet JSON de l'objet -->
 <!-- puis on parcours tout et on donne chaque objet sous format JSON à la fonction ajoutObjet(oObjet) -->
+ <!-- Les carteObjet sont ajoutée avec requête AJAX -->
 
 </fieldset>
+
+ <div>
+    <!-- On affiche un message si aucune annonce n'est trouvée -->
+        <h2 id="messageAucunObjet" style="display : none; color: red; text-align : center;">Aucune annonce trouvée...</h2>
+    </div>
 
 <script>
 
@@ -121,7 +121,7 @@ include_once("libs/modele.php");
             type: 'GET',
             dataType : 'json',
             success: function(reponse) {
-                console.log(reponse); // Afficher la réponse dans la console 
+                console.log(reponse);  
                 // Vider la liste des objets avant d'ajouter les nouveaux
                 $('#annonces').empty();
 
@@ -142,15 +142,19 @@ include_once("libs/modele.php");
         // Événement de clic sur le bouton Filtrer
         $('#btnFiltrer').click(function() {
 
-            var categorie = $('#categorie').val();
+            var categorie = $('#categorieAnnonce').val();
             var type = $('#typeAnnonce').val();
+            var sort = $('#sortAnnonce').val(); 
+             console.log(sort);
+
             $.ajax({
                 url: 'api/listerObjet', 
                 type: 'GET',
                 dataType : 'json',
                 data: {
                     "categorie": categorie,
-                    "type": type
+                    "type": type,
+                    "sort": sort
                 },
                 success: function(reponse) {
                     console.log(reponse); // Afficher la réponse dans la console pour le débogage

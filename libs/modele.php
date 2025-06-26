@@ -202,12 +202,13 @@ function supprimerCategorie ($idCategorie) {
   // ]
   // }
 function listerObjets($options = array()) {
+  
     // la tableau associatif $options peut contenir : 
     // 'categorie', 'type', 'utilisateur', 'statut', 'amount', 'sort'
     $SQL = "SELECT * FROM Objet WHERE 1=1"; //toujours vrai, donc permet de tout selectionner
 
     // Filtrage par catégorie (par nom, via idCategorie)
-if (!empty($options['categorie'])) {
+if (!empty($options['categorie']) && $options['categorie']!=="all") {
     $categorie = htmlspecialchars($options['categorie']);
     // On récupère l'id de la catégorie à partir de son nom
     $SQLcat = "SELECT id FROM Categorie WHERE nom='$categorie'";
@@ -223,7 +224,7 @@ if (!empty($options['categorie'])) {
 
 
     // Filtrage par type
-    if (!empty($options['type'])) {
+    if (!empty($options['type']) && $options['type']!=="all") {
         $type = htmlspecialchars($options['type']);
         $SQL .= " AND typeAnnonce='$type'";
     }
@@ -246,10 +247,10 @@ if (!empty($options['categorie'])) {
         if ($options['sort'] == "recent") {
             $SQL .= " ORDER BY dateCreation DESC";
         } else if ($options['sort'] == "ancien") {
-            $SQL .= " ORDER BY dateCreation ASC";
+            $SQL .= " ORDER BY id ASC";
         } // Ajoute d'autres tris si besoin
     } else {
-        $SQL .= " ORDER BY id DESC";
+        $SQL .= " ORDER BY dateCreation DESC";
     }
 
     // Limite le nombre de résultats
@@ -264,7 +265,10 @@ if (!empty($options['categorie'])) {
     //le tableau contiendra tous les oBjets des objets concernés par les filtres
 
     //TODO : le tableau renvoyé doit aussi contenir les images associées à chaque objet!!
-    $res = parcoursRs(SQLSelect($SQL));
+    
+    $res = SQLSelect($SQL);
+    $res= parcoursRs($res);
+    
 
     // Pour chaque objet, on ajoute le champ "images"
     foreach ($res as &$objet) {
