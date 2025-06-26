@@ -103,27 +103,56 @@ switch ($view) {
         }
         break;
 
-    case "annonce": // TODO : mettre en place l'authentification
-        if (is_null($data)) {
+    case "annonce": // base/annonce*
+        if (is_null($data)) { // base/annonce
             // on cherche à aller à une annonce, sans préciser laquelle...
             $mainpage = "templates/404.php";
             $title = "Erreur 404";
-        } elseif (count($data) > 1 && $data[1] == "edit") {
+        } elseif ($data[0]=="edit") { // base/annonce/edit
+            // On cherche à éditer une annonce sans préciser laquelle : Création d'une nouvelle annonce
+            if (valider("connecte","SESSION")) {
+                $idObjet = -1;
+                $mainpage = "templates/editionObjet.php";
+                $title = "Nouvelle annonce";
+            } else {
+                header('Location: '.$base.'login');
+                die();
+            }
+        } elseif ($data[0] != "" && is_numeric($data[0]) && count($data) <= 2) { // base/annonce/#/*
             $idObjet = $data[0];
-            $mainpage = "templates/editionObjet.php";
-            $title = "Édition de \"Nom de l'objet ici\""; // TODO
-        } elseif ($data[0] == "") {
+
+            // on vérifie si l'id correspond bien à un objet
+            if (!($objetInfo = infoObjet($idObjet))){
+                $mainpage = "templates/404.php";
+                $title = "Erreur 404";
+                break;
+            }
+
+            $objetString = $objetInfo[0]["nom"];
+            
+            if (count($data) == 2 && $data[1] == "edit") { // base/annonce/#/edit
+                if (!valider("connecte","SESSION")) {
+                    header('Location: '.$base.'login');
+                    die();
+                } elseif ($objetInfo[0]["idProprietaire"] == valider("idUser", "SESSION") || isModerateur(valider("idUser", "SESSION"))) {
+                    $mainpage = "templates/editionObjet.php";
+                    $title = "Édition de l'annonce \"".$objetString.'"';
+                } else {
+                    $mainpage = "templates/403.php";
+                    $title = "Erreur 403";
+                }
+            } else { // base/annonce/#
+                $mainpage = "templates/ficheObjet.php";
+                $title = $objetString;
+            }
+        } else {
             $mainpage = "templates/404.php";
             $title = "Erreur 404";
-        } else {
-            $idObjet = $data[0];
-            $mainpage = "templates/ficheObjet.php";
-            $title = "Nom de l'objet ici"; // TODO
         }
         break;
 
     case "profil":
-        if (is_null($data) || $data[0]=="edit") {
+        if (is_null($data) || $data[0]=="edit") { // base/profil ou base/profil/edit
             // On cherche à aller à un profil, sans préciser lequel...
             // Si l'utilisateur est connecté, on redirige vers son profil, et sinon on redirige vers login
             if (valider("connecte","SESSION")) {
@@ -137,16 +166,19 @@ switch ($view) {
                 die();
             }
         }
-        if (is_numeric($data[0])) {
+        if ($data[0] != "" && is_numeric($data[0]) && count($data) <= 2) { // base/profil/#/*
             $idProfil = $data[0];
             
+            // on vérifie si l'id correspond bien à un utilisateur
             if (!($userInfo = infoUtilisateur($idProfil))){
                 $mainpage = "templates/404.php";
                 $title = "Erreur 404";
                 break;
             }
+
             $userString = $userInfo[0]["prenom"] . " " . $userInfo[0]["nom"];
-            if (count($data) > 1 && $data[1] == "edit") {
+
+            if (count($data) == 2 && $data[1] == "edit") { // base/profil/#/edit
                 if (!valider("connecte","SESSION")) {
                     header('Location: '.$base.'login');
                     die();
@@ -157,10 +189,13 @@ switch ($view) {
                     $mainpage = "templates/403.php";
                     $title = "Erreur 403";
                 }
-            } else {
+            } else { // base/profil/#
                 $mainpage = "templates/profilUtilisateur.php";
                 $title = "Profil de ".$userString;
             }
+        } else {
+            $mainpage = "templates/404.php";
+            $title = "Erreur 404";
         }
         break;
 
