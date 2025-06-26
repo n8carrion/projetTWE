@@ -3,7 +3,7 @@
 
 <script>
     var params = {
-            amount : "4",// Nombre d'annonces à afficher
+            amount : 4,// Nombre d'annonces à afficher
             sort: "recent" // Tri par date de création
     };
     // Appel de la fonction pour charger les annonces
