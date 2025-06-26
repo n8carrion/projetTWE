@@ -48,6 +48,7 @@
 
     <div class="details">
         <h2 id="objet-nom"><?= $nom ?></h2>
+        <p><strong>Statut :</strong></p>
         <p id="statutObjet"><?=$infoObjet["statutObjet"]?> </p>
 
         <p><strong>Description :</strong></p>
@@ -58,8 +59,8 @@
 
         <p>
             <strong>Publié par :</strong><?=$prenomUser  ?> <?=$nomUser ?>
-            <button id="button_user_profil">
-                <a href="profil/<?=$idUser?> ">Voir Profil</a></button>
+            <button class="btn" id="button_user_profil">
+                <a  href="profil/<?=$idUser?> ">Voir Profil</a></button>
         </p>
         <?php if($infoObjet["typeAnnonce"]=="Pret"): ?>
         <p id="objet-dates"><strong>Dates de prêt :</strong> du <?= $infoObjet["debutPret"] ?> au <?= $infoObjet["finPret"] ?></p>
@@ -71,12 +72,12 @@
         </div>
         <?php if($objetInfo[0]["idProprietaire"] == valider("idUser", "SESSION") || isModerateur(valider("idUser", "SESSION"))): ?>
         <div class="admin-options">
-            <button> <!-- not sure yet if the link will be js or done just with <a></a>-->
+            <button class="btn"> <!-- not sure yet if the link will be js or done just with <a></a>-->
                 <a href="annonce/<?=$idObjet?>/edit">
                     Modifier l'annonce </a>
             </button>
 
-            <button id="btnSupprimerAnnonce" >Supprimer l'annonce</button>
+            <button class="btn" id="btnSupprimerAnnonce" >Supprimer l'annonce</button>
         </div>
     <?php endif; ?>
     </div>
@@ -127,8 +128,8 @@
                 url: "api/supprimerObjet",
                 type: "GET",
                 data: { idObjet: <?= $idObjet ?> }, // Envoi de l'ID de l'objet à supprimer
-                success: function(response) {
-                  console.log(response);
+                success: function(reponse) {
+                  console.log(reponse);
                 },
                 error: function() {
                     alert("Une erreur s'est produite lors de la suppression de l'annonce.");

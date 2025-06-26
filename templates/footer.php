@@ -12,8 +12,23 @@
             <a  href="accueil">Accueil</a>
             <a  href="catalogue">Catalogue</a>
             <a  href="apropos">À propos</a>
+</br>La REZerve, une création de Valentin GREGOIRE, Natalia CARRION, William TAN et Jeanne BOUCHER, pour l'electif TWE 2024-2025
         </div>
 
+        <style>
+            #logoCentrale {
+                width: 300px;
+                height: auto;
+                margin-left: 10px;
+                margin-right: 10px;
+                
+                
+            }
+
+        </style>
+                <img id="logoCentrale" src="ressources/Logo-EcoleCentrale-couleur-RVB.png" alt="Logo Centrale Lille ">
+        
+        
         <div id="Odd">
             <p id=textOdd>
                 La REZerve répond aux objectifs de 
@@ -21,6 +36,8 @@
                 11. Villes et Communautés durables <br>
                 12. Consommation et production responsable
             </p>
+        
+
 
             <div id="imgOdd">
                 <a target="_blank" href="https://pactemondial.org/17-objectifs-developpement-durable/odd-11-villes-et-communautes-durables/">

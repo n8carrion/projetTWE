@@ -19,13 +19,14 @@ $userString = $infoUser['prenom'] ." ". $infoUser['nom'];
 <section class="profile-info-box" style="background-color: #fff; padding: 1.5em; border-radius: 8px;">
   <h2><?=$userString?></h2>
 
-  <p><a href="<?= $infoUser['facebook'] ?>">Facebook</a></p>
-  <p>Email : <a href="mailto:<?= $infoUser['mail'] ?>"><?=$infoUser["mail"]?></a></p>
-  <p>Telephone : <?= $infoUser["telephone"] ?></p>
-  <p>Adresse : <?= $infoUser["adresse"] ?></p>
+  <p class="btn" ><a href="<?= $infoUser['facebook'] ?>">Aller sur son profil Facebook</a></p>
+
+  <p><strong>Email</strong> : <a href="mailto:<?= $infoUser['mail'] ?>"><?=$infoUser["mail"]?></a></p>
+  <p><strong>Telephone</strong> : <?= $infoUser["telephone"] ?></p>
+  <p><strong>Adresse</strong>: <?= $infoUser["adresse"] ?></p>
 
   <?php if($idProfil==$userInfo[0]['id']): ?>
-  <button><a href="profil/edit">Modifier profil </a> </button>
+  <button class="btn"><a href="profil/edit">Modifier profil </a> </button>
   <?php endif; ?>
 </section>
 

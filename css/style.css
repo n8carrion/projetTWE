@@ -2,6 +2,15 @@
     display: none;
 }
 
+
+
+/* style pour les lien (non surligné et couleur noir */
+
+a {
+    text-decoration : none;
+    color : rgb(12, 40, 12);
+}
+
 fieldset {
     border: 2px solid #ccc;
 }
@@ -14,7 +23,7 @@ legend {
     .btn {
         display: inline-block;
     padding: 8px 15px;
-    background-color:rgb(170, 202, 41);
+    background-color:rgb(170, 202, 41) !important;
     color: rgba(251,249,246,255);
     /* enleve le texte souligné pour un lien */
     text-decoration: none; 
@@ -22,7 +31,8 @@ legend {
     font-weight: bold;
     }
     .btn:hover {
-        background-color: rgb(150, 180, 30); /* Couleur au survol */
+        background-color: rgb(150, 180, 30) !important; 
+        cursor: pointer;
     }
 
     /* STYLE POUR LE MENU DE NAVIGATION de classe "menu" */
@@ -142,10 +152,38 @@ legend {
     max-width: 1200px;
     margin: 0 auto;
 }
+.container2 {
+    width: 100%;
+    max-width: 2000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap; /* Allow wrapping if needed */
+    gap: 20px;
+    box-sizing: border-box;
+}
 .left{
     flex:1;
     position: relative;
+    max-width: 40%;
 
+
+}
+.right{
+    display: flex;
+    flex-direction: column;
+    max-width: 60%;
+
+
+}
+
+
+form#publication {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 /* Main image
@@ -190,7 +228,8 @@ img {
 /* Hide the images by default */
 .mySlides {
     display: none;
-    width:500px;
+    width: 100%;
+    max-width: 400px;
 }
 
 /* Add a pointer when hovering over the thumbnail images */
@@ -218,6 +257,10 @@ img {
 /* Position the "next button" to the right */
 .next {
     right: 80px;
+    border-radius: 3px 0 0 3px;
+}
+.next2 {
+    right: 200px;
     border-radius: 3px 0 0 3px;
 }
 
@@ -295,6 +338,7 @@ img {
     text-decoration: none;
     border-radius: 3px;
     font-weight: bold;
+    margin : 3px !important;
 }
 
 .btn:hover {
@@ -403,13 +447,8 @@ h1,h2 {
 #infos {
     padding:20px;
     margin:20px;
-    display: block;
-}
-
-/* Style EditionObjet */
-#publication {
-    position:relative ;
-    height:1000px;
+    flex-direction: row;
+    align-items: flex-end;
 }
 
 #publication input {
@@ -419,24 +458,22 @@ h1,h2 {
 }
 
 #infos {
-    position:absolute;
-    left:250px ;
+    padding: 20px;
+    margin: 20px;
 }
 
 #infos label {
-   position:absolute;
+
     left:80px ;
     bottom:100px ;
 }
 
 #infos select {
-   position:absolute;
-    left:150px ;
+
     bottom:100px ;
 }
 #typeService {
-    position:absolute;
-    left:600px ;
+
     padding:20px;
     margin:20px;
     display: block;

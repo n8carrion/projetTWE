@@ -65,8 +65,10 @@ if ($view == 'api') {
             if (is_numeric($idObjet)) {
                 $result = supprimerObjet($idObjet);
                 echo($result);
-
             } 
+            else{
+                echo("erreur controleur pour suppression annonce");
+            }
 
             break;
         
