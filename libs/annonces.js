@@ -1,10 +1,8 @@
 
 
-
-
 //Fonction pour créer une carte d'objet, qui sera ensuite ajoutée au catalogue 
 // Cette fonction est appelée pour chaque objet reçu de la requête AJAX
-    function mkCarteObjet(oObjet) {
+function mkCarteObjet(oObjet) {
 
         var carte = $('<div class="carteObjet"></div>');
         var lien = $('<a></a>').attr('href', 'annonce/' + oObjet.id);
@@ -18,9 +16,22 @@
         var titreCarte = $('<h2></h2>').text(oObjet.nom);
 
 
-        var details = $('<p></p>').html('<strong>Type :</strong> ' + oObjet.typeAnnonce + '<br>' +
-            '<strong>Catégorie :</strong> ' + oObjet.categorieObjet + '<br>' +
-            '<strong>Statut :</strong> ' + oObjet.statutObjet);
+        var details = $('<p></p>')
+                    .append(
+                        $('<div class="elemCarte"></div>')
+                            .append('<div class="etiquette" >Type :</div>')
+                            .append('<div>' + oObjet.typeAnnonce + '</div>')
+                    )
+                    .append(
+                        $('<div class="elemCarte"></div>')
+                            .append('<div class="etiquette">Catégorie :</div>')
+                            .append('<div>' + oObjet.categorieNom + '</div>')
+                    )
+                    .append(
+                        $('<div class="elemCarte"></div>')
+                            .append('<div class="etiquette">Statut :</div>')
+                            .append('<div>' + oObjet.statutObjet + '</div>')
+                    );
 
         // Assembler la carte
         lien.append(img, titreCarte, details);

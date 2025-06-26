@@ -3,8 +3,8 @@
 include_once("libs/modele.php");            
 ?>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<!-- <scipt src ="js/jquery-3.7.1.min.js"></scipt> -->
+<!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
+<script src ="js/jquery-3.7.1.min.js"></script>
 
 
 <style>
