@@ -136,9 +136,11 @@ switch ($view) {
         } elseif ($data[0]=="edit") { // base/annonce/edit
             // On cherche à éditer une annonce sans préciser laquelle : Création d'une nouvelle annonce
             if (valider("connecte","SESSION")) {
-                $idObjet = -1;
-                $mainpage = "templates/editionObjet.php";
-                $title = "Nouvelle annonce";
+                if (!$idObjet = objetBrouillon(valider("idUser","SESSION"))){
+                    $idObjet = creerObjetVide(valider("idUser","SESSION"));
+                }
+                header('Location: '.$base.'annonce/'.$idObjet.'/edit');
+                die();
             } else {
                 header('Location: '.$base.'login');
                 die();
@@ -154,7 +156,7 @@ switch ($view) {
             }
 
             // si l'objet est archivé, on vérifie que l'utilisateur est connecté, et qu'il est soit propriétaire, soit modérateur
-            if ($objetInfo[0]["statutObjet"] == "Archive" && !(valider("connecte", "SESSION") && (isModerateur(valider("idUser", "SESSION")) || valider("idUser", "SESSION") == $objetInfo[0]["idProprietaire"]))) {
+            if (($objetInfo[0]["statutObjet"] == "Archive" || $objetInfo[0]["statutObjet"] == "Brouillon") && !(valider("connecte", "SESSION") && (isModerateur(valider("idUser", "SESSION")) || valider("idUser", "SESSION") == $objetInfo[0]["idProprietaire"]))) {
                 $mainpage = "templates/403.php";
                 $title = "Erreur 403";
                 break;
