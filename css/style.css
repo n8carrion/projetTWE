@@ -381,6 +381,18 @@ h1,h2 {
     position:absolute;
     left:250px ;
 }
+
+#infos label {
+   position:absolute;
+    left:80px ;
+    bottom:100px ;
+}
+
+#infos select {
+   position:absolute;
+    left:150px ;
+    bottom:100px ;
+}
 #typeService {
     position:absolute;
     left:600px ;
@@ -390,9 +402,10 @@ h1,h2 {
 }
 #BtnPublier {
     position:absolute ;
-    bottom:100px ;
+    bottom:50px ;
     left:650px;
 }
+/*
 input[type="radio"], label{
     display: inline-block!important;
     vertical-align: middle;
@@ -401,6 +414,7 @@ input[type="checkbox"], label{
     display: inline-block!important;
     vertical-align: middle;
 }
+    */
 
 textarea {
     height:300px;
