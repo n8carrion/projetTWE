@@ -169,8 +169,17 @@ function modifierObjet($idObjet, $nom, $description, $typeAnnonce, $statutObjet,
 }
   
 //   La fonction suprimerObjet(idObjet) permet de supprimer un objet de la base de données
+// Elle renvoie false si ca na pas marché 
 function supprimerObjet($idObjet) {
+// On supprime d'abord toutes les images associées à cet objet
+  $SQL = "SELECT id FROM Image WHERE idObjet='$idObjet'";
+  $images = parcoursRs(SQLSelect($SQL));
+  foreach ($images as $img) {
+      supprimerImage($img['id']);
+  }
+
   $SQL = "DELETE FROM Objet WHERE id='$idObjet'" ;
+
   SQLDelete($SQL);
 }
 

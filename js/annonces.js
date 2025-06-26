@@ -43,7 +43,7 @@ function mkCarteObjet(oObjet) {
     }
 
 //Fonction pour charger les annonce dans un element d'id "annonces"
-//params sera donné à la fonction listerObjet de l'API contenu dans api/listerObjet
+//params (qui est un objet json) sera donné à la fonction listerObjet de l'API contenu dans api/listerObjet
 //ne pas oublier dans la page en question d'avoir la librairie jQuery et annonce.js
 function chargerAnnonces(params) {
     $.ajax({

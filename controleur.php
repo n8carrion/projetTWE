@@ -53,6 +53,22 @@ if ($view == 'api') {
             
                 
             break;
+        case 'supprimerObjet':
+            // Suppression d'un objet
+            //c'est ce qu'on lui donne comme idObjet
+            // on vérifie que l'utilisateur est connecté et qu'il a le droit de supprimer l'objet
+            // if (!valider("connecte", "SESSION")) {
+            //     echo json_encode(["success" => false, "error" => "Vous devez être connecté pour supprimer un objet."]);
+            //     die();
+            // }
+            $idObjet = valider("idObjet");
+            if (is_numeric($idObjet)) {
+                $result = supprimerObjet($idObjet);
+                echo($result);
+
+            } 
+
+            break;
         
         default:
             // on a pas reconnue ce qui est demandé

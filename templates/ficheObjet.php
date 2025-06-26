@@ -1,3 +1,5 @@
+<script src="js/jquery-3.7.1.min.js"></script>
+
 <?php
     include_once "libs/modele.php";
     $infoObjet = infoObjet($idObjet)[0];
@@ -73,37 +75,62 @@
                     Modifier l'annonce </a>
             </button>
 
-            <button>Supprimer l'annonce</button>
+            <button id="btnSupprimerAnnonce" >Supprimer l'annonce</button>
         </div>
     </div>
 </div>
+
+
+
 <script>
-let slideIndex = 1;
-showSlides(slideIndex);
+  let slideIndex = 1;
+  showSlides(slideIndex);
 
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
-
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("demo");
-  //let captionText = document.getElementById("caption");
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
+  function plusSlides(n) {
+    showSlides(slideIndex += n);
   }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
+
+  function currentSlide(n) {
+    showSlides(slideIndex = n);
   }
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " active";
-  //captionText.innerHTML = dots[slideIndex-1].alt;
-}
+
+  function showSlides(n) {
+    let i;
+    let slides = document.getElementsByClassName("mySlides");
+    let dots = document.getElementsByClassName("demo");
+    //let captionText = document.getElementById("caption");
+    if (n > slides.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = slides.length}
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[slideIndex-1].style.display = "block";
+    dots[slideIndex-1].className += " active";
+    //captionText.innerHTML = dots[slideIndex-1].alt;
+  }
+
+  $(document).ready(function() {
+    // Gestion de la suppression de l'annonce
+    $("#btnSupprimerAnnonce").click(function() {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cette annonce ?")) {
+            $.ajax({
+                url: "api/supprimerObjet",
+                type: "GET",
+                data: { idObjet: <?= $idObjet ?> }, // Envoi de l'ID de l'objet à supprimer
+                success: function(response) {
+                  console.log(response);
+                },
+                error: function() {
+                    alert("Une erreur s'est produite lors de la suppression de l'annonce.");
+                }
+            });
+        }
+    });
+
+
+
+  });//fin document ready 
 </script>

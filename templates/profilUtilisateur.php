@@ -27,7 +27,7 @@ $userString = $infoUser['prenom'] ." ". $infoUser['nom'];
 <!-- ici même code que catalogue mais adapté-->
 
 <fieldset>
-    <legend>Les annonces de </legend>
+    <legend>Les annonces de <?=$userString?> </legend>
     <div id="annonces">
         <!-- Les cartes seront ajoutées ici grace à chargerAnnonces -->
     </div>
