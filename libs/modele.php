@@ -159,7 +159,7 @@ function creerObjetVide($idProprietaire) {
   //et retourne l'id de l'objet créé
 
   $SQL = "INSERT INTO `Objet` (`id`, `nom`, `idProprietaire`, `description`, `typeAnnonce`, `statutObjet`, `idCategorie`, `dateCreation`, `debutPret`, `finPret`)";
-  $SQL .= " VALUES (NULL, NULL, '$idProprietaire', NULL, 'Don', 'Brouillon', NULL, CURRENT_TIMESTAMP, NULL, NULL)" ;
+  $SQL .= " VALUES  (NULL, '', '$idProprietaire', '', 'Don', 'Disponible', 5, CURRENT_TIMESTAMP, NULL, NULL)" ;
 
   return SQLInsert($SQL) ;
 }
