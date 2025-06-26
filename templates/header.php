@@ -13,7 +13,6 @@ include_once("libs/maLibUtils.php");
         <a id="lienCatalogue" href="catalogue">Catalogue</a>
     </div>
         <input id=barreSearch type="search" placeholder="Recherche d'une annonce">
-        <a class="btn" href="editionObjet">+ Ajouter une annonce</a>
         
     <div class="menu" style="display : inline">
 <?php
@@ -21,6 +20,7 @@ if (valider("connecte","SESSION")) {
     $userInfo = infoUtilisateur(valider("idUser","SESSION"));
     $userString = $userInfo[0]["prenom"] . " " . $userInfo[0]["nom"];
     echo 'Bienvenue '. $userString .' !';
+    echo '<a class="btn" href="annonce/edit">+ Ajouter une annonce</a>';
     echo '<a id="lienSeConnecter" href="profil">Mon profil</a>';
     echo '<a id="lienSeConnecter" href="logout">Se déconnecter</a>';
 } else {

@@ -265,6 +265,22 @@ img {
     opacity: 1;
 }
 
+/*STYLE POUR LE PROFILUTILISATEUR*/
+.profile-info-box {
+    background-color: #fff;
+    padding: 1.5em;
+    border-radius: 8px;
+    max-width: 500px;
+    font-family: Arial, sans-serif;
+}
+
+.profile-info-box h2 {
+    margin-top: 0;
+}
+
+.profile-info-box p {
+    margin: 0.5em 0;
+}
 
 /* Style pour le header et le footer */
 
@@ -405,6 +421,18 @@ h1,h2 {
     position:absolute;
     left:250px ;
 }
+
+#infos label {
+   position:absolute;
+    left:80px ;
+    bottom:100px ;
+}
+
+#infos select {
+   position:absolute;
+    left:150px ;
+    bottom:100px ;
+}
 #typeService {
     position:absolute;
     left:600px ;
@@ -414,9 +442,10 @@ h1,h2 {
 }
 #BtnPublier {
     position:absolute ;
-    bottom:100px ;
+    bottom:50px ;
     left:650px;
 }
+/*
 input[type="radio"], label{
     display: inline-block!important;
     vertical-align: middle;
@@ -425,6 +454,7 @@ input[type="checkbox"], label{
     display: inline-block!important;
     vertical-align: middle;
 }
+    */
 
 textarea {
     height:300px;
