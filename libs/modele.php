@@ -261,7 +261,17 @@ if (!empty($options['categorie']) && $options['categorie']!=="all") {
         $statut = htmlspecialchars($options['statut']);
         $SQL .= " AND statutObjet='$statut'";
     }
-
+    
+    // sécurisation : un utilisateur ne doit pas pouvoir accéder aux annonces archivés d'un autre utilisateur sauf si il est modérateur
+    if (valider("connecte", "SESSION")) {
+      $idCurrentUser = valider("idUser", "SESSION");
+      if (!isModerateur($idCurrentUser)) {
+          $SQL .= " AND (statutObjet!='Archive' OR idProprietaire=$idCurrentUser)"; // il doit être propriétaire pour voir une annonce archivée
+      } // si modérateur, pas de restrictions
+    } else {
+      $SQL .= " AND statutObjet!='Archive'"; // On n'affiche que les annonces non archivés
+    }
+    
 
     // Tri selon la date de création le plus récent d'abord (DESC)ou le plus ancien(ASC)
     if (!empty($options['sort'])) {
