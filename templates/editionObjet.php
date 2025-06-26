@@ -91,7 +91,6 @@
         <div class="right-right">
           <label for="categorieAnnonce">Catégorie :</label>
           <select name="categorie" id="categorieAnnonce">
-            <option value="all">Toutes les catégorie</option>
             <?php
             $SQL = "SELECT DISTINCT nom FROM Categorie";
             $categories = parcoursRs(SQLSelect($SQL));
