@@ -3,8 +3,8 @@
 include_once("libs/modele.php");            
 ?>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- <scipt src ="js/jquery-3.7.1.min.js"></scipt> -->
 
 <!-- STRUCTURE DE LA PAGE ===================================== -->
 
@@ -49,6 +49,7 @@ include_once("libs/modele.php");
 </fieldset>
 
 
+
 <!-- Catalogue des objets -->
 <fieldset id="annonces">
     <legend>Les annonces</legend>
@@ -86,7 +87,7 @@ include_once("libs/modele.php");
 
 
         var details = $('<p></p>').html('<strong>Type :</strong> ' + oObjet.typeAnnonce + '<br>' +
-            '<strong>Catégorie :</strong> ' + oObjet.categorieObjet + '<br>' +
+            '<strong>Catégorie :</strong> ' + oObjet.categorieNom + '<br>' +
             '<strong>Statut :</strong> ' + oObjet.statutObjet);
 
         // Assembler la carte
@@ -121,7 +122,7 @@ include_once("libs/modele.php");
             type: 'GET',
             dataType : 'json',
             success: function(reponse) {
-                console.log(reponse);  
+                console.log(reponse); // Afficher la réponse dans la console 
                 // Vider la liste des objets avant d'ajouter les nouveaux
                 $('#annonces').empty();
 
