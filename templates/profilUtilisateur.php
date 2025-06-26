@@ -20,8 +20,13 @@ $userString = $infoUser['prenom'] ." ". $infoUser['nom'];
   <h2><?=$userString?></h2>
 
   <p><a href="<?= $infoUser['facebook'] ?>">Facebook</a></p>
-  <p><a href="mailto:<?= $infoUser['mail'] ?>">Email : <?=$infoUser["mail"]?></a></p>
-  <p><?= $infoUser["telephone"] ?></p>
+  <p>Email : <a href="mailto:<?= $infoUser['mail'] ?>"><?=$infoUser["mail"]?></a></p>
+  <p>Telephone : <?= $infoUser["telephone"] ?></p>
+  <p>Adresse : <?= $infoUser["adresse"] ?></p>
+
+  <?php if($idProfil==$userInfo[0]['id']): ?>
+  <button><a href="profil/edit">Modifier profil </a> </button>
+  <?php endif; ?>
 </section>
 
 <!-- ici même code que catalogue mais adapté-->

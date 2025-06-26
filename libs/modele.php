@@ -14,16 +14,18 @@ function creerUtilisateur($nom, $prenom, $pseudoCLA, $mail) {
   return SQLInsert($SQL) ;
 }
 
-function modifierUtilisateur($idUtilisateur, $mail, $telephone, $adresse, $statutUtilisateur) {
+//this version doesnt care for moderator status changes. another function can be created for that
+function modifierUtilisateur($idUtilisateur, $mail, $telephone, $adresse, $facebook = "") {
   //Modifie un utilisateur dans la base de données et retourne l'id de l'utilisateur modifié
 
   //Pour éviter les injestion de html il faut encoder les caractères spéciaux HTML :
   $mail = htmlspecialchars($mail);
   $telephone = htmlspecialchars($telephone);
   $adresse=htmlspecialchars($adresse);
-  $statutUtilisateur=htmlspecialchars($statutUtilisateur);
+  //$statutUtilisateur=htmlspecialchars($statutUtilisateur);
+  $facebook = htmlspecialchars($facebook);
 
-  $SQL = "UPDATE Utilisateur SET mail='$mail', telephone='$telephone', adresse='$adresse', statutUtilisateur='$statutUtilisateur'" ;
+  $SQL = "UPDATE Utilisateur SET mail='$mail', telephone='$telephone', adresse='$adresse', facebook='$facebook'" ;
   $SQL .= " WHERE id='$idUtilisateur'" ;
 
   SQLUpdate($SQL) ;
