@@ -8,6 +8,7 @@
     $cat = getCategorie($idcat) ;
     $don = ($infoObjet['typeAnnonce'] =="Don") ;
     $images = getImagesByObjet($idObjet);
+    $size = count($images);
     $image1 = choisirImageByOrder($idObjet, 1) ;
     $image2 = choisirImageByOrder($idObjet, 2) ;
     $image3 = choisirImageByOrder($idObjet, 3) ;
@@ -58,7 +59,7 @@
 <?php if(isset($don) && $don==0) echo "checked";?>>
  Pour Prêter 
 </label>
-    <span id="texteDebut">de</span>
+    <span id="texteDebut"> de</span>
     <input name="debutPret" id="debut" type="date">
     <span id="texteFin">Jusqu'à</span>
     <input name="FinPret" id="fin" type="date">
@@ -69,12 +70,70 @@
     </label>
 </div>
 <input id="BtnPublier" class="btn" type="submit" value="Publier">
+
+<div class="left"  >
+            <?php if (empty($images)): ?>
+              <div class="mySlides">
+                <div class="numbertext">1 / 1</div>
+                <img src="uploads/imagesObjets/noimage.jpg" style="width:100%">
+              </div>
+            <?php else: ?>
+              <?php foreach ($images as $index => $image): ?>
+                <div class="mySlides">
+                  <div class="numbertext"><?= ($index + 1) . " / " .$size ?></div>
+                  <img src="<?= "uploads/imagesObjets/" . $image["hash"] . ".jpg" ?>" style="width:100%">
+                </div>
+              <?php endforeach; ?>
+
+              <a class="prev" onclick="plusSlides(-1)">❮</a>
+              <a class="next" onclick="plusSlides(1)">❯</a>
+
+              <div class="row">
+                <?php foreach ($images as $index => $image): ?>
+                  <div class="column">
+                    <img class="demo cursor" src="<?= "uploads/imagesObjets/" . $image["hash"] . ".jpg" ?>"
+                         style="width:100%" onclick="currentSlide(<?= $index + 1 ?>)" alt="Slide <?= $index + 1 ?>">
+                  </div>
+                <?php endforeach; ?>
+              </div>
+            <?php endif; ?>
+    </div>
+
 </form>
+
+
 
 <script src="js/jquery-3.7.1.min.js">
 </script>
 <script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
 
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("demo");
+      //let captionText = document.getElementById("caption");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " active";
+      //captionText.innerHTML = dots[slideIndex-1].alt;
+    }
     $('#resetAnnonce').click(function () {
     // Décocher les radios
     $('#don').prop('checked', false);
