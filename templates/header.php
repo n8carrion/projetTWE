@@ -47,7 +47,7 @@ if (valider("connecte","SESSION")) {
 <script>
     $(document).ready(function() {
         $("#btnAjouterNot").click(function() {
-            alert("Pour ajouter une annonce, vous tu dois être connecté !");
+            alert("Pour ajouter une annonce, tu dois être connecté !");
         });
 
         

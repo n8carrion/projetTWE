@@ -1,15 +1,7 @@
 <script src ="js/jquery-3.7.1.min.js"></script>
 <script src ="js/annonces.js"></script>
 
-<script>
-    var params = {
-            amount : 4,// Nombre d'annonces à afficher
-            sort: "recent" // Tri par date de création
-    };
-    // Appel de la fonction pour charger les annonces
-    //  voulues dans l'id "annonces"
-    chargerAnnonces(params); 
-</script>
+
 
 
 <div id="description" style="display: flex; align-items: center; justify-content: space-between;border-radius : 3px;  margin : 10px;">
@@ -34,12 +26,60 @@
 
 </div>
 
-<fieldset id="stickyAnnonces">
+<fieldset>
     <legend>Les dernières annonces</legend>
     <div id="annonces">
         <!-- Les cartes seront ajoutées ici grace à chargerAnnonces -->
     </div>
+    <style>
+        #voirPlus {
+            text-align: center;
+            background-color:rgb(22, 71, 37);
+            padding: 10px 0;
+            border-radius: 3px;
+        }
+
+        #voirPlus a {
+            text-decoration: none;
+            color:rgb(255, 255, 255);
+            font-weight: bold;
+        }
+
+        #voirPlus:hover{
+            background-color: rgb(68, 103, 25);
+            cursor: pointer;
+        }
+
+
+    </style>
+    <div id="voirPlus">
+        <a>Voir plus !</a>
+    </div>
 </fieldset>
+
+<script>
+    var params = {
+            amount : 4,// Nombre d'annonces à afficher
+            sort: "recent" // Tri par date de création
+    };
+    // Appel de la fonction pour charger les annonces
+    //  voulues dans l'id "annonces"
+    chargerAnnonces(params); 
+
+    
+        // Gestion du clic sur le lien "Voir plus"
+        $("#voirPlus").click(function() {
+            // console.log("Voir plus cliqué");
+            // $("#lienCatalogue").click();
+            window.location.href = "catalogue";
+        });//fin click sur le lien Voir plus
+        
+        
+       
+    
+</script>
+
+
 
 
 
