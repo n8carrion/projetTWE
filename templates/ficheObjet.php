@@ -2,7 +2,7 @@
     include_once "libs/modele.php";
     $infoObjet = infoObjet($idObjet)[0];
     $idcategorie = $infoObjet["idCategorie"];
-    //$cat = getCategorie($idcategorie);
+    $cat = getCategorie($idcategorie);
     $nom = $infoObjet["nom"];
     $idUser = $infoObjet["idProprietaire"];
     $infoUser =infoUtilisateur($idUser)[0];
@@ -50,7 +50,7 @@
         <p><strong>Description :</strong></p>
         <p id="objet-description"> <?=$infoObjet['description'] ?></p>
 
-        <p id="categorieObjet"><strong>Catégorie :</strong>categorie</p>
+        <p id="categorieObjet"><strong>Catégorie :</strong>still testing getCategorie</p>
         <p id=objet-typeAnnonce><strong>Type :</strong> <?=$infoObjet["typeAnnonce"]?></p>
 
         <p>

@@ -183,6 +183,7 @@ function getCategorie($idCategorie) {
   $SQL .= " INNER JOIN Objet o on o.idCategorie = c.id" ;
   $SQL .= " WHERE o.idCategorie='$idCategorie'";
   return SQLGetChamp($SQL) ;
+  //parcoursRs(SQLSelect($SQL));
 }
 
 //pour ajouter pour le modérateur
