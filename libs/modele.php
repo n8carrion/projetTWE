@@ -98,6 +98,19 @@ function choisirImage($idObjet, $idImage) {
   return parcoursRs(SQLSelect($SQL)) ;
 }
 
+// TODO: if image is not available, return hash for a placeholder image
+
+function choisirImageByOrder($idObjet, $imageOrdre) {
+  //Retourne l'objet JSON représentant l'image donnée
+  // dont $idImage est en paramètres
+  // associée à l'objet dont l'id est $idObjet
+  $SQL = "SELECT i.* FROM Image i";
+  $SQL .= " INNER JOIN Objet o ON i.idObjet= o.id";
+  $SQL .= " WHERE i.idObjet = '$idObjet' AND i.ordre='$imageOrdre'";
+
+  return parcoursRs(SQLSelect($SQL)) ;
+}
+
 //===========================
 // Fonctions pour les objets ============================================
 //===========================

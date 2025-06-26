@@ -9,22 +9,33 @@
     $userMail = $infoUser["mail"];
     $userTelephone = $infoUser["telephone"];
 
+    $image1 = choisirImageByOrder($idObjet, 1) ;
+    $image2 = choisirImageByOrder($idObjet, 2) ;
+    $image3 = choisirImageByOrder($idObjet, 3) ;
+    $image4 = choisirImageByOrder($idObjet, 4) ;
+    $mainImage = $image1[0]["hash"];
+    $source1 = "uploads/imagesObjets/" . $mainImage  . ".jpg";
+    $source2 = "uploads/imagesObjets/" . $image2[0]["hash"]  . ".jpg";
+    $source3 = "uploads/imagesObjets/" . $image3[0]["hash"]  . ".jpg";
+    //$source4 = "uploads/imagesObjets/" . $image4[0]["hash"]  . ".jpg";
+
 
     // TODO :
-    // - LINK IMAGES TO FICHE OBJET
+    //
     //- add dates pret (for the moment null)
     // - link to user profil
     // - link to 404 if id doesnt exist
+    // - add placeholder image if image not available
 ?>
 <div class="container">
     <div class="left">
-        <div class="main-image">
-            <img src="uploads/imagesObjets/1_1.jpg" alt="Image principale" class="main-img">
-        </div>
+
+            <img class="main-image" src="<?=$source1 ?> "alt="Image principale" >
+
         <div class="thumbnails">
-            <div></div>
-            <div></div>
-            <div></div> <!-- this here can be changed to img, then in <style> would be .thumbnails img-->
+            <img src="<?=$source2 ?>" alt="thumbnail" >
+            <img src="<?=$source3 ?>"alt="thumbnail" >
+            <img src="<?=$source3 ?>" alt="thumbnail" ><!-- this here can be changed to img, then in <style> would be .thumbnails img-->
         </div>
     </div>
 
@@ -41,7 +52,7 @@
         <p>
             <strong>Publié par :</strong><?=$prenomUser  ?> <?=$nomUser ?>
             <button id="button_user_profil">
-                <a href="profil/1">Voir Profil</a></button>
+                <a href="profil">Voir Profil</a></button>
         </p>
 
         <p id="objet-dates"><strong>Dates de prêt :</strong> du 01/07/2025 au 15/07/2025</p>

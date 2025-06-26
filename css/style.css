@@ -141,16 +141,20 @@ legend {
     max-width: 1200px;
     margin: 0 auto;
 }
+.left{
+    flex:1;
+}
 
-/* Main image placeholder */
+/* Main image*/
 .main-image {
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 90%;
     background-color: #ccc;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 
 .thumbnails {
     display: flex;
@@ -158,9 +162,10 @@ legend {
     margin-top: 10px;
 }
 
-.thumbnails div {
-    width: 60px;
-    height: 60px;
+.thumbnails img{
+    width: 80px;
+    height: 80px;
+    object-fit: cover; /* ensures images don't overflow their boxes */
     background-color: #ccc;
 }
 
@@ -175,6 +180,8 @@ legend {
     font-weight: bold;
     margin-bottom: 10px;
 }
+
+
 
 /* Style pour le header et le footer */
 
