@@ -41,7 +41,7 @@ function ListerObjetsASoi($idProprietaire) {
   $SQL .= " INNER JOIN Utilisateur u ON o.idProprietaire = u.id" ;
   $SQL .= " WHERE o.idProprietaire = '$idProprietaire'" ;
 
-  return parcoursRs(SQLSelect($SQL)) ;
+  return parcoursRs(SQLSelect($SQL));
 }
 function listerUtilisateur($statut="both") {
   //Renvoie le tableau des utilisateurs dont 

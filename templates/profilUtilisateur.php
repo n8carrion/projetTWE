@@ -1,13 +1,16 @@
 <?php
 include_once("libs/modele.php");
 
+$catalogueUser = ListerObjetsASoi($userInfo[0]["id"]);
+
+
 
 ?>
 
 <section class="profile-info-box" style="background-color: #fff; padding: 1.5em; border-radius: 8px;">
   <h2><?=$userString?></h2>
 
-  <p><a href="$userInfo[0]['facebook']">Facebook</a></p>
+  <p><a href="<?= $userInfo[0]['facebook'] ?>">Facebook</a></p>
   <p><a href="mailto:<?= $userInfo[0]['mail'] ?>">Email : <?=$userInfo[0]["mail"]?></a></p>
   <p><?= $userInfo[0]["telephone"] ?></p>
 </section>
@@ -26,6 +29,7 @@ include_once("libs/modele.php");
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     const idUtilisateur = <?= json_encode($userInfo[0]["id"]) ?>;
+    const objetsUtilisateur = <?= json_encode($catalogueUser) ?>;
     //Fonction pour créer une carte d'objet, qui sera ensuite ajoutée au catalogue
     // Cette fonction est appelée pour chaque objet reçu de la requête AJAX
     function mkCarteObjet(oObjet) {
@@ -70,71 +74,15 @@ include_once("libs/modele.php");
 
      var idUser = idUtilisateur;
     $(document).ready(function() {
-    console.log(idUser);
-        $.ajax({
 
-                            url: 'api/listerObjet',
-                            type: 'GET',
-                            dataType : 'json',
-                            data: {
-                                "utilisateur": idUser
-                            },
-                            success: function(reponse) {
-                                console.log(reponse); // Afficher la réponse dans la console pour le débogage
-                                // Vider la liste des objets avant d'ajouter les nouveaux
-                                $('#annonces').empty();
-
-                                // Parcourir les annonces reçues et créer des cartes d'objet
-                                // et l'ajouter à la liste des objets visibles dans le catalogue
-                                //la réponse est un tableau JSON d'objets
-                                //pour chaque objet, on crée une carte et on l'ajoute à la liste des objets
-                                $.each(reponse, function(index, oObjet) {
-                                    // Créer une carte pour chaque objet
-                                    var carte = mkCarteObjet(oObjet);
-                                    // Ajouter la carte à la liste des objets
-                                    $('#annonces').append(carte);
-                                });
-                                // Après avoir ajouté toutes les cartes
-                                if ($('#annonces').children().length === 0) {
-                                    $('#messageAucunObjet').show();
-                                } else {
-                                    $('#messageAucunObjet').hide();
-                                }
-                            },
-                            error: function(xhr, status, error) {
-                console.error("Erreur lors de la récupération des objets ", xhr.responseText, status, error);
-            }
-                        });//fin requête AJAX
-        // On charge TOUTES les annonces sans aucun filtre au chargement de la page
-        // Requête AJAX pour charger toutes les annonces au chargement de la page
-       /* $.ajax({
-            url: 'api/listerObjet',
-            type: 'GET',
-            dataType : 'json',
-            success: function(reponse) {
-                console.log(reponse); // Afficher la réponse dans la console
-                // Vider la liste des objets avant d'ajouter les nouveaux
-                $('#annonces').empty();
-
-                // Parcourir les annonces reçues et créer des cartes d'objet
-                // et l'ajouter à la liste des objets visibles dans le catalogue
-                $.each(reponse, function(index, oObjet) {
-                    // Créer une carte pour chaque objet
-                    var carte = mkCarteObjet(oObjet);
-                    // Ajouter la carte à la liste des objets
+        if (objetsUtilisateur.length === 0) {
+                $('#messageAucunObjet').show(); // Affiche le message "aucune annonce"
+            } else {
+                $.each(objetsUtilisateur, function(index, oObjet) {
+                    const carte = mkCarteObjet(oObjet);
                     $('#annonces').append(carte);
                 });
-            },
-            error: function(xhr, status, error) {
-                console.error("Erreur lors de la récupération de tous les objets ", xhr.responseText, status, error);
             }
-        });//fin requête AJAX affichage de toutes les annonces
-
-        */
-
-
-
-
 
     });//fin document ready
 
