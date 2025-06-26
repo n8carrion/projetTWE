@@ -14,6 +14,26 @@ function creerUtilisateur($nom, $prenom, $pseudoCLA, $mail) {
   return SQLInsert($SQL) ;
 }
 
+function modifierUtilisateur($idUtilisateur, $mail, $telephone, $adresse, $statutUtilisateur) {
+  //Modifie un utilisateur dans la base de données et retourne l'id de l'utilisateur modifié
+
+  //Pour éviter les injestion de html il faut encoder les caractères spéciaux HTML :
+  $mail = htmlspecialchars($mail);
+  $telephone = htmlspecialchars($telephone);
+  $adresse=htmlspecialchars($adresse);
+  $statutUtilisateur=htmlspecialchars($statutUtilisateur);
+
+  $SQL = "UPDATE Utilisateur SET mail='$mail', telephone='$telephone', adresse='$adresse', statutUtilisateur='$statutUtilisateur'" ;
+  $SQL .= " WHERE id='$idUtilisateur'" ;
+
+  SQLUpdate($SQL) ;
+}
+
+function supprimerUtilisateur($idUtilisateur) {
+  $SQL = "DELETE FROM Utilisateur WHERE id='$idUtilisateur'" ;
+  SQLDelete($SQL);
+}
+
 function ListerObjetsASoi($idProprietaire) {
   //Renvoie le tableau d'objets (objets JSON)
   //relatif à l'utilisateur d'id idProprietaire

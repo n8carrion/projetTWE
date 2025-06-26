@@ -8,34 +8,29 @@
     $prenomUser = $infoUser["prenom"];
     $userMail = $infoUser["mail"];
     $userTelephone = $infoUser["telephone"];
+    $images = getImagesByObjet($idObjet);
+    $size = count($images);
 
-    $image1 = choisirImageByOrder($idObjet, 1) ;
-    $image2 = choisirImageByOrder($idObjet, 2) ;
-    $image3 = choisirImageByOrder($idObjet, 3) ;
-    $image4 = choisirImageByOrder($idObjet, 4) ;
-    $mainImage = $image1[0]["hash"];
-    $source1 = "uploads/imagesObjets/" . $mainImage  . ".jpg";
-    $source2 = "uploads/imagesObjets/" . $image2[0]["hash"]  . ".jpg";
-    $source3 = "uploads/imagesObjets/" . $image3[0]["hash"]  . ".jpg";
-    //$source4 = "uploads/imagesObjets/" . $image4[0]["hash"]  . ".jpg";
-
-
-    // TODO :
-    //
-    //- add dates pret (for the moment null)
-    // - link to user profil
-    // - link to 404 if id doesnt exist
-    // - add placeholder image if image not available
 ?>
 <div class="container">
     <div class="left">
+          <?php foreach ($images as $index => $image): ?>
+            <div class="mySlides">
+              <div class="numbertext"><?= ($index + 1) . " / " . $size ?></div>
+              <img src=<?= "uploads/imagesObjets/" . $image["hash"] . ".jpg" ?> style="width:100%">
+            </div>
+          <?php endforeach; ?>
+      <a class="prev" onclick="plusSlides(-1)">❮</a>
+      <a class="next" onclick="plusSlides(1)">❯</a>
 
-            <img class="main-image" src="<?=$source1 ?> "alt="Image principale" >
+       <div class="row">
+          <?php foreach ($images as $index => $image): ?>
+              <div class="column">
+                <img class="demo cursor" src="<?= "uploads/imagesObjets/" . $image["hash"] . ".jpg" ?>"
+                     style="width:100%" onclick="currentSlide(<?= $index + 1 ?>)" alt="Slide <?= $index + 1 ?>">
+              </div>
+            <?php endforeach; ?>
 
-        <div class="thumbnails">
-            <img src="<?=$source2 ?>" alt="thumbnail" >
-            <img src="<?=$source3 ?>"alt="thumbnail" >
-            <img src="<?=$source3 ?>" alt="thumbnail" ><!-- this here can be changed to img, then in <style> would be .thumbnails img-->
         </div>
     </div>
 
@@ -73,3 +68,33 @@
         </div>
     </div>
 </div>
+<script>
+let slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("demo");
+  let captionText = document.getElementById("caption");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  captionText.innerHTML = dots[slideIndex-1].alt;
+}
+</script>
