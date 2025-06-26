@@ -34,9 +34,8 @@ Explorez le catalogue ou proposez vos objets dès maintenant !
     <div id="annonces">
         <!-- Les cartes seront ajoutées ici grace à chargerAnnonces -->
     </div>
-
 </fieldset>
-    <!-- Chaque objet est représenté par une "carte" -->
+
 
 
 
