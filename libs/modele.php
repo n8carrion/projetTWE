@@ -214,7 +214,7 @@ function supprimerCategorie ($idCategorie) {
 //   - categorie (string) : catégorie de l'objet
 //   - type (string) : don ou emprunt
 //   - utilisateur (int) : id du propriétaire de l'objet
-//   - statut (string) : satut de l'objet
+//   - statut (tableau de string ou juste statut string) : satut de l'objet ex : ['disponible, 'donne'] ou juste 'donne'
 //   - amount (int) : nombre d'objets à retourner
 //   - sort (string) : tri des objets par date de création (recent ou ancien
 // si on lui donne aucun paramètre, on liste tous les objets de la table Objet
@@ -269,9 +269,15 @@ if (!empty($options['categorie']) && $options['categorie']!=="all") {
 
     // Filtrage par statut
     if (!empty($options['statut'])) {
+    if (is_array($options['statut'])) {
+        $statuts = array_map('htmlspecialchars', $options['statut']);
+        $statuts = array_map(function($s) { return "'$s'"; }, $statuts);
+        $SQL .= " AND statutObjet IN (" . implode(',', $statuts) . ")";
+    } else {
         $statut = htmlspecialchars($options['statut']);
         $SQL .= " AND statutObjet='$statut'";
     }
+}
     
     // sécurisation : un utilisateur ne doit pas pouvoir accéder aux annonces archivés d'un autre utilisateur sauf si il est modérateur
     if (valider("connecte", "SESSION")) {

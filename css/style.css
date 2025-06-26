@@ -2,6 +2,15 @@
     display: none;
 }
 
+
+
+/* style pour les lien (non surligné et couleur noir */
+
+a {
+    text-decoration : none;
+    color : rgb(12, 40, 12);
+}
+
 fieldset {
     border: 2px solid #ccc;
 }
@@ -14,7 +23,7 @@ legend {
     .btn {
         display: inline-block;
     padding: 8px 15px;
-    background-color:rgb(170, 202, 41);
+    background-color:rgb(170, 202, 41) !important;
     color: rgba(251,249,246,255);
     /* enleve le texte souligné pour un lien */
     text-decoration: none; 
@@ -22,7 +31,8 @@ legend {
     font-weight: bold;
     }
     .btn:hover {
-        background-color: rgb(150, 180, 30); /* Couleur au survol */
+        background-color: rgb(150, 180, 30) !important; 
+        cursor: pointer;
     }
 
     /* STYLE POUR LE MENU DE NAVIGATION de classe "menu" */
@@ -295,6 +305,7 @@ img {
     text-decoration: none;
     border-radius: 3px;
     font-weight: bold;
+    margin : 3px !important;
 }
 
 .btn:hover {
