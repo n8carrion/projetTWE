@@ -1,9 +1,11 @@
 <IfModule mod_rewrite.c>
     Options +FollowSymLinks
+    DirectorySlash Off
     RewriteEngine On
 
     # Permet un accès direct à certains dossiers
     RewriteCond %{REQUEST_URI} ^.*/(ressources|css|js|uploads)/ [NC]
+    RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ - [L]
 
     # Sinon redirige vers controleur.php, avec l'url en argument

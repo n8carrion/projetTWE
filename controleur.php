@@ -9,11 +9,17 @@ $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\') . '/'; // Récupération 
 
 $url = valider("url"); // récupération de l'url
 
+// Enlever le dernier "/" et rediriger si il y en a un
+if ($url && mb_substr($url, -1)=="/") {
+    header("Location:".$base.substr($url, 0, -1));
+    die("");
+}
+
 $url = explode('/', $url, 2);
 $view = $url[0]; // Récupération de la view (racine)
 // S'il est vide, on charge la vue accueil par défaut
 if (!$view) {
-    header("Location:accueil");
+    header("Location:".$base."accueil");
     die("");
 }
 
