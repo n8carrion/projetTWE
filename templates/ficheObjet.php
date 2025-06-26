@@ -56,7 +56,7 @@
         <p>
             <strong>Publié par :</strong><?=$prenomUser  ?> <?=$nomUser ?>
             <button id="button_user_profil">
-                <a href="profil">Voir Profil</a></button>
+                <a href="profil/<?=$idUser?> ">Voir Profil</a></button>
         </p>
         <?php if($infoObjet["typeAnnonce"]=="Pret"): ?>
         <p id="objet-dates"><strong>Dates de prêt :</strong> du <?= $infoObjet["debutPret"] ?> au <?= $infoObjet["finPret"] ?></p>

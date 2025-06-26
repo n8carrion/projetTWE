@@ -2,8 +2,8 @@
 <script src="js/annonces.js"></script>
 
 <script>
-const idUtilisateur = <?= json_encode($userInfo[0]["id"]) ?>;
-
+const idUtilisateur = <?= json_encode($idProfil) ?>;
+console.log(idUtilisateur);
 $(document).ready(function() {
     // Charge les annonces de cet utilisateur
     chargerAnnonces({ utilisateur: idUtilisateur });
@@ -12,14 +12,16 @@ $(document).ready(function() {
 
 <?php
 include_once("libs/modele.php");
+$infoUser =infoUtilisateur($idProfil)[0];
+$userString = $infoUser['prenom'] ." ". $infoUser['nom'];
 ?>
 
 <section class="profile-info-box" style="background-color: #fff; padding: 1.5em; border-radius: 8px;">
   <h2><?=$userString?></h2>
 
-  <p><a href="<?= $userInfo[0]['facebook'] ?>">Facebook</a></p>
-  <p><a href="mailto:<?= $userInfo[0]['mail'] ?>">Email : <?=$userInfo[0]["mail"]?></a></p>
-  <p><?= $userInfo[0]["telephone"] ?></p>
+  <p><a href="<?= $infoUser['facebook'] ?>">Facebook</a></p>
+  <p><a href="mailto:<?= $infoUser['mail'] ?>">Email : <?=$infoUser["mail"]?></a></p>
+  <p><?= $infoUser["telephone"] ?></p>
 </section>
 
 <!-- ici même code que catalogue mais adapté-->
