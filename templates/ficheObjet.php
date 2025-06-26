@@ -50,7 +50,7 @@
         <p><strong>Description :</strong></p>
         <p id="objet-description"> <?=$infoObjet['description'] ?></p>
 
-        <p id="categorieObjet"><strong>Catégorie :</strong>still testing getCategorie</p>
+        <p id="categorieObjet"><strong>Catégorie :</strong><?= $cat?></p>
         <p id=objet-typeAnnonce><strong>Type :</strong> <?=$infoObjet["typeAnnonce"]?></p>
 
         <p>
