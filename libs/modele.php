@@ -293,8 +293,14 @@ if (!empty($options['categorie']) && $options['categorie']!=="all") {
 
     // Pour chaque objet, on ajoute le champ "images"
     foreach ($res as &$objet) {
-        $objet['images'] = getImagesByObjet($objet['id']);
+    $objet['images'] = getImagesByObjet($objet['id']);
+    // Ajoute le nom de la catégorie à chaque objet
+    if (isset($objet['idCategorie'])) {
+        $objet['categorieNom'] = SQLGetChamp("SELECT nom FROM Categorie WHERE id='{$objet['idCategorie']}'");
+    } else {
+        $objet['categorieNom'] = '';
     }
+}
     unset($objet); // bonne pratique pour éviter les effets de bord
 
     return $res;

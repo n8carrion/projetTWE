@@ -265,6 +265,22 @@ img {
     opacity: 1;
 }
 
+/*STYLE POUR LE PROFILUTILISATEUR*/
+.profile-info-box {
+    background-color: #fff;
+    padding: 1.5em;
+    border-radius: 8px;
+    max-width: 500px;
+    font-family: Arial, sans-serif;
+}
+
+.profile-info-box h2 {
+    margin-top: 0;
+}
+
+.profile-info-box p {
+    margin: 0.5em 0;
+}
 
 /* Style pour le header et le footer */
 
