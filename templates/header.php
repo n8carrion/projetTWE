@@ -20,11 +20,11 @@ if (valider("connecte","SESSION")) {
     $userInfo = infoUtilisateur(valider("idUser","SESSION"));
     $userString = $userInfo[0]["prenom"] . " " . $userInfo[0]["nom"];
     echo 'Bienvenue '. $userString .' !';
-    echo '<a class="btn" href="annonce/edit">+ Ajouter une annonce</a>';
-    echo '<a id="lienSeConnecter" href="profil">Mon profil</a>';
-    echo '<a id="lienSeConnecter" href="logout">Se déconnecter</a>';
+    echo '<a class="btn" href="annonce/edit">+ Ajouter une annonce</a> ';
+    echo '<a id="lienSeConnecter" href="profil">Mon profil</a> ';
+    echo '<a id="lienSeConnecter" href="logout">Se déconnecter</a> ';
 } else {
-    echo '<a id="lienSeConnecter" href="login">Se connecter</a>';
+    echo '<a id="lienSeConnecter" href="login">Se connecter</a> ';
 }
 ?>
     </div>
