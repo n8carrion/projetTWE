@@ -141,6 +141,15 @@ function supprimerObjet($idObjet) {
   SQLDelete($SQL);
 }
 
+//===========================
+// Fonctions pour categorie ============================================
+//===========================
+
+function getCategorie($idCategorie) {
+  $SQL = "SELECT nom from categorie c" ;
+  $SQL .= " INNER JOIN Objet o on o.idCategorie = c.id" ;
+  $SQL .= " WHERE o.idCategorie='$idCategorie'";
+}
 
 //   fonction ListerObjets(....) permet de lister les objets de la base de données
 //   en fonction de plusieurs paramètres donné dans un tableau associatif $options: 
