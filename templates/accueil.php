@@ -1,6 +1,16 @@
+<script src ="js/jquery-3.7.1.min.js"></script>
+<script src ="js/annonces.js"></script>
+
 <script>
-    //rajouter le chargment des annonces
+    var params = {
+            amount : "4",// Nombre d'annonces à afficher
+            sort: "recent" // Tri par date de création
+    };
+    // Appel de la fonction pour charger les annonces
+    //  voulues dans l'id "annonces"
+    chargerAnnonces(params); 
 </script>
+
 
 <div id=description>
 <h1>La REZerve</h1>
@@ -19,47 +29,11 @@ Explorez le catalogue ou proposez vos objets dès maintenant !
 
 </div>
 
-<fieldset id="annonces">
+<fieldset>
     <legend>Les dernières annonces</legend>
-    <div class="carteObjet">
-        <!-- Si on clique sur  -->
-        <a href="annonce/1"> <!-- annonce/idObjet -->
-            <img src="uploads/imagesObjets/dWc3XpV9MqL7zRy.jpg" alt="Photo de l’objet">
-            <h2>Commode test</h2>
-            <p><strong>Type :</strong>Don</p>
-            <p><strong>Catégorie :</strong> Électroménager</p>
-            <p><strong>Statut :</strong> Disponible</p>
-        </a>
+    <div id="annonces">
+        <!-- Les cartes seront ajoutées ici grace à chargerAnnonces -->
     </div>
-
-    <div class="carteObjet">
-        <!-- Si on clique sur  -->
-        <a href="annonce/1"> <!-- annonce/idObjet -->
-            <img src="uploads/imagesObjets/Yc3qNzX84JrKbvF.jpg" alt="Photo de l’objet">
-            <h2>Table basse test</h2>
-            <p><strong>Type :</strong>Don</p>
-            <p><strong>Catégorie :</strong> Électroménager</p>
-            <p><strong>Statut :</strong> Disponible</p>
-        </a>
-    </div>
-
-    <div class="carteObjet">
-        <!-- Si on clique sur  -->
-        <a href="annonce/1"> <!-- annonce/idObjet -->
-            <img src="uploads/imagesObjets/PqKmZRY29xTW48j.jpg" alt="Photo de l’objet">
-            <h2>Four test</h2>
-            <p><strong>Type :</strong>Don</p>
-            <p><strong>Catégorie :</strong> Électroménager</p>
-            <p><strong>Statut :</strong> Disponible</p>
-        </a>
-    </div>
-   
-
-
-<!-- on fait une requête AJAX qui envoie les filtres à une page listerObjet.php -->
- <!-- si c'est un succes, alors ca nous renvoi comme réponse une tableau JSON clé = idObjet et valeur = objet JSON de l'objet -->
-<!-- puis on parcours tout et on donne chaque objet sous format JSON à la fonction ajoutObjet(oObjet) -->
- <!-- Les carteObjet sont ajoutée avec requête AJAX -->
 
 </fieldset>
     <!-- Chaque objet est représenté par une "carte" -->

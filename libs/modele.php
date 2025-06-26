@@ -287,8 +287,7 @@ if (!empty($options['categorie']) && $options['categorie']!=="all") {
 
     //TODO : le tableau renvoyé doit aussi contenir les images associées à chaque objet!!
     
-    $res = SQLSelect($SQL);
-    $res= parcoursRs($res);
+    $res = parcoursRs(SQLSelect($SQL));
     
 
     // Pour chaque objet, on ajoute le champ "images"
