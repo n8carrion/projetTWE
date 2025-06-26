@@ -66,15 +66,16 @@
             <p id="user-telephone"><strong>Telephone : </strong><?=$userTelephone?></p>
             <p id="user-adresse"><strong>Adresse : </strong><?=$infoUser["adresse"]?></p>
         </div>
-
+        <?php if($objetInfo[0]["idProprietaire"] == valider("idUser", "SESSION") || isModerateur(valider("idUser", "SESSION"))): ?>
         <div class="admin-options">
             <button> <!-- not sure yet if the link will be js or done just with <a></a>-->
                 <a href="annonce/<?=$idObjet?>/edit">
                     Modifier l'annonce </a>
             </button>
 
-            <button>Supprimer l'annonce</button>
+            <button id="supprimerAnnonce">Supprimer l'annonce</button>
         </div>
+    <?php endif; ?>
     </div>
 </div>
 <script>
