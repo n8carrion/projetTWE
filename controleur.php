@@ -151,6 +151,13 @@ switch ($view) {
                 break;
             }
 
+            // si l'objet est archivé, on vérifie que l'utilisateur est connecté, et qu'il est soit propriétaire, soit modérateur
+            if ($objetInfo[0]["statutObjet"] == "Archive" && !(valider("connecte", "SESSION") && (isModerateur(valider("idUser", "SESSION")) || valider("idUser", "SESSION") == $objetInfo[0]["idProprietaire"]))) {
+                $mainpage = "templates/403.php";
+                $title = "Erreur 403";
+                break;
+            }
+
             $objetString = $objetInfo[0]["nom"];
             
             if (count($data) == 2 && $data[1] == "edit") { // base/annonce/#/edit

@@ -14,16 +14,18 @@ function creerUtilisateur($nom, $prenom, $pseudoCLA, $mail) {
   return SQLInsert($SQL) ;
 }
 
-function modifierUtilisateur($idUtilisateur, $mail, $telephone, $adresse, $statutUtilisateur) {
+//this version doesnt care for moderator status changes. another function can be created for that
+function modifierUtilisateur($idUtilisateur, $mail, $telephone, $adresse, $facebook = "") {
   //Modifie un utilisateur dans la base de données et retourne l'id de l'utilisateur modifié
 
   //Pour éviter les injestion de html il faut encoder les caractères spéciaux HTML :
   $mail = htmlspecialchars($mail);
   $telephone = htmlspecialchars($telephone);
   $adresse=htmlspecialchars($adresse);
-  $statutUtilisateur=htmlspecialchars($statutUtilisateur);
+  //$statutUtilisateur=htmlspecialchars($statutUtilisateur);
+  $facebook = htmlspecialchars($facebook);
 
-  $SQL = "UPDATE Utilisateur SET mail='$mail', telephone='$telephone', adresse='$adresse', statutUtilisateur='$statutUtilisateur'" ;
+  $SQL = "UPDATE Utilisateur SET mail='$mail', telephone='$telephone', adresse='$adresse', facebook='$facebook'" ;
   $SQL .= " WHERE id='$idUtilisateur'" ;
 
   SQLUpdate($SQL) ;
@@ -270,7 +272,17 @@ if (!empty($options['categorie']) && $options['categorie']!=="all") {
         $statut = htmlspecialchars($options['statut']);
         $SQL .= " AND statutObjet='$statut'";
     }
-
+    
+    // sécurisation : un utilisateur ne doit pas pouvoir accéder aux annonces archivés d'un autre utilisateur sauf si il est modérateur
+    if (valider("connecte", "SESSION")) {
+      $idCurrentUser = valider("idUser", "SESSION");
+      if (!isModerateur($idCurrentUser)) {
+          $SQL .= " AND (statutObjet!='Archive' OR idProprietaire=$idCurrentUser)"; // il doit être propriétaire pour voir une annonce archivée
+      } // si modérateur, pas de restrictions
+    } else {
+      $SQL .= " AND statutObjet!='Archive'"; // On n'affiche que les annonces non archivés
+    }
+    
 
     // Tri selon la date de création le plus récent d'abord (DESC)ou le plus ancien(ASC)
     if (!empty($options['sort'])) {
