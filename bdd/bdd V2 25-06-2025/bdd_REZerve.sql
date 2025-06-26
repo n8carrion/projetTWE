@@ -84,12 +84,12 @@ INSERT INTO `Image` (`id`, `hash`, `idObjet`, `ordre`) VALUES
 
 CREATE TABLE `Objet` (
   `id` int NOT NULL,
-  `nom` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nom` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `idProprietaire` int NOT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `typeAnnonce` enum('Don','Pret') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `statutObjet` enum('Disponible','Prete','Donne','Archive') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `idCategorie` int NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `typeAnnonce` enum('Don','Pret') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Don',
+  `statutObjet` enum('Disponible','Prete','Donne','Archive', 'Brouillon') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Brouillon',
+  `idCategorie` int DEFAULT NULL,
   `dateCreation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `debutPret` date DEFAULT NULL,
   `finPret` date DEFAULT NULL
