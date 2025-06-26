@@ -179,10 +179,11 @@ function supprimerObjet($idObjet) {
 //===========================
 
 function getCategorie($idCategorie) {
-  $SQL = "SELECT nom from categorie c" ;
+  $SQL = "SELECT c.nom from Categorie c" ;
   $SQL .= " INNER JOIN Objet o on o.idCategorie = c.id" ;
   $SQL .= " WHERE o.idCategorie='$idCategorie'";
   return SQLGetChamp($SQL) ;
+  //parcoursRs(SQLSelect($SQL));
 }
 
 //pour ajouter pour le modérateur

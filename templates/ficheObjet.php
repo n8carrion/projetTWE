@@ -1,6 +1,8 @@
 <?php
     include_once "libs/modele.php";
     $infoObjet = infoObjet($idObjet)[0];
+    $idcategorie = $infoObjet["idCategorie"];
+    $cat = getCategorie($idcategorie);
     $nom = $infoObjet["nom"];
     $idUser = $infoObjet["idProprietaire"];
     $infoUser =infoUtilisateur($idUser)[0];
@@ -14,24 +16,31 @@
 ?>
 <div class="container">
     <div class="left">
-          <?php foreach ($images as $index => $image): ?>
-            <div class="mySlides">
-              <div class="numbertext"><?= ($index + 1) . " / " . $size ?></div>
-              <img src=<?= "uploads/imagesObjets/" . $image["hash"] . ".jpg" ?> style="width:100%">
-            </div>
-          <?php endforeach; ?>
-      <a class="prev" onclick="plusSlides(-1)">❮</a>
-      <a class="next" onclick="plusSlides(1)">❯</a>
-
-       <div class="row">
-          <?php foreach ($images as $index => $image): ?>
-              <div class="column">
-                <img class="demo cursor" src="<?= "uploads/imagesObjets/" . $image["hash"] . ".jpg" ?>"
-                     style="width:100%" onclick="currentSlide(<?= $index + 1 ?>)" alt="Slide <?= $index + 1 ?>">
+            <?php if (empty($images)): ?>
+              <div class="mySlides">
+                <div class="numbertext">1 / 1</div>
+                <img src="uploads/imagesObjets/noimage.jpg" style="width:100%">
               </div>
-            <?php endforeach; ?>
+            <?php else: ?>
+              <?php foreach ($images as $index => $image): ?>
+                <div class="mySlides">
+                  <div class="numbertext"><?= ($index + 1) . " / " . $size ?></div>
+                  <img src="<?= "uploads/imagesObjets/" . $image["hash"] . ".jpg" ?>" style="width:100%">
+                </div>
+              <?php endforeach; ?>
 
-        </div>
+              <a class="prev" onclick="plusSlides(-1)">❮</a>
+              <a class="next" onclick="plusSlides(1)">❯</a>
+
+              <div class="row">
+                <?php foreach ($images as $index => $image): ?>
+                  <div class="column">
+                    <img class="demo cursor" src="<?= "uploads/imagesObjets/" . $image["hash"] . ".jpg" ?>"
+                         style="width:100%" onclick="currentSlide(<?= $index + 1 ?>)" alt="Slide <?= $index + 1 ?>">
+                  </div>
+                <?php endforeach; ?>
+              </div>
+            <?php endif; ?>
     </div>
 
     <div class="details">
@@ -41,7 +50,7 @@
         <p><strong>Description :</strong></p>
         <p id="objet-description"> <?=$infoObjet['description'] ?></p>
 
-        <p id="categorieObjet"><strong>Catégorie :</strong> Meuble TODO : get categorie from idCategorie</p>
+        <p id="categorieObjet"><strong>Catégorie :</strong><?= $cat?></p>
         <p id=objet-typeAnnonce><strong>Type :</strong> <?=$infoObjet["typeAnnonce"]?></p>
 
         <p>
@@ -84,7 +93,7 @@ function showSlides(n) {
   let i;
   let slides = document.getElementsByClassName("mySlides");
   let dots = document.getElementsByClassName("demo");
-  let captionText = document.getElementById("caption");
+  //let captionText = document.getElementById("caption");
   if (n > slides.length) {slideIndex = 1}
   if (n < 1) {slideIndex = slides.length}
   for (i = 0; i < slides.length; i++) {
@@ -95,6 +104,6 @@ function showSlides(n) {
   }
   slides[slideIndex-1].style.display = "block";
   dots[slideIndex-1].className += " active";
-  captionText.innerHTML = dots[slideIndex-1].alt;
+  //captionText.innerHTML = dots[slideIndex-1].alt;
 }
 </script>
