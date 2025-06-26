@@ -50,7 +50,7 @@
         <p><strong>Description :</strong></p>
         <p id="objet-description"> <?=$infoObjet['description'] ?></p>
 
-        <p id="categorieObjet"><strong>Catégorie :</strong><?= $cat?></p>
+        <p id="categorieObjet"><strong>Catégorie :</strong> <?= $cat?></p>
         <p id=objet-typeAnnonce><strong>Type :</strong> <?=$infoObjet["typeAnnonce"]?></p>
 
         <p>
@@ -58,9 +58,9 @@
             <button id="button_user_profil">
                 <a href="profil">Voir Profil</a></button>
         </p>
-
-        <p id="objet-dates"><strong>Dates de prêt :</strong> du 01/07/2025 au 15/07/2025</p>
-
+        <?php if($infoObjet["typeAnnonce"]=="Pret"): ?>
+        <p id="objet-dates"><strong>Dates de prêt :</strong> du <?= $infoObjet["debutPret"] ?> au <?= $infoObjet["finPret"] ?></p>
+        <?php endif; ?>
         <div class="contact">
             <p id="user-mail"><strong>Contact : </strong> <?= $userMail ?></p>
             <p id="user-telephone"><strong>Telephone : </strong><?=$userTelephone?></p>
