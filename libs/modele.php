@@ -154,6 +154,21 @@ function creerObjet($nom, $idProprietaire, $description, $typeAnnonce, $statutOb
   return SQLInsert($SQL) ;
 }
 
+function creerObjetVide($idProprietaire) {
+  //Crée un objet vide dans la base de données
+  //et retourne l'id de l'objet créé
+
+  $SQL = "INSERT INTO `Objet` (`id`, `nom`, `idProprietaire`, `description`, `typeAnnonce`, `statutObjet`, `idCategorie`, `dateCreation`, `debutPret`, `finPret`)";
+  $SQL .= " VALUES (NULL, NULL, '$idProprietaire', NULL, 'Don', 'Brouillon', NULL, CURRENT_TIMESTAMP, NULL, NULL)" ;
+
+  return SQLInsert($SQL) ;
+}
+
+function objetBrouillon($idUser) {
+  $SQL = "SELECT id FROM Objet WHERE idProprietaire='$idUser' AND statutObjet='Brouillon'";
+  return SQLGetChamp($SQL);
+}
+
 //   La fonction modifierObjet(idProprietaire) permet de modifier un objet dans la base de données
 // tous les paramètres doivent être donnés : idObjet, nom, description, typeAnnonce, statutObjet et categorieObjet
 //   elle ne modifie pas l'id de l'objet ni la date de création 
@@ -296,10 +311,10 @@ if (!empty($options['categorie']) && $options['categorie']!=="all") {
     if (valider("connecte", "SESSION")) {
       $idCurrentUser = valider("idUser", "SESSION");
       if (!isModerateur($idCurrentUser)) {
-          $SQL .= " AND (statutObjet!='Archive' OR idProprietaire=$idCurrentUser)"; // il doit être propriétaire pour voir une annonce archivée
+          $SQL .= " AND ((statutObjet!='Archive' AND statutObjet!='Brouillon') OR idProprietaire=$idCurrentUser)"; // il doit être propriétaire pour voir une annonce archivée
       } // si modérateur, pas de restrictions
     } else {
-      $SQL .= " AND statutObjet!='Archive'"; // On n'affiche que les annonces non archivés
+      $SQL .= " AND statutObjet!='Archive' AND statutObjet!='Brouillon'"; // On n'affiche que les annonces non archivés
     }
     
 
