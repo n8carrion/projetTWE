@@ -34,6 +34,11 @@ if (valider("connecte","SESSION")) {
     echo '<a id="lienSeConnecter" href="profil">Mon profil</a> ';
     echo '<a id="lienSeConnecter" href="logout">Se déconnecter</a> ';
     echo '<h2>Bienvenue '. $userString .' !</h2>';
+    // On cache le bouton si connecté
+    echo '<script>$(function() { $("#btnAjouterNot").hide(); });</script>';
+    
+
+
 } else {
     echo '<a id="lienSeConnecter" href="login">Se connecter</a> ';
 }
