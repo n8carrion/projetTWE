@@ -165,7 +165,6 @@ function getCategorie($idCategorie) {
   return SQLGetChamp($SQL) ;
 }
 
-
 //pour ajouter pour le modérateur
 function ajouterCategorie ($nom) {
   $SQL = "INSERT INTO Categorie(nom)" ;
@@ -207,11 +206,21 @@ function listerObjets($options = array()) {
     // 'categorie', 'type', 'utilisateur', 'statut', 'amount', 'sort'
     $SQL = "SELECT * FROM Objet WHERE 1=1"; //toujours vrai, donc permet de tout selectionner
 
-    // Filtrage par catégorie
-    // if (!empty($options['categorie'])) {
-    //     $categorie = htmlspecialchars($options['categorie']); // permet d'éviter les injections SQL
-    //     $SQL .= " AND categorieObjet='$categorie'";
-    // }
+    // Filtrage par catégorie (par nom, via idCategorie)
+if (!empty($options['categorie'])) {
+    $categorie = htmlspecialchars($options['categorie']);
+    // On récupère l'id de la catégorie à partir de son nom
+    $SQLcat = "SELECT id FROM Categorie WHERE nom='$categorie'";
+    $idCategorie = SQLGetChamp($SQLcat);
+    if ($idCategorie) {
+        $SQL .= " AND idCategorie='$idCategorie'";
+    } else {
+        // Si la catégorie n'existe pas, aucun résultat ne doit être retourné
+        $SQL .= " AND 0";
+    }
+}
+
+
 
     // Filtrage par type
     if (!empty($options['type'])) {

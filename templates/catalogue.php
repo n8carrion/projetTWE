@@ -43,43 +43,17 @@ include_once("libs/modele.php");
 
 
 
+
+
 <!-- Catalogue des objets -->
 <fieldset id="annonces">
     <legend>Les annonces</legend>
-
-    <!-- Chaque objet est représenté par une "carte" -->
-    <div class="carteObjet">
-        <!-- Si on clique sur  -->
-        <a href="annonce/1"> <!-- annonce/idObjet -->
-            <img src="uploads/imagesObjets/dWc3XpV9MqL7zRy.jpg" alt="Photo de l’objet">
-            <h2>Commode test</h2>
-            <p><strong>Type :</strong>Don</p>
-            <p><strong>Catégorie :</strong> Électroménager</p>
-            <p><strong>Statut :</strong> Disponible</p>
-        </a>
+    <div>
+    <!-- On affiche un message si aucune annonce n'est trouvée -->
+        <h2 id="messageAucunObjet" style="display : none; color: red; text-align : center;">Aucune annonce trouvée...</h2>
     </div>
 
-    <div class="carteObjet">
-        <!-- Si on clique sur  -->
-        <a href="annonce/1"> <!-- annonce/idObjet -->
-            <img src="uploads/imagesObjets/Yc3qNzX84JrKbvF.jpg" alt="Photo de l’objet">
-            <h2>Table basse test</h2>
-            <p><strong>Type :</strong>Don</p>
-            <p><strong>Catégorie :</strong> Électroménager</p>
-            <p><strong>Statut :</strong> Disponible</p>
-        </a>
-    </div>
-
-    <div class="carteObjet">
-        <!-- Si on clique sur  -->
-        <a href="annonce/1"> <!-- annonce/idObjet -->
-            <img src="uploads/imagesObjets/PqKmZRY29xTW48j.jpg" alt="Photo de l’objet">
-            <h2>Four test</h2>
-            <p><strong>Type :</strong>Don</p>
-            <p><strong>Catégorie :</strong> Électroménager</p>
-            <p><strong>Statut :</strong> Disponible</p>
-        </a>
-    </div>
+  
 
     
 
@@ -138,11 +112,32 @@ include_once("libs/modele.php");
   // }
 
 
-
-
     $(document).ready(function() {
 
-        // TODO : Charger toutes les annonces sans aucun filtre au chargement de la page
+        // On charge TOUTES les annonces sans aucun filtre au chargement de la page
+        // Requête AJAX pour charger toutes les annonces au chargement de la page
+        $.ajax({
+            url: 'api/listerObjet', 
+            type: 'GET',
+            dataType : 'json',
+            success: function(reponse) {
+                console.log(reponse); // Afficher la réponse dans la console 
+                // Vider la liste des objets avant d'ajouter les nouveaux
+                $('#annonces').empty();
+
+                // Parcourir les annonces reçues et créer des cartes d'objet 
+                // et l'ajouter à la liste des objets visibles dans le catalogue
+                $.each(reponse, function(index, oObjet) {
+                    // Créer une carte pour chaque objet
+                    var carte = mkCarteObjet(oObjet);
+                    // Ajouter la carte à la liste des objets
+                    $('#annonces').append(carte);
+                });
+            }, 
+            error: function(xhr, status, error) {
+                console.error("Erreur lors de la récupération de tous les objets ", xhr.responseText, status, error);
+            }
+        });//fin requête AJAX affichage de toutes les annonces
        
         // Événement de clic sur le bouton Filtrer
         $('#btnFiltrer').click(function() {
@@ -172,6 +167,12 @@ include_once("libs/modele.php");
                         // Ajouter la carte à la liste des objets
                         $('#annonces').append(carte);
                     });
+                    // Après avoir ajouté toutes les cartes
+                    if ($('#annonces').children().length === 0) {
+                        $('#messageAucunObjet').show();
+                    } else {
+                        $('#messageAucunObjet').hide();
+                    }
                 }, 
                 error: function(xhr, status, error) {
     console.error("Erreur lors de la récupération des objets ", xhr.responseText, status, error);
