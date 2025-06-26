@@ -65,7 +65,7 @@
 
         <div class="admin-options">
             <button> <!-- not sure yet if the link will be js or done just with <a></a>-->
-                <a href="annonce/1/edit">
+                <a href="annonce/1/">
                     Modifier l'annonce </a>
             </button>
 
