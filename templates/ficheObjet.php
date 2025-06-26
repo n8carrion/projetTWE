@@ -8,75 +8,28 @@
     $prenomUser = $infoUser["prenom"];
     $userMail = $infoUser["mail"];
     $userTelephone = $infoUser["telephone"];
-    $images = getImagesByObjet($idObjet)[0];
-    foreach($images as $image){
-    }
+    $images = getImagesByObjet($idObjet);
+    $size = count($images);
 
-
-    $image1 = choisirImageByOrder($idObjet, 1) ;
-    $image2 = choisirImageByOrder($idObjet, 2) ;
-    $image3 = choisirImageByOrder($idObjet, 3) ;
-    $image4 = choisirImageByOrder($idObjet, 4) ;
-    $mainImage = $image1[0]["hash"];
-    $source1 = "uploads/imagesObjets/" . $mainImage  . ".jpg";
-    $source2 = "uploads/imagesObjets/" . $image2[0]["hash"]  . ".jpg";
-    $source3 = "uploads/imagesObjets/" . $image3[0]["hash"]  . ".jpg";
-    $source4 = "uploads/imagesObjets/" . $image4[0]["hash"]  . ".jpg";
-
-
-    // TODO :
-    //
-    //- add dates pret (for the moment null)
-    // - link to user profil
-    // - link to 404 if id doesnt exist
-    // - add placeholder image if image not available
 ?>
 <div class="container">
     <div class="left">
-        <!--
-            <img class="main-image" src="<?=$source1 ?> "alt="Image principale" >
-
-        <div class="thumbnails">
-            <img src="<?=$source2 ?>" alt="thumbnail" >
-            <img src="<?=$source3 ?>"alt="thumbnail" >
-            <img src="<?=$source3 ?>" alt="thumbnail" >
-        </div>-->
-
-        <div class="mySlides">
-            <div class="numbertext">1 / 4</div>
-            <img src="<?= $source1 ?>" style="width:100%">
-          </div>
-
-          <div class="mySlides">
-            <div class="numbertext">2 / 6</div>
-            <img src="<?= $source2 ?>" style="width:100%">
-          </div>
-
-          <div class="mySlides">
-            <div class="numbertext">3 / 4</div>
-            <img src="<?= $source3 ?>" style="width:100%">
-          </div>
-
-          <div class="mySlides">
-            <div class="numbertext">4 / 4</div>
-            <img src="<?= $source4 ?>" style="width:100%">
-          </div>
+          <?php foreach ($images as $index => $image): ?>
+            <div class="mySlides">
+              <div class="numbertext"><?= ($index + 1) . " / " . $size ?></div>
+              <img src=<?= "uploads/imagesObjets/" . $image["hash"] . ".jpg" ?> style="width:100%">
+            </div>
+          <?php endforeach; ?>
       <a class="prev" onclick="plusSlides(-1)">❮</a>
       <a class="next" onclick="plusSlides(1)">❯</a>
 
        <div class="row">
-          <div class="column">
-            <img class="demo cursor" src="<?= $source1 ?>" style="width:100%" onclick="currentSlide(1)" alt="The Woods">
-          </div>
-          <div class="column">
-            <img class="demo cursor" src="<?= $source2 ?>" style="width:100%" onclick="currentSlide(2)" alt="Cinque Terre">
-          </div>
-          <div class="column">
-            <img class="demo cursor" src="<?= $source3 ?>" style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">
-          </div>
-          <div class="column">
-            <img class="demo cursor" src="<?= $source4 ?>" style="width:100%" onclick="currentSlide(4)" alt="Northern Lights">
-          </div>
+          <?php foreach ($images as $index => $image): ?>
+              <div class="column">
+                <img class="demo cursor" src="<?= "uploads/imagesObjets/" . $image["hash"] . ".jpg" ?>"
+                     style="width:100%" onclick="currentSlide(<?= $index + 1 ?>)" alt="Slide <?= $index + 1 ?>">
+              </div>
+            <?php endforeach; ?>
 
         </div>
     </div>
