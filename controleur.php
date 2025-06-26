@@ -36,10 +36,17 @@ if ($view == 'api') {
             // Récupère les filtres envoyés en GET
             $categorie = valider('categorie');
             $type = valider('type');
+            $amount = valider('amount');
+            $sort = valider('sort');
+            $utilisateur = valider('utilisateur');
+            
             // Prépare les options pour listerObjets
             $options = [];
             if ($categorie) $options['categorie'] = $categorie;
             if ($type) $options['type'] = $type;
+            if ($amount) $options['amount'] = $amount;
+            if ($sort) $options['sort'] = $sort;
+            if ($utilisateur) $options['utilisateur'] = $utilisateur;
             // Appelle la fonction et renvoie le JSON
             $result = listerObjets($options);
             echo json_encode($result);

@@ -347,6 +347,30 @@ img {
     /* Hauteur des images ODD */
 }
 
+/* STYLE pour les carteObjet */
+
+
+    .elemCarte .etiquette {
+        display : inline-block;
+        padding : 4px;
+        margin : 2px;
+        color : rgba(251, 249, 246, 255);
+        background-color: darkgreen;
+        border-radius: 3px;
+    }
+
+    .etiquette + div {
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .carteObjet:hover{
+        opacity: 0.6;
+    }
+
+
+
 /*STYLE accueil.php */
 
 #description {

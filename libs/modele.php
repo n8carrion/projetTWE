@@ -41,7 +41,7 @@ function ListerObjetsASoi($idProprietaire) {
   $SQL .= " INNER JOIN Utilisateur u ON o.idProprietaire = u.id" ;
   $SQL .= " WHERE o.idProprietaire = '$idProprietaire'" ;
 
-  return parcoursRs(SQLSelect($SQL)) ;
+  return parcoursRs(SQLSelect($SQL));
 }
 function listerUtilisateur($statut="both") {
   //Renvoie le tableau des utilisateurs dont 
@@ -268,10 +268,10 @@ if (!empty($options['categorie']) && $options['categorie']!=="all") {
         if ($options['sort'] == "recent") {
             $SQL .= " ORDER BY dateCreation DESC";
         } else if ($options['sort'] == "ancien") {
-            $SQL .= " ORDER BY id ASC";
+            $SQL .= " ORDER BY dateCreation ASC";
         } // Ajoute d'autres tris si besoin
     } else {
-        $SQL .= " ORDER BY dateCreation DESC";
+        $SQL .= " ORDER BY id DESC";
     }
 
     // Limite le nombre de résultats
@@ -285,10 +285,8 @@ if (!empty($options['categorie']) && $options['categorie']!=="all") {
     //ensuite on pourra faire un json_encode() du resulat pour avoir un tableau d'objet json
     //le tableau contiendra tous les oBjets des objets concernés par les filtres
 
-    //TODO : le tableau renvoyé doit aussi contenir les images associées à chaque objet!!
-    
-    $res = SQLSelect($SQL);
-    $res= parcoursRs($res);
+    //Le tableau renvoyé doit aussi contenir les images associées à chaque objet!!
+    $res = parcoursRs(SQLSelect($SQL));
     
 
     // Pour chaque objet, on ajoute le champ "images"
