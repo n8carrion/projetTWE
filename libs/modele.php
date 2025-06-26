@@ -149,6 +149,20 @@ function getCategorie($idCategorie) {
   $SQL = "SELECT nom from categorie c" ;
   $SQL .= " INNER JOIN Objet o on o.idCategorie = c.id" ;
   $SQL .= " WHERE o.idCategorie='$idCategorie'";
+  return SQLGetChamp($SQL) ;
+}
+
+
+//pour ajouter pour le modérateur
+function ajouterCategorie ($nom) {
+  $SQL = "INSERT INTO Categorie(nom)" ;
+  $SQL .= " VALUES ('$nom')" ;
+  return SQLInsert($SQL) ;
+}
+//pour supprimer pour le modérateur
+function supprimerCategorie ($idCategorie) {
+  $SQL = "DELETE FROM Categorie WHERE id='$idCategorie'" ;
+  SQLDelete($SQL);
 }
 
 //   fonction ListerObjets(....) permet de lister les objets de la base de données
