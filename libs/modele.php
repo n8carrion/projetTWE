@@ -94,19 +94,45 @@ function infoUtilisateur($idUtilisateur) {
 // Fonctions pour les images ============================================
 //===========================
 
+function creerImage($idObjet, $hash) {
+  // rajoute une image à la fin (en mettant order = count)
+
+  $ordre = count(getImagesByObjet($idObjet)) + 1;
+
+  $SQL = "INSERT INTO Image(hash, idObjet, ordre)" ;
+  $SQL .= " VALUES ('$hash','$idObjet','$ordre')" ;
+
+  return SQLInsert($SQL);
+}
+
 function getImagesByObjet($idObjet) {
   //Renvoie le tableau d'images (objets JSON)
   //relatif à l'objet d'id idObjet
   $SQL = "SELECT i.* FROM Image i" ;
   $SQL .= " INNER JOIN Objet o ON i.idObjet= o.id";
   $SQL .= " WHERE i.idObjet = '$idObjet'" ;
+  $SQL .= " ORDER BY ordre";
 
   return parcoursRs(SQLSelect($SQL)) ;
 }
 
 function supprimerImage($idImage) {
+  $SQL = "SELECT hash FROM Image WHERE id='$idImage'";
+
+  $hash = SQLGetChamp($SQL);
+
   $SQL = "DELETE FROM Image WHERE id='$idImage'" ;
   SQLDelete($SQL);
+
+  $SQL = "SELECT * FROM Image WHERE hash='$hash'";
+
+  if (count(parcoursRs(SQLSelect($SQL))) == 0) { // C'était la dernière mention de l'image dans la BDD
+    // On supprime le fichier
+    $file = "uploads/imagesObjets/".$hash.".jpg";
+    if (file_exists($file)) {
+        unlink($file);
+    }
+  }
 }
 
 function choisirImage($idObjet, $idImage) {
@@ -131,6 +157,21 @@ function choisirImageByOrder($idObjet, $imageOrdre) {
   $SQL .= " WHERE i.idObjet = '$idObjet' AND i.ordre='$imageOrdre'";
 
   return parcoursRs(SQLSelect($SQL)) ;
+}
+
+function orderImages($idArray) {
+  $array = explode(",", $idArray);
+  $x = 1;
+  foreach ($array as $idImage) {
+    if (!$idImage == "") {
+      $SQL = "UPDATE Image SET
+            ordre='$x'
+            WHERE id=$idImage";
+
+      SQLUpdate($SQL);
+      ++$x;
+    }
+  }
 }
 
 //===========================

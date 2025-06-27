@@ -1,15 +1,15 @@
 <?php
-    include_once "libs/modele.php";
+include_once "libs/modele.php";
 
-    $infoObjet = infoObjet($idObjet)[0];
-    $nom = $infoObjet['nom'];
-    $description = $infoObjet["description"] ;
-    $idcat = $infoObjet['idCategorie'];
-    $cat = getCategorie($idcat) ;
-    $don = ($infoObjet['typeAnnonce'] =="Don") ;
-    $images = getImagesByObjet($idObjet);
-    $size = count($images);
-    /*$image1 = choisirImageByOrder($idObjet, 1) ;
+$infoObjet = infoObjet($idObjet)[0];
+$nom = $infoObjet['nom'];
+$description = $infoObjet["description"];
+$idcat = $infoObjet['idCategorie'];
+$cat = getCategorie($idcat);
+$don = ($infoObjet['typeAnnonce'] == "Don");
+$images = getImagesByObjet($idObjet);
+$size = count($images);
+/*$image1 = choisirImageByOrder($idObjet, 1) ;
     $image2 = choisirImageByOrder($idObjet, 2) ;
     $image3 = choisirImageByOrder($idObjet, 3) ;
     $image4 = choisirImageByOrder($idObjet, 4) ;
@@ -21,64 +21,58 @@
     */
 
 
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $idObjet = $_POST['idObjet'] ?? -1;
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  $idObjet = $_POST['idObjet'] ?? -1;
 
-        $nom = $_POST['nomObjet'] ?? '';
-        $description = $_POST['ocontenuDescription'] ?? '';
-        $categorieNom = $_POST['categorie'] ?? '';
-        $typeAnnonce = ($_POST['typeAnnonce'] === 'Don') ? 'Don' : 'Prêt';
-        $idProprietaire = $_SESSION['idUtilisateur'] ?? null;
+  $nom = $_POST['nomObjet'] ?? '';
+  $description = $_POST['ocontenuDescription'] ?? '';
+  $categorieNom = $_POST['categorie'] ?? '';
+  $ordreImages = $_POST['ordreImages'] ?? '';
+  $typeAnnonce = ($_POST['typeAnnonce'] === 'Don') ? 'Don' : 'Prêt';
+  $idProprietaire = $_SESSION['idUtilisateur'] ?? null;
 
-        $statutObjet="Disponible";
+  $statutObjet = "Disponible";
 
-        $idCategorie = SQLGetChamp("SELECT id FROM Categorie WHERE nom='$categorieNom'");
-
-
-            // Modifier l'objet existant
-            modifierObjet($idObjet, $nom, $description, $idCategorie, $typeAnnonce, $statutObjet);
+  $idCategorie = SQLGetChamp("SELECT id FROM Categorie WHERE nom='$categorieNom'");
 
 
-        // Redirect to avoid resubmission
-        header('Location: ' . $base . 'annonce/'.$idObjet); // Or wherever you want to go
-        exit;
-    }
-    ?>
+  // Modifier l'objet existant
+  modifierObjet($idObjet, $nom, $description, $idCategorie, $typeAnnonce, $statutObjet);
+
+  orderImages($ordreImages);
+
+  // Redirect to avoid resubmission
+  header('Location: ' . $base . 'annonce/' . $idObjet); // Or wherever you want to go
+  exit;
+}
+?>
+
+<link rel="stylesheet" href="css/jquery-ui.min.css">
 
 
-
-<form id="publication" action="" method="POST">
-    <input type="hidden" name="idObjet" value="<?= htmlspecialchars($idObjet) ?>">
-    <div class="container2">
-        <div class="left"  >
-                <?php if (empty($images)): ?>
-                  <div class="mySlides">
-                    <div class="numbertext">1 / 1</div>
-                    <img src="uploads/imagesObjets/noimage.jpg" style="width:100%">
-                  </div>
-                <?php else: ?>
-                  <?php foreach ($images as $index => $image): ?>
-                    <div class="mySlides">
-                      <div class="numbertext"><?= ($index + 1) . " / " .$size ?></div>
-                      <img src="<?= "uploads/imagesObjets/" . $image["hash"] . ".jpg" ?>" style="width:100%">
-                    </div>
-                  <?php endforeach; ?>
-
-                  <a class="prev" onclick="plusSlides(-1)">❮</a>
-                  <a class="next2" onclick="plusSlides(1)">❯</a>
-
-                  <div class="row">
-                    <?php foreach ($images as $index => $image): ?>
-                      <div class="column">
-                        <img class="demo cursor" src="<?= "uploads/imagesObjets/" . $image["hash"] . ".jpg" ?>"
-                             style="width:100%" onclick="currentSlide(<?= $index + 1 ?>)" alt="Slide <?= $index + 1 ?>">
-                      </div>
-                    <?php endforeach; ?>
-                  </div>
-                <?php endif; ?>
-        </div>
-
-    <div class="right">
+<div class="container2">
+  <div class="left">
+    <div>
+      <ul id="sortable">
+        <?php foreach ($images as $image): ?>
+          <li class="ui-state-default" data-id="<?= $image["id"] ?>">
+            <img src="<?= "uploads/imagesObjets/" . $image["hash"] . ".jpg" ?>">
+            <input type="button" value=supprimer class="deletebtn">
+          </li>
+        <?php endforeach; ?>
+      </ul>
+    </div>
+    <form id="imageUploadForm">
+      Sélectionner l'image à ajouter :
+      <input type="file" name="imageToUpload" accept=".jpg,.jpeg,.png,.gif" id="imageToUpload">
+      <input type="button" value="Ajout Image" name="Ajouter l'image" id="ajouterImage" />
+      <p id="status"></p>
+    </form>
+  </div>
+  <div class="right">
+    <form id="publication" action="" method="POST">
+      <input type="hidden" name="idObjet" value="<?= htmlspecialchars($idObjet) ?>">
+      <input id="ordreImages" type="hidden" name="ordreImages" value="<?php foreach ($images as $image) echo $image["id"] . ','; ?>">
       <div class="right-inner">
         <div class="right-left">
           <input name="nomObjet" value="<?= isset($nom) ? htmlspecialchars($nom) : '' ?>" type="text" placeholder="Nom de l'objet">
@@ -95,8 +89,8 @@
             $SQL = "SELECT DISTINCT nom FROM Categorie";
             $categories = parcoursRs(SQLSelect($SQL));
             foreach ($categories as $categorie) {
-              $selected = (isset($cat) && $categorie["nom"]==$cat) ? "selected": "" ;
-              echo '<option value="' . htmlspecialchars($categorie['nom']) .'"' . $selected .'>' . htmlspecialchars($categorie['nom']) . '</option>';
+              $selected = (isset($cat) && $categorie["nom"] == $cat) ? "selected" : "";
+              echo '<option value="' . htmlspecialchars($categorie['nom']) . '"' . $selected . '>' . htmlspecialchars($categorie['nom']) . '</option>';
             }
             ?>
           </select>
@@ -106,7 +100,7 @@
               <input id="don" type="radio" value="Don" name="typeAnnonce" <?= (isset($don) && $don) ? "checked" : "" ?>> Pour Don
             </label>
             <label for="pret">
-              <input id="pret" type="radio"  value="Prêt" name="typeAnnonce" <?= (isset($don) && $don==0) ? "checked" : "" ?>> Pour Prêter
+              <input id="pret" type="radio" value="Prêt" name="typeAnnonce" <?= (isset($don) && $don == 0) ? "checked" : "" ?>> Pour Prêter
             </label>
 
             <span id="texteDebut"> de</span>
@@ -123,52 +117,25 @@
         </div>
       </div>
 
+
       <!-- Publier button centered below -->
       <div class="btn-publier-container">
         <input id="BtnPublier" class="btn" type="submit" value="Publier">
       </div>
-    </div>
+    </form>
+  </div>
 
 
 </div>
-</form>
 
 
 
-<script src="js/jquery-3.7.1.min.js">
-</script>
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
 <script>
-    const objet = <?= json_encode($idObjet) ?>;
-    let slideIndex = 1;
-    if(objet!=-1){ showSlides(slideIndex);}
+  const objet = <?= json_encode($idObjet) ?>;
 
-
-    function plusSlides(n) {
-      showSlides(slideIndex += n);
-    }
-
-    function currentSlide(n) {
-      showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-      let i;
-      let slides = document.getElementsByClassName("mySlides");
-      let dots = document.getElementsByClassName("demo");
-      //let captionText = document.getElementById("caption");
-      if (n > slides.length) {slideIndex = 1}
-      if (n < 1) {slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-      }
-      for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-      }
-      slides[slideIndex-1].style.display = "block";
-      dots[slideIndex-1].className += " active";
-      //captionText.innerHTML = dots[slideIndex-1].alt;
-    }
-    $('#resetAnnonce').click(function () {
+  $('#resetAnnonce').click(function() {
     // Décocher les radios
     $('#don').prop('checked', false);
     $('#pret').prop('checked', false);
@@ -182,31 +149,119 @@
     $('#fin').show();
     $('#texteDebut').show();
     $('#texteFin').show();
-});
+  });
 
-$(document).ready(function () {
-    $('input[name="typeAnnonce"]').change(function () {
-        if ($('#don').is(':checked')) {
-            $('#pret').closest('label').hide();
+  $(document).ready(function() {
+    $('input[name="typeAnnonce"]').change(function() {
+      if ($('#don').is(':checked')) {
+        $('#pret').closest('label').hide();
 
-            $('#debut').hide();
-            $('#fin').hide();
-            $('#texteDebut').hide();
-            $('#texteFin').hide();
+        $('#debut').hide();
+        $('#fin').hide();
+        $('#texteDebut').hide();
+        $('#texteFin').hide();
 
-            $('#don').closest('label').show();
-        }
+        $('#don').closest('label').show();
+      }
 
-        if ($('#pret').is(':checked')) {
-            $('#don').closest('label').hide();
+      if ($('#pret').is(':checked')) {
+        $('#don').closest('label').hide();
 
-            $('#debut').show();
-            $('#fin').show();
-            $('#texteDebut').show();
-            $('#texteFin').show();
+        $('#debut').show();
+        $('#fin').show();
+        $('#texteDebut').show();
+        $('#texteFin').show();
 
-            $('#pret').closest('label').show();
-        }
+        $('#pret').closest('label').show();
+      }
     });
-});
+
+    $("#sortable").on("click", ".deletebtn", function() {
+      if (confirm("Êtes-vous sûr de vouloir supprimer cette image ?")) {
+        $.ajax({
+          url: "api/supprimerImage",
+          type: "GET",
+          data: {
+            idImage: $(this).parent().data("id")
+          }, // Envoi de l'ID de l'objet à supprimer
+          success: function(reponse) {
+            console.log(reponse);
+          },
+          error: function() {
+            alert("Une erreur s'est produite lors de la suppression de l'image.");
+          }
+        });
+        $(this).parent().remove();
+        $("#sortable").sortable("refresh");
+        updateOrdreImages();
+      }
+    })
+  });
+
+  // Pour la gestion des images
+
+  function updateOrdreImages() {
+    ordreimages = "";
+    $('#sortable').children().each(function() {
+      ordreimages += $(this).data("id") + ",";
+    });
+    $('#ordreImages').val(ordreimages);
+  }
+
+  $(function() {
+    $("#sortable").sortable({
+      update: updateOrdreImages
+    });
+  });
+
+  const ajouterImage = document.getElementById('ajouterImage'); // Our HTML form's ID
+  const myFile = document.getElementById('imageToUpload'); // Our HTML files' ID
+  const statusP = document.getElementById('status');
+
+  ajouterImage.onclick = function(event) {
+    event.preventDefault();
+
+    statusP.innerHTML = 'Téléversement...';
+
+    // Get the files from the form input
+    const files = myFile.files;
+    if (files.length == 0) {
+      statusP.innerHTML = 'Pas d\'image sélectionnée !';
+      return;
+    }
+    // Create a FormData object
+    const formData = new FormData();
+
+    // Select only the first file from the input array
+    const file = files[0];
+
+    // Add the file to the AJAX request
+    formData.append('fileAjax', file, file.name);
+
+    // Set up the request
+    const xhr = new XMLHttpRequest();
+
+    // Open the connection
+    xhr.open('POST', 'api/uploadImage/<?= $idObjet ?>', true);
+
+    // Set up a handler for when the task for the request is complete
+    xhr.onload = function() {
+      if (xhr.status == 200) {
+        const responseArray = xhr.response.split(",");
+        statusP.innerHTML = responseArray[0];
+        if (responseArray[0] == "L'image a été téléversé") {
+          $("#sortable").append('<li class="ui-state-default" data-id="' + responseArray[2] + '"><img src="uploads/imagesObjets/' + responseArray[1] + '.jpg"><input type="button" value=supprimer class="deletebtn"></li>');
+          $("#sortable").sortable("refresh");
+          updateOrdreImages();
+
+          console.log("success");
+        }
+      } else {
+        statusP.innerHTML = 'Erreur de téléversement, veuillez réessayer';
+      }
+    };
+
+    // Send the data.
+    xhr.send(formData);
+  }
 </script>

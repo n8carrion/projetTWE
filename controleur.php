@@ -71,18 +71,41 @@ if ($view == 'api') {
             }
 
             break;
+        case 'supprimerImage':
+            // Suppression d'un objet
+            //c'est ce qu'on lui donne comme idObjet
+            // on vérifie que l'utilisateur est connecté et qu'il a le droit de supprimer l'objet
+            // if (!valider("connecte", "SESSION")) {
+            //     echo json_encode(["success" => false, "error" => "Vous devez être connecté pour supprimer un objet."]);
+            //     die();
+            // }
+            $idImage = valider("idImage");
+            if (is_numeric($idImage)) {
+                $result = supprimerImage($idImage);
+                echo($result);
+            } 
+            else{
+                echo("erreur controleur pour suppression annonce");
+            }
+
+            break;
         case 'suggestionsObjets':
             $debutNom = valider('debutNom');
             $result = suggestionsObjets($debutNom);
             echo json_encode($result);
         exit;
         
+        case 'uploadImage':
+            include_once("libs/maImageHandling.php");
+            uploadImage($data[1]);
+            break;
+
         default:
             // on a pas reconnue ce qui est demandé
 
             break;
     }
-    die(); // Pour ne pas 
+    die(); // Pour ne pas aller plus loin
 }
 
 

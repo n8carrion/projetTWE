@@ -499,3 +499,36 @@ textarea {
     width:300px ;
     resize:vertical ;
 }
+
+#sortable {
+    list-style-type: none;
+    padding: 0;
+    width: 435px;
+    height: 135px;
+    border: 1px solid black;
+}
+
+#sortable li {
+    margin: 3px 3px 3px 3px;
+    padding: 1px;
+    float: left;
+    width: 100px;
+    height: 120px;
+    font-size: 4em;
+    text-align: center;
+    background-color: beige;
+    position: relative;
+}
+
+#sortable li img {
+    width: 100%;
+    height: 80%;
+    object-fit: contain;
+}
+
+.deletebtn {
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    background-color: rgb(255, 91, 91);
+}
