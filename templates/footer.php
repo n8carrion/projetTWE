@@ -12,7 +12,7 @@
             <a  href="accueil">Accueil</a>
             <a  href="catalogue">Catalogue</a>
             <a  href="apropos">À propos</a>
-</br>La REZerve, une création de Valentin GREGOIRE, Natalia CARRION, William TAN et Jeanne BOUCHER, pour l'electif TWE 2024-2025
+</br>La REZerve, une création de Valentin GREGOIRE, Natalia CARRIÓN, William TAN et Jeanne BOUCHER, pour l'electif TWE 2024-2025
         </div>
 
         <style>
