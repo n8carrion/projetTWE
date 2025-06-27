@@ -67,7 +67,7 @@ function uploadImage($idObjet)
 */
 function convertImage($originalImage, $outputImage, $quality) {
 
-    switch (exif_imagetype($originalImage)) {
+    switch (getimagesize($originalImage)[1]) {
         case IMAGETYPE_PNG:
             $imageTmp=imagecreatefrompng($originalImage);
             break;
