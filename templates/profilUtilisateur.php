@@ -20,11 +20,13 @@ $userString = $infoUser['prenom'] ." ". $infoUser['nom'];
   <h2><?=$userString?></h2>
 
   <p class="btn" ><a href="<?= $infoUser['facebook'] ?>">Aller sur son profil Facebook</a></p>
-
+   <?php if(valider("connecte","SESSION")): ?>
   <p><strong>Email</strong> : <a href="mailto:<?= $infoUser['mail'] ?>"><?=$infoUser["mail"]?></a></p>
   <p><strong>Telephone</strong> : <?= $infoUser["telephone"] ?></p>
   <p><strong>Adresse</strong>: <?= $infoUser["adresse"] ?></p>
-
+  <?php else: ?>
+  <p>Se connecter pour voir information de contact</p>
+<?php endif; ?>
  <?php if ($idProfil == valider("idUser", "SESSION")): ?>
 <button class="btn"><a href="profil/edit">Modifier profil </a> </button>
 <?php endif; ?>
