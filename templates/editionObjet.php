@@ -49,27 +49,51 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <link rel="stylesheet" href="css/jquery-ui.min.css">
 
+<style>
+    .right-inner {
+      display: flex;
+      flex-direction: row;
+      gap: 32px; /* espace entre les deux colonnes, ajuste si besoin */
+  }
+  
+  .right-left {
+      flex: 2;
+      min-width: 0;
+  }
+  
+  .right-right {
+      flex: 1;
+      min-width: 200px; /* ajuste selon le rendu souhaité */
+  }
 
+  
+
+</style>
 <div class="container2">
-  <div class="left">
-    <div>
-      <ul id="sortable">
-        <?php foreach ($images as $image): ?>
-          <li class="ui-state-default" data-id="<?= $image["id"] ?>">
-            <img src="<?= "uploads/imagesObjets/" . $image["hash"] . ".jpg" ?>">
-            <input type="button" value=supprimer class="deletebtn">
-          </li>
-        <?php endforeach; ?>
-      </ul>
-    </div>
-    <form id="imageUploadForm">
-      Sélectionner l'image à ajouter :
-      <input type="file" name="imageToUpload" accept=".jpg,.jpeg,.png,.gif" id="imageToUpload">
-      <input type="button" value="Ajout Image" name="Ajouter l'image" id="ajouterImage" />
-      <p id="status"></p>
-    </form>
-  </div>
-  <div class="right">
+  <div>
+    <fieldset id="divAjoutImages">
+      <legend>Ajout des images</legend>
+        <div>
+          <ul id="sortable">
+            <?php foreach ($images as $image): ?>
+              <li class="ui-state-default" data-id="<?= $image["id"] ?>">
+                <img src="<?= "uploads/imagesObjets/" . $image["hash"] . ".jpg" ?>">
+                <input type="button" value=supprimer class="deletebtn">
+              </li>
+            <?php endforeach; ?>
+          </ul>
+        </div>
+          <form id="imageUploadForm">
+            Sélectionner l'image à ajouter :
+            <input type="file" name="imageToUpload" accept=".jpg,.jpeg,.png,.gif" id="imageToUpload">
+            <input type="button" value="Ajout Image" name="Ajouter l'image" id="ajouterImage" />
+            <p id="status"></p>
+          </form>
+        </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Ajout infos de l'annonce</legend>
     <form id="publication" action="" method="POST">
       <input type="hidden" name="idObjet" value="<?= htmlspecialchars($idObjet) ?>">
       <input id="ordreImages" type="hidden" name="ordreImages" value="<?php foreach ($images as $image) echo $image["id"] . ','; ?>">
@@ -79,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
           <textarea name="ocontenuDescription" id="description" placeholder="contenu de la description"><?= isset($description) ? htmlspecialchars($description) : '' ?></textarea>
 
-          <input type="button" value="Ajouter des photos">
+          <!-- <input type="button" value="Ajouter des photos"> -->
         </div>
 
         <div class="right-right">
@@ -95,39 +119,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             ?>
           </select>
 
-          <div id="typeService">
-            <label for="don">
-              <input id="don" type="radio" value="Don" name="typeAnnonce" <?= (isset($don) && $don) ? "checked" : "" ?>> Pour Don
+            <div id="typeService">
+            <label>
+              <input id="don" type="radio" value="Don" name="typeAnnonce" <?= (isset($don) && $don) ? "checked" : "" ?>> Don
             </label>
-            <label for="pret">
-              <input id="pret" type="radio" value="Prêt" name="typeAnnonce" <?= (isset($don) && $don == 0) ? "checked" : "" ?>> Pour Prêter
-            </label>
-
-            <span id="texteDebut"> de</span>
-            <input name="debutPret" id="debut" type="date">
-            <span id="texteFin">Jusqu'à</span>
-            <input name="FinPret" id="fin" type="date">
-
-            <button type="button" id="resetAnnonce">Réinitialiser</button>
-
-            <label for="toujours">
-              <input id="toujours" type="checkbox" name="toujoursActive"> Toujours(jusqu'à desactisvation)
+            <label>
+              <input id="pret" type="radio" value="Prêt" name="typeAnnonce" <?= (isset($don) && !$don) ? "checked" : "" ?>> Prêt
             </label>
           </div>
+           <div id="datesPret" style="display: <?= (isset($don) && !$don) ? 'block' : 'none' ?>; margin-top:8px;">
+              <span id="texteDebut">De</span>
+              <input name="debutPret" id="debut" type="date">
+              <span id="texteFin">Jusqu'à</span>
+              <input name="FinPret" id="fin" type="date">
+              <label for="toujours" style="margin-left:10px;">
+                <input id="toujours" type="checkbox" name="toujoursActive"> Toujours (jusqu'à désactivation)
+              </label>
+            </div>
         </div>
-      </div>
+        </fieldset>
 
 
-      <!-- Publier button centered below -->
+      
       <div class="btn-publier-container">
         <input id="BtnPublier" class="btn" type="submit" value="Publier">
       </div>
     </form>
   </div>
-
-
 </div>
-
 
 
 <script src="js/jquery-3.7.1.min.js"></script>
@@ -135,46 +154,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <script>
   const objet = <?= json_encode($idObjet) ?>;
 
-  $('#resetAnnonce').click(function() {
-    // Décocher les radios
-    $('#don').prop('checked', false);
-    $('#pret').prop('checked', false);
-
-    // Réafficher les labels
-    $('#don').closest('label').show();
-    $('#pret').closest('label').show();
-
-    // Réafficher les dates et leurs textes
-    $('#debut').show();
-    $('#fin').show();
-    $('#texteDebut').show();
-    $('#texteFin').show();
-  });
 
   $(document).ready(function() {
-    $('input[name="typeAnnonce"]').change(function() {
-      if ($('#don').is(':checked')) {
-        $('#pret').closest('label').hide();
 
-        $('#debut').hide();
-        $('#fin').hide();
-        $('#texteDebut').hide();
-        $('#texteFin').hide();
-
-        $('#don').closest('label').show();
+        $(document).ready(function() {
+      function toggleDatesPret() {
+        if ($('#pret').is(':checked')) {
+          $('#datesPret').show();
+        } else {
+          $('#datesPret').hide();
+        }
       }
-
-      if ($('#pret').is(':checked')) {
-        $('#don').closest('label').hide();
-
-        $('#debut').show();
-        $('#fin').show();
-        $('#texteDebut').show();
-        $('#texteFin').show();
-
-        $('#pret').closest('label').show();
-      }
+    
+      // Initialisation au chargement
+      toggleDatesPret();
+    
+      // Sur changement de radio
+      $('input[name="typeAnnonce"]').change(toggleDatesPret);
+    
+      // ... (le reste de ton code déjà présent)
     });
+    
+ 
 
     $("#sortable").on("click", ".deletebtn", function() {
       if (confirm("Êtes-vous sûr de vouloir supprimer cette image ?")) {
