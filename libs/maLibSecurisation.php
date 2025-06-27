@@ -1,7 +1,7 @@
 <?php
 
 include_once "maLibUtils.php";	// Car on utilise la fonction valider()
-include_once "modele.php";	// Car on utilise la fonction connecterUtilisateur()
+include_once "modele.php";	// Car on accèdes aux données de la table Utilisateur
 
 /**
  * @file login.php
@@ -44,7 +44,7 @@ function verifUserCLA($ticketCLA)
 	$lastName = $payload['lastName'];
 	$email = $payload['emailSchool'];
 	//$cursus = $payload['cursus']; // non utilisé
-	
+
 	$q = "accueil";
 	if (!($idUser = existUserCLA($username))) {
 		$idUser = creerUtilisateur($lastName, $firstName, $username, $email);
@@ -59,7 +59,8 @@ function verifUserCLA($ticketCLA)
 	return $q;
 }
 
-function fixtureLogin($pseudoCLA) {
+function fixtureLogin($pseudoCLA)
+{
 	if (!($idUser = existUserCLA($pseudoCLA))) {
 		die("User does not exist");
 	}
@@ -69,18 +70,3 @@ function fixtureLogin($pseudoCLA) {
 	$_SESSION['idUser'] = $idUser;
 	$_SESSION['isModerator'] = isModerateur($idUser);
 }
-
-
-/**
- * Fonction à placer au début de chaque page privée
- * Cette fonction redirige vers la page $urlBad en envoyant un message d'erreur 
-	et arrête l'interprétation si l'utilisateur n'est pas connecté
- * Elle ne fait rien si l'utilisateur est connecté, et si $urlGood est faux
- * Elle redirige vers urlGood sinon
- */
-function securiser($urlBad,$urlGood=false)
-{
-
-}
-
-?>

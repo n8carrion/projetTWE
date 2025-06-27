@@ -1,6 +1,7 @@
 <?php
 
 // V1.0 du 18 mai 2018
+// source: TWE
 
 if (file_exists("./config.php"))
 	include_once("./config.php");
@@ -43,7 +44,7 @@ function SQLUpdate($sql)
 	$dbh->exec("SET CHARACTER SET utf8");
 	$res = $dbh->query($sql);
 	if ($res === false) {
-		$e = $dbh->errorInfo(); 
+		$e = $dbh->errorInfo();
 		die("<font color=\"red\">SQLUpdate/Delete: Erreur de requete : " . $e[2] . "</font>");
 	}
 
@@ -51,11 +52,14 @@ function SQLUpdate($sql)
 	$nb = $res->rowCount();
 	if ($nb != 0) return $nb;
 	else return false;
-	
 }
 
+
 // Un delete c'est comme un Update
-function SQLDelete($sql) {return SQLUpdate($sql);}
+function SQLDelete($sql)
+{
+	return SQLUpdate($sql);
+}
 
 
 /**
@@ -70,7 +74,7 @@ function SQLInsert($sql)
 	global $BDD_base;
 	global $BDD_user;
 	global $BDD_password;
-	
+
 	try {
 		$dbh = new PDO("mysql:host=$BDD_host;dbname=$BDD_base", $BDD_user, $BDD_password);
 	} catch (PDOException $e) {
@@ -80,24 +84,23 @@ function SQLInsert($sql)
 	$dbh->exec("SET CHARACTER SET utf8");
 	$res = $dbh->query($sql);
 	if ($res === false) {
-		$e = $dbh->errorInfo(); 
+		$e = $dbh->errorInfo();
 		die("<font color=\"red\">SQLInsert: Erreur de requete : " . $e[2] . "</font>");
 	}
 
 	$lastInsertId = $dbh->lastInsertId();
-	$dbh = null; 
+	$dbh = null;
 	return $lastInsertId;
 }
 
 
-
 /**
-* Effectue une requete SELECT dans une base de données SQL SERVER, pour récupérer uniquement un champ (la requete ne doit donc porter que sur une valeur)
-* Renvoie FALSE si pas de resultats, ou la valeur du champ sinon
-* @pre Les variables  $BDD_login, $BDD_password $BDD_chaine doivent exister
-* @param string $SQL
-* @return false|string
-*/
+ * Effectue une requete SELECT dans une base de données SQL SERVER, pour récupérer uniquement un champ (la requete ne doit donc porter que sur une valeur)
+ * Renvoie FALSE si pas de resultats, ou la valeur du champ sinon
+ * @pre Les variables  $BDD_login, $BDD_password $BDD_chaine doivent exister
+ * @param string $SQL
+ * @return false|string
+ */
 function SQLGetChamp($sql)
 {
 	global $BDD_host;
@@ -114,22 +117,22 @@ function SQLGetChamp($sql)
 	$dbh->exec("SET CHARACTER SET utf8");
 	$res = $dbh->query($sql);
 	if ($res === false) {
-		$e = $dbh->errorInfo(); 
+		$e = $dbh->errorInfo();
 		die("<font color=\"red\">SQLGetChamp: Erreur de requete : " . $e[2] . "</font>");
 	}
 
 	$num = $res->rowCount();
 	$dbh = null;
 
-	if ($num==0) return false;
-	
+	if ($num == 0) return false;
+
 	$res->setFetchMode(PDO::FETCH_NUM);
 
 	$ligne = $res->fetch();
 	if ($ligne == false) return false;
 	else return $ligne[0];
-
 }
+
 
 /**
  * Effectue une requete SELECT dans une base de données SQL SERVER
@@ -139,11 +142,11 @@ function SQLGetChamp($sql)
  * @return boolean|resource
  */
 function SQLSelect($sql)
-{	
- 	global $BDD_host;
+{
+	global $BDD_host;
 	global $BDD_base;
- 	global $BDD_user;
- 	global $BDD_password;
+	global $BDD_user;
+	global $BDD_password;
 
 	try {
 		$dbh = new PDO("mysql:host=$BDD_host;dbname=$BDD_base", $BDD_user, $BDD_password);
@@ -154,39 +157,30 @@ function SQLSelect($sql)
 	$dbh->exec("SET CHARACTER SET utf8");
 	$res = $dbh->query($sql);
 	if ($res === false) {
-		$e = $dbh->errorInfo(); 
+		$e = $dbh->errorInfo();
 		die("<font color=\"red\">SQLSelect: Erreur de requete : " . $e[2] . "</font>");
 	}
-	
+
 	$num = $res->rowCount();
 	$dbh = null;
 
-	if ($num==0) return false;
+	if ($num == 0) return false;
 	else return $res;
 }
 
+
 /**
-*
-* Parcours les enregistrements d'un résultat mysql et les renvoie sous forme de tableau associatif
-* On peut ensuite l'afficher avec la fonction print_r, ou le parcourir avec foreach
-* @param resultat_Mysql $result
-*/
+ * Parcours les enregistrements d'un résultat mysql et les renvoie sous forme de tableau associatif
+ * On peut ensuite l'afficher avec la fonction print_r, ou le parcourir avec foreach
+ * @param resultat_Mysql $result
+ */
 function parcoursRs($result)
 {
-	if  ($result == false) return array();
+	if ($result == false) return array();
 
 	$result->setFetchMode(PDO::FETCH_ASSOC);
-	while ($ligne = $result->fetch()) 
-		$tab[]= $ligne;
+	while ($ligne = $result->fetch())
+		$tab[] = $ligne;
 
 	return $tab;
 }
-
-
-
-
-
-
-
-
-?>

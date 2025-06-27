@@ -1,6 +1,7 @@
 <?php
 
 // V1.0 du 18 mai 2018
+// Source: TWE
 
 /**
  * @file maLibUtils.php
@@ -16,34 +17,33 @@
  * @param string $type
  * @return string|boolean
  */
-function valider($nom,$type="REQUEST")
-{	
-	switch($type)
-	{
-		case 'REQUEST': 
-		if(isset($_REQUEST[$nom]) && !($_REQUEST[$nom] == "")) 	
-			return proteger($_REQUEST[$nom]); 	
-		break;
-		case 'GET': 	
-		if(isset($_GET[$nom]) && !($_GET[$nom] == "")) 			
-			return proteger($_GET[$nom]); 
-		break;
-		case 'POST': 	
-		if(isset($_POST[$nom]) && !($_POST[$nom] == "")) 	
-			return proteger($_POST[$nom]); 		
-		break;
-		case 'COOKIE': 	
-		if(isset($_COOKIE[$nom]) && !($_COOKIE[$nom] == "")) 	
-			return proteger($_COOKIE[$nom]);	
-		break;
-		case 'SESSION': 
-		if(isset($_SESSION[$nom]) && !($_SESSION[$nom] == "")) 	
-			return $_SESSION[$nom]; 		
-		break;
-		case 'SERVER': 
-		if(isset($_SERVER[$nom]) && !($_SERVER[$nom] == "")) 	
-			return $_SERVER[$nom]; 		
-		break;
+function valider($nom, $type = "REQUEST")
+{
+	switch ($type) {
+		case 'REQUEST':
+			if (isset($_REQUEST[$nom]) && !($_REQUEST[$nom] == ""))
+				return proteger($_REQUEST[$nom]);
+			break;
+		case 'GET':
+			if (isset($_GET[$nom]) && !($_GET[$nom] == ""))
+				return proteger($_GET[$nom]);
+			break;
+		case 'POST':
+			if (isset($_POST[$nom]) && !($_POST[$nom] == ""))
+				return proteger($_POST[$nom]);
+			break;
+		case 'COOKIE':
+			if (isset($_COOKIE[$nom]) && !($_COOKIE[$nom] == ""))
+				return proteger($_COOKIE[$nom]);
+			break;
+		case 'SESSION':
+			if (isset($_SESSION[$nom]) && !($_SESSION[$nom] == ""))
+				return $_SESSION[$nom];
+			break;
+		case 'SERVER':
+			if (isset($_SERVER[$nom]) && !($_SERVER[$nom] == ""))
+				return $_SERVER[$nom];
+			break;
 	}
 	return false; // Si pb pour récupérer la valeur 
 }
@@ -57,39 +57,36 @@ function valider($nom,$type="REQUEST")
  * @param string $defaut
  * @param string $type
  * @return string
-*/
-function getValue($nom,$defaut=false,$type="REQUEST")
+ */
+function getValue($nom, $defaut = false, $type = "REQUEST")
 {
 	// NB : cette commande affecte la variable resultat une ou deux fois
-	if (($resultat = valider($nom,$type)) === false)
+	if (($resultat = valider($nom, $type)) === false)
 		$resultat = $defaut;
 
 	return $resultat;
 }
 
 /**
-*
-* Evite les injections SQL en protegeant les apostrophes par des '\'
-* Attention : SQL server utilise des doubles apostrophes au lieu de \'
-* ATTENTION : LA PROTECTION N'EST EFFECTIVE QUE SI ON ENCADRE TOUS LES ARGUMENTS PAR DES APOSTROPHES
-* Y COMPRIS LES ARGUMENTS ENTIERS !!
-* @param string $str
-*/
+ *
+ * Evite les injections SQL en protegeant les apostrophes par des '\'
+ * Attention : SQL server utilise des doubles apostrophes au lieu de \'
+ * ATTENTION : LA PROTECTION N'EST EFFECTIVE QUE SI ON ENCADRE TOUS LES ARGUMENTS PAR DES APOSTROPHES
+ * Y COMPRIS LES ARGUMENTS ENTIERS !!
+ * @param string $str
+ */
 function proteger($str)
 {
 	// attention au cas des select multiples !
 	// On pourrait passer le tableau par référence et éviter la création d'un tableau auxiliaire
-	if (is_array($str))
-	{
+	if (is_array($str)) {
 		$nextTab = array();
-		foreach($str as $cle => $val)
-		{
+		foreach ($str as $cle => $val) {
 			$nextTab[$cle] = addslashes($val);
 		}
 		return $nextTab;
-	}
-	else 	
-		return addslashes ($str);
+	} else
+		return addslashes($str);
 	//return str_replace("'","''",$str); 	//utile pour les serveurs de bdd Crosoft
 }
 
@@ -99,11 +96,11 @@ function tprint($tab)
 {
 	echo "<pre>\n";
 	print_r($tab);
-	echo "</pre>\n";	
+	echo "</pre>\n";
 }
 
 
-function rediriger($url,$qs="")
+function rediriger($url, $qs = "")
 {
 	// if ($qs != "")	 $qs = urlencode($qs);	
 	// Il faut respecter l'encodage des caractères dans les chaînes de requêtes
@@ -111,7 +108,7 @@ function rediriger($url,$qs="")
 	// TODO: Passer un tabAsso en paramètres
 
 	if ($qs != "") $qs = "?$qs";
- 
+
 	header("Location:$url$qs"); // envoi par la méthode GET
 	die(""); // interrompt l'interprétation du code 
 
@@ -128,4 +125,3 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 	die("");
 }
 */
-?>

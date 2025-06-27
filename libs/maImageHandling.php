@@ -1,6 +1,9 @@
 <?php
 include_once("libs/modele.php");
 
+/**
+ * Gère l'upload d'une image, avec sa vérification, son traitement, son renommage, son ajout dans la base de donnée, etc...
+ */
 function uploadImage($idObjet)
 {
     $currentDir = getcwd();
@@ -47,42 +50,51 @@ function uploadImage($idObjet)
             if ($didUpload) {
 
                 $hash = hash_file('md5', $uploadPath);
-                rename($uploadPath, $currentDir . "/uploads/imagesObjets/".$hash.".jpg");
+                rename($uploadPath, $currentDir . "/uploads/imagesObjets/" . $hash . ".jpg");
 
                 $idImage = creerImage($idObjet, $hash);
 
                 echo "L'image a été téléversé";
-                echo ",".$hash.",".$idImage;
+                echo "," . $hash . "," . $idImage;
             } else {
                 echo 'An error occurred while uploading. Try again.';
             }
         }
     }
-
-    
 }
 
 /**
-*   Auxiliar function to convert images to JPG
-*/
-function convertImage($originalImage, $outputImage, $quality) {
+ *   Auxiliar function to convert images to JPG
+ *   Source : https://stackoverflow.com/a/46894481
+ */
+function convertImage($originalImage, $outputImage, $quality)
+{
+    if (!function_exists('exif_imagetype')) {
+        function exif_imagetype($filename)
+        {
+            if ((list($width, $height, $type, $attr) = getimagesize($filename)) !== false) {
+                return $type;
+            }
+            return false;
+        }
+    }
 
-    switch (getimagesize($originalImage)[1]) {
+    switch (exif_imagetype($originalImage)) {
         case IMAGETYPE_PNG:
-            $imageTmp=imagecreatefrompng($originalImage);
+            $imageTmp = imagecreatefrompng($originalImage);
             break;
         case IMAGETYPE_JPEG:
-            $imageTmp=imagecreatefromjpeg($originalImage);
+            $imageTmp = imagecreatefromjpeg($originalImage);
             break;
         case IMAGETYPE_GIF:
-            $imageTmp=imagecreatefromgif($originalImage);
+            $imageTmp = imagecreatefromgif($originalImage);
             break;
         case IMAGETYPE_BMP:
-            $imageTmp=imagecreatefrombmp($originalImage);
+            $imageTmp = imagecreatefrombmp($originalImage);
             break;
         // Defaults to JPG
         default:
-            $imageTmp=imagecreatefromjpeg($originalImage);
+            $imageTmp = imagecreatefromjpeg($originalImage);
             break;
     }
 
