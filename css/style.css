@@ -478,11 +478,11 @@ h1,h2 {
     margin:20px;
     display: block;
 }
-#BtnPublier {
+/* #BtnPublier {
     position:absolute ;
     bottom:0 ;
     left:650px;
-}
+} */
 /*
 input[type="radio"], label{
     display: inline-block!important;
