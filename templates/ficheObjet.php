@@ -68,7 +68,7 @@
         <?php endif; ?>
         <?php if(valider("connecte","SESSION")): ?>
         <div class="contact">
-            <p id="user-mail"><strong>Contact : </strong> <?= $userMail ?></p>
+            <p id="user-mail"><strong>Contact : </strong> <a href="mailto:<?= $userMail ?>"><?= $userMail ?></a></p>
             <p id="user-telephone"><strong>Telephone : </strong><?=$userTelephone?></p>
             <p id="user-adresse"><strong>Adresse : </strong><?=$infoUser["adresse"]?></p>
         </div>
